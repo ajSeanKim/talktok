@@ -45,11 +45,18 @@ spring:
             tokenUri: https://nid.naver.com/oauth2.0/token
             userInfoUri: https://openapi.naver.com/v1/nid/me
   jpa:
-    database: mysql
     hibernate:
       ddl-auto: none
+
+
+  mail:
+    hostSMTPid: aircamp03@naver.com
+    hostSMTPpwd: aircamp123123
+
 
     open-in-view: false
   devtools:
     livereload:
       enabled: true
+
+

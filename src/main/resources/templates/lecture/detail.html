@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>톡톡스피킹</title>
+</head>
+<body>
+    <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
+    <main class="wrap">
+        <section>
+            <div>
+                <a th:text="${lectureDto.lec_name}"></a>
+                <a th:text="${lectureDto.lec_day}"></a>
+                <a th:text="${lectureDto.lec_time}"></a>
+                <a th:text="${lectureDto.lec_price}"></a>
+                <a th:text="${lectureDto.lec_detail}"></a>
+                <a th:text="${lectureDto.lec_startdate}"></a>
+                <a th:text="${lectureDto.lec_enddate}"></a>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+</body>
+</html>

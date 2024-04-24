@@ -1,19 +1,26 @@
 package com.tt.talktok.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 
+@Builder
 @Setter
 @Getter
+@AllArgsConstructor
 public class StudentDto {
 
-    private String stu_no;
-    private String stu_name;
-    private String stu_email;
-    private String stu_pwd;
-    private String stu_phone;
-    private String stu_nickname;
-    private String lec_no;
+    private int stuNo;
+    private String stuName;
+    private String stuEmail;
+    private String stuPwd;
+    private String stuPhone;
+    private String stuNickname;
+
+    public StudentDto() {
+        // 기본 생성자 추가
+    }
 
 }
