@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 폼</title>
+    <script>
+        function boardCheck() {
+            var stuEmail = $.trim($("#stuEmail").val());
+            if (stuEmail === "") {
+                alert("아이디를 입력하세요");
+                $("#stuEmail").val("").focus();
+                return false;
+            }
+            if (!checkId(userId)) {
+                alert("아이디는 4~12자 이내로 소문자와 숫자만 사용할 수 있습니다");
+                $("#stuEmail").val("").focus();
+                return false;
+            }
+            if ($.trim($("#stuPwd").val()) == "") {
+                alert("비밀번호를 입력하세요");
+                $("#stuPwd").val("").focus();
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<form method="post" action="/student/login" onsubmit="return check()">
+    아이디 <input type="text" id="stuEmail" name="stuEmail" placeholder="이메일을 입력하세요." /> <br/>
+    비밀번호 <input type="text" id="stuPwd" name="stuPwd" /> <br/>
+    <input type="submit" value="로그인">
+    <input type="button" value="회원가입" onclick="location='/student/join'">
+    <input type="button" value="비밀번호 찾기" onclick="location='/student/findPwd'">
+
+</form>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+</body>
+</html>

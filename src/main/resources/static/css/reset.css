@@ -11,53 +11,25 @@ table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    vertical-align: baseline;
+time, mark, audio, video,
+button, input, textarea, label {
+    margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline;
 }
 
-/* HTML5 reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
+body {line-height: 1.6;
+    /*font-family: 'Pretendard', sans-serif;*/
 }
-html {font-size: 10px;}
-@font-face {
-    font-family: 'INCHEON';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-body { font-family: 'SUIT', sans-serif; line-height: 1.6; font-size:1.8rem; letter-spacing:-0.5px;}
 ol, ul {list-style: none; list-style-type: none;}
-blockquote, q {quotes: none;}
-blockquote:before, blockquote:after,
-q:before, q:after {content: '';content: none;}
 table {border-collapse: collapse; border-spacing: 0;}
 a {text-decoration: none;}
 img {vertical-align: middle;}
-table {width: 100%; margin: auto; border-collapse: collapse; border-top: 1px solid #ddd; }
-th, td {padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
-th { border-bottom-color: #ddd; background-color: #f8f8f8; }
-
-input, select, textarea, button {
-    margin: 0;
-    padding: 5px;
-    border:1px solid #ddd;
-    font-family:'SUIT', sans-serif;
-    font-size:1.8rem;
+button {cursor: pointer;}
+button,input,label,textarea {
     line-height: 1.6;
+    /*font-family: 'Pretendard', sans-serif; */
     background: transparent;
-    vertical-align: middle;
-    -webkit-border-radius: 0;
-    -webkit-appearance: none;
 }
-input:focus, textarea:focus, select:focus, button:focus {outline:none;}
-input[type=button], input[type=submit], button, select {cursor: pointer;}
-
-select {-webkit-appearance: none; -moz-appearance: none;}
+button:focus,input:focus,select:focus {outline: 0}
+select {-webkit-appearance: none; -moz-appearance: none; cursor: pointer;}
 select::-ms-expand {display: none;}
-* {box-sizing: border-box;}
+* {margin: 0; padding: 0; box-sizing: border-box;}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<section>
+<div class="wrap">
+    <form id="searchTutorForm" name="searchTutorForm" method="post">
+        <div class="sort-left">
+            <div class="box local">
+                <select id-="nationSelect" name="" title="국적">
+                    <option value="">국적</option>
+                    <option value="미국">미국</option>
+                </select>
+                <select id="gender" name="gender" title="성별">
+                    <option value="">성별</option>
+                    <option value="남성">남성</option>
+                    <option value="여성">여성</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">검색</button>
+        <div class="sort-right">
+            <span class="search_input">
+                <input type="text" name="searchTutorName" id="searchTutorName" placeholder="강사 검색">
+                <button class="btn_search" onclick="">
+                    <span>검색</span>
+                </button>
+            </span>
+        </div>
+        </div>
+    </form>
+</div>
+<form class="teacher_contents">
+    <div class="list-wrap">
+        <div th:each="list : ${teacherList}" class="list">
+<!--            <div th:href="@{/teacher/detail(tea_no=${list.tea_no})}" class="inner">-->
+<!--                <img th:src="${list.tea_image}" th:alt="Image" th:case="*"></img>-->
+<!--                <img src="images/teacher.jpg" th:alt="No Image" th:case="null"></img>-->
+<!--            </div>-->
+            <div class="text-box">
+                <span class="name" th:text="${list.tea_name}">[[${tea_name}]]</span>
+                <span class="desc" th:text="${list.tea_intro}"></span>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+</section>
+
+
+<th:insert="footer.html" id="footer"></th:insert>
+</body>
+</html>

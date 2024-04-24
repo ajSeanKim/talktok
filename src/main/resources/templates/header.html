@@ -1,15 +1,6 @@
-<!--headerFragment 선언 (공용 css, js) 불러오기-->
-<header th:fragment="headFragment" id="hd">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous"/>
+<header th:fragment="headerFragment" id="hd">
     <link rel="stylesheet" type="text/css" href="/css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-            crossorigin="anonymous"></script>
-
     <div class="wrap">
         <h1 class="logo">
             <a href="/main" title="메인으로 바로가기">
@@ -21,7 +12,7 @@
                 <li class="depth1"><a href="/teacher/list">강사소개</a></li>
                 <li class="depth1"><a href="/lecture/list">커리큘럼</a></li>
                 <li class="depth1"><a href="/study">스터디룸</a></li>
-                <li class="depth1"><a href="">후기</a></li>
+                <li class="depth1"><a href="/review/list">후기</a></li>
                 <li class="depth1"><a href="">공지사항/이벤트</a></li>
             </ol>
         </nav>

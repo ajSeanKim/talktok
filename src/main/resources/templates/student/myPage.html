@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<input type="button" value="회원탈퇴" onclick="location='/student/withdraw'">
+<input type="button" value="강의목록" onclick="location='/student/'">
+<input type="button" value="로그아웃" onclick="location='/student/logout'">
+
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+</body>
+</html>

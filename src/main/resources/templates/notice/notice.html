@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>공지사항</title>
 </head>
 <body>
+<h1>공지사항</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회수</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notice : ${list}">
+        <td th:text="${notice.no_no}"></td>
+        <td th:text="${notice.no_subject}"></td>
+        <td th:text="${notice.no_content}"></td>
+        <td th:text="${notice.no_readcount}"></td>
+        <td th:text="${notice.no_date}"></td>
+    </tr>
+    </tbody>
+    <input type="button" value="글쓰기" th:attr="onclick=|location='write'|"/>
+</table>
+
+<div th:if="${list.totalPages > 1}">
+    <ul class="pagination">
+        <li th:if="${list.number > 0}" class="page-item">
+            <a th:href="@{/notice/list(page=${list.number - 1})}" class="page-link">이전</a>
+        </li>
+
+        <li th:each="pageNumber : ${#numbers.sequence(0, list.totalPages - 1)}" th:class="${pageNumber == list.number ? 'active' : ''}">
+            <a th:href="@{/notice/list(page=${pageNumber})}">[[${pageNumber + 1}]]</a>
+        </li>
+
+        <li th:if="${list.number < list.totalPages - 1}" class="page-item">
+            <a th:href="@{/notice/list(page=${list.number + 1})}" class="page-link">다음</a>
+        </li>
+    </ul>
+</div>
 
 </body>
 </html>
