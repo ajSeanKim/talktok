@@ -18,6 +18,7 @@
                 <a th:text="${lectureDto.lec_startdate}"></a>
                 <a th:text="${lectureDto.lec_enddate}"></a>
             </div>
+            <button><a th:href="@{/lecture/list(page=${page})}">목록으로 돌아가기</a></button>
         </section>
     </main>
 
