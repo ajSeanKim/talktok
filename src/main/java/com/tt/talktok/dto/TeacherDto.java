@@ -11,15 +11,14 @@ import lombok.ToString;
 @ToString
 @Builder
 public class TeacherDto {
-    private int tea_no;
-    private String tea_name;
-    private String tea_email;
-    private String tea_phone;
-    private String tea_nickname;
-    private String tea_intro;
-    private String tea_detail;
-    private String tea_career;
-    private String tea_nation;
-    private String tea_image;
+    public int tea_no;
+    public String tea_name;
+    public String tea_email;
+    public String tea_phone;
+    public String tea_nickname;
+    public String tea_intro;
+    public String tea_detail;
+    public String tea_career;
+    public String tea_nation;
 
 }

@@ -18,10 +18,8 @@
     </thead>
     <tbody>
     <tr th:each="notice : ${list}">
-        <td th:text="${notice.noNo}"></td>
-        <td>
-            <a th:href="@{/notice/detail(noNo=${notice.noNo})}" th:text="${notice.no_subject}"></a>
-        </td>
+        <td th:text="${notice.no_no}"></td>
+        <td th:text="${notice.no_subject}"></td>
         <td th:text="${notice.no_content}"></td>
         <td th:text="${notice.no_readcount}"></td>
         <td th:text="${notice.no_date}"></td>

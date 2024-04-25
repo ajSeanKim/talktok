@@ -30,7 +30,6 @@ public class ReviewController {
     public String reviewAllFind(Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<ReviewDto> reviews = reviewService.reviewFindAll(pageable);
         log.info("review: {}", reviews.getContent());
-
         model.addAttribute("reviews", reviews.getContent());
         model.addAttribute("page", reviews);
         return "review/list";

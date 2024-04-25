@@ -33,10 +33,6 @@ public class Review {
     private String revDate;
     @Column(name = "lec_no")
     private int lecNo;
-    @Column(name = "lec_name")
-    private String lecName;
-    @Column(name = "tea_name")
-    private String teaName;
     @Column(name = "tea_no")
     private int teaNo;
 
