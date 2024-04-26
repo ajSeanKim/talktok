@@ -1,0 +1,11 @@
+/*table {border-top:2px solid var(--main); border-bottom:1px solid var(--dgray);}*/
+/*th {background:#effff2;}*/
+/*th, td {padding:1.2rem; border:1px solid var(--dgray); border-width:0 1px 1px 0; vertical-align:middle;}*/
+/*td:last-child {border-right: none;}*/
+
+.notice-page h2 {margin-bottom:2rem; font-size:3rem; text-align:center;}
+.notice-page table {margin:2rem 0;}
+.notice-page table input, .notice-page table textarea {width:100%;}
+.notice-page .btns {text-align:right;}
+.notice-page .btns input {width:100px;}
+

@@ -3,13 +3,15 @@ package com.tt.talktok.service;
 import com.tt.talktok.dto.NoticeDto;
 import com.tt.talktok.entity.Notice;
 import com.tt.talktok.repository.NoticeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Builder
@@ -18,49 +20,69 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    // DTO에서 엔터티로 변환하는 메서드
-    public Notice convertToEntity(NoticeDto dto) {
-        return Notice.builder()
-//                .noNo(dto.getNoNo())
-                .no_subject(dto.getNo_subject())
-                .no_content(dto.getNo_content())
-//                .no_readcount(dto.getNo_readcount())
-                .build();
+    //상세, 페이징
+    public Page<NoticeDto> getNoticePage(Pageable pageable) {
+        Page<Notice> list = noticeRepository.findAll(pageable);
+        return list.map(this::convertToDto);
     }
 
-    // 엔터티에서 DTO로 변환하는 메서드
-    public NoticeDto convertToDto(Notice entity) {
-        return NoticeDto.builder()
-//                .noNo(entity.getNoNo())
-                .no_subject(entity.getNo_subject())
-                .no_content(entity.getNo_content())
-//                .no_readcount(entity.getNo_readcount())
-                .build();
+    //검색
+    public Page<NoticeDto> getNoticeSearchPage(String keyword, Pageable pageable){
+        Page<Notice> list = noticeRepository.findByNoSubjectContaining(keyword, pageable);
+        return list.map(this::convertToDto);
     }
 
+    public NoticeDto convertToDto(Notice notice) {
+        NoticeDto noticeDto = new NoticeDto();
+        noticeDto.setNoNo(notice.getNoNo());
+        noticeDto.setNoSubject(notice.getNoSubject());
+        if(noticeDto.getNoContent() != null){
+            noticeDto.setNoContent(noticeDto.getNoContent().replace("\\n","<br/>"));};
+        noticeDto.setNoReadcount(notice.getNoReadcount());
+        noticeDto.setNoDate(notice.getNoDate());
 
-    //페이징
-    public Page<Notice> getNoticePage(Pageable pageable) {
-
-        return noticeRepository.findAll(pageable);
+        return noticeDto;
     }
 
-    //저장
+    //작성
     public void noticeWrite(NoticeDto noticeDto){
+        LocalDateTime currentDateTime = LocalDateTime.now();
         Notice notice = Notice.builder()
-                .no_subject(noticeDto.getNo_subject())
-                .no_content(noticeDto.getNo_content())
-                .build();
+                        .noSubject(noticeDto.getNoSubject())
+                        .noContent(noticeDto.getNoContent())
+                        .noDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                        .build();
+
         noticeRepository.save(notice);
     }
 
     //상세
     public Notice getNoticeDetail(Integer noNo) {
-
         return noticeRepository.findById(noNo).orElse(null);
     }
 
-    public Notice getNoticeUpdate(Integer noNo) {
-        retur
+    @Transactional
+    public void updateCount(Integer noNo) {
+        noticeRepository.updateCount(noNo);
+    }
+
+    //수정
+    public void noticeUpdate(NoticeDto noticeDto) {
+        Notice notice = Notice.builder()
+                        .noNo(noticeDto.getNoNo())
+                        .noSubject(noticeDto.getNoSubject())
+                        .noContent(noticeDto.getNoContent())
+                        .noDate(noticeDto.getNoDate())
+                        .noReadcount(noticeDto.getNoReadcount())
+                        .build();
+
+        System.out.println(notice.getNoSubject());
+
+        noticeRepository.save(notice);
+    }
+
+    //삭제
+    public void delete(int noNo) {
+        noticeRepository.deleteById(noNo);
     }
 }

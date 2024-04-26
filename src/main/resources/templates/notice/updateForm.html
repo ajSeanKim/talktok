@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 수정</title>
+</head>
+<body>
+
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
+    <div class="noticeUpdate">
+        <h2>글수정</h2>
+        <form th:action="@{/notice/update}" th:object="${notice}" method="post">
+            <input type="hidden" name="noNo" th:value="${notice.noNo}" />
+            <input type="hidden" name="noDate" th:value="${notice.noDate}" />
+            <input name="noSubject" type="text" th:value="${notice.noSubject}">
+            <textarea name="noContent" th:text="${notice.noContent}"></textarea>
+            <button type="submit">수정</button>
+        </form>
+</div>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+
+</body>
+</html>

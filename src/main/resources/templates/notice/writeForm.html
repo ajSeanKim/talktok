@@ -5,12 +5,18 @@
     <title>공지사항 작성</title>
 </head>
 <body>
+
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
     <div class="noticewrite">
         <form th:action="@{/notice/write}" th:object="${notice}" method="post">
-            <input name="no_subject" type="text">
-            <textarea name="no_content"></textarea>
+            <input name="noSubject" type="text">
+            <textarea name="noContent"></textarea>
             <button type="submit">작성</button>
         </form>
 </div>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+
 </body>
 </html>
