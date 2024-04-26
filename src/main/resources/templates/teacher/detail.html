@@ -5,11 +5,30 @@
     <title>detail</title>
 </head>
 <body>
-<th:insert="header.html" id="header"></th:insert>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<section>
+    <div class="teacher-view">
+        <div class="teacher-image">
+            <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+            <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
+        </div>
+        <div class="teacherInfo">
+            <h1 class="teacherName" th:text="${teacherDetail.teaName}"></h1>
+            <p class="teacherSchool" th:text="${teacherDetail.teaCareer}"></p>
+            <p class="" th:text="${teacherDetail.teaEmail}"></p>
+            <p class="" th:text="${teacherDetail.teaNickname}"></p>
+            <p class="" th:text="${teacherDetail.teaIntro}"></p>
+            <p class="" th:text="${teacherDetail.teaDetail}"></p>
+            <p class="" th:text="${teacherDetail.teaNation}"></p>
+
+        </div>
+    </div>
+    <div class="teacher-tab">
+
+    </div>
+</section>
 
 
-
-
-<th:insert="footer.html" id="footer"></th:insert>
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>
 </html>
