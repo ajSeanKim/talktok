@@ -59,4 +59,8 @@ spring:
     livereload:
       enabled: true
 
-
+#페이징 페이지 1부터 시작
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
