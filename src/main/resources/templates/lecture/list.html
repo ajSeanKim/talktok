@@ -10,12 +10,12 @@
     <main class="wrap">
         <section>
             <div th:each="list : ${lectureList}">
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_name}"></a>
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_day}"></a>
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_time}"></a>
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_price}"></a>
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_startdate}"></a>
-                <a th:href="@{/lecture/detail(no=${list.lec_no})}" th:text="${list.lec_enddate}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_name}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_day}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_time}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_price}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_startdate}"></a>
+                <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}" th:text="${list.lec_enddate}"></a>
             </div>
             <div th:if="${lectureList.totalPages > 1}">
                 <ul class="pagination">
