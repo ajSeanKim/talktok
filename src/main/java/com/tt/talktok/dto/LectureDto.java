@@ -14,4 +14,5 @@ public class LectureDto {
     private String lec_detail;
     private String lec_startdate;
     private String lec_enddate;
+    private int tea_no;
 }

@@ -18,6 +18,7 @@ public class StudentDto {
     private String stuPwd;
     private String stuPhone;
     private String stuNickname;
+    private String stuSocial;
 
     public StudentDto() {
         // 기본 생성자 추가

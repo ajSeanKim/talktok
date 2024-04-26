@@ -4,6 +4,7 @@ import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Student;
 import com.tt.talktok.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +27,7 @@ public class StudentService {
                 .stuPwd(entity.getStuPwd())
                 .stuPhone(entity.getStuPhone())
                 .stuNickname(entity.getStuNickname())
+                .stuSocial(entity.getStuSocial())
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class StudentService {
                 .stuPwd(dto.getStuPwd())
                 .stuPhone(dto.getStuPhone())
                 .stuNickname(dto.getStuNickname())
+                .stuSocial(dto.getStuSocial())
                 .build();
     }
 
@@ -63,10 +66,9 @@ public class StudentService {
 
         studentRepository.save(newStudent);
     }
-
+    @Transactional
     public void withdraw(String stuEmail) {
-        Student dbStudent = studentRepository.findStudentByStuEmail(stuEmail);
-        studentRepository.delete(dbStudent);
+        studentRepository.deleteStudentByStuEmail(stuEmail);
     }
 
     public void updatePwd(StudentDto studentDto) {

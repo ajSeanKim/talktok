@@ -1,7 +1,9 @@
 package com.tt.talktok.controller;
 
 import com.tt.talktok.dto.LectureDto;
+import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.service.LectureService;
+import com.tt.talktok.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,9 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.List;
 public class LectureController {
 
     private final LectureService lectureService;
+    private final ReviewService reviewService;
 
     @GetMapping("/list")
     public String list(Model model,@PageableDefault(page = 0, size = 4) Pageable pageable) {
@@ -34,14 +35,16 @@ public class LectureController {
     @GetMapping("/detail")
     public String detail(@RequestParam("no") int lec_no, @RequestParam("page") int currentPage, Model model) {
         LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);
+
+        int tea_no = lectureDto.getTea_no();
+        List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
+
         int page = currentPage;
+
+        model.addAttribute("reviews", reviews);
         model.addAttribute("lectureDto",lectureDto);
         model.addAttribute("page",page);
         return "/lecture/detail";
     }
 
-    @GetMapping("/payments")
-    public String payments() {
-        return "/lecture/payments";
-    }
 }

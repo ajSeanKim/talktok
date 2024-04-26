@@ -16,14 +16,14 @@
         return phone.replace(/-/g, '');
     }
     function boardCheck() {
-        var stuEmail = $.trim($("#stuEmail").val());
-        if (stuEmail === "") {
+        var teaEmail = $.trim($("#teaEmail").val());
+        if (teaEmail === "") {
             alert("아이디를 입력하세요");
-            $("#stuEmail").val("").focus();
+            $("#teaEmail").val("").focus();
             return false;
         }
         // 이메일 입력란에서 값을 가져옴
-        var email = document.getElementById("stuEmail").value;
+        var email = document.getElementById("teaEmail").value;
 
         // 이메일 형식 검사 정규식
         var emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,41 +34,41 @@
             return false; // 유효성 검사 실패
         }
 
-        if ($.trim($("#stuPwd").val()) == "") {
+        if ($.trim($("#teaPwd").val()) == "") {
             alert("비밀번호를 입력하세요");
-            $("#stuPwd").val("").focus();
+            $("#teaPwd").val("").focus();
             return false;
         }
-        if ($.trim($("#stuPwd2").val()) == "") {
+        if ($.trim($("#teaPwd2").val()) == "") {
             alert("비밀번호 확인을 입력하세요");
-            $("#stuPwd2").val("").focus();
+            $("#teaPwd2").val("").focus();
             return false;
         }
-        if($.trim($("#stuPwd").val()) != $.trim($("#stuPwd2").val())){
+        if($.trim($("#teaPwd").val()) != $.trim($("#teaPwd2").val())){
             alert("비밀번호가 다릅니다!");
-            $("#stuPwd").val("");
-            $("#stuPwd2").val("");
-            $("#stuPwd").focus();
+            $("#teaPwd").val("");
+            $("#teaPwd2").val("");
+            $("#teaPwd").focus();
             return false;
         }
-        if ($.trim($("#stuName").val()) == "") {
+        if ($.trim($("#teaName").val()) == "") {
             alert("이름을 입력하세요");
-            $("#stuName").val("").focus();
+            $("#teaName").val("").focus();
             return false;
         }
-        if ($.trim($("#stuNickname").val()) == "") {
+        if ($.trim($("#teaNickname").val()) == "") {
             alert("닉네임을 입력하세요");
-            $("#stuNickname").val("").focus();
+            $("#teaNickname").val("").focus();
             return false;
         }
-        if ($.trim($("#stuPhone").val()) == "") {
+        if ($.trim($("#teaPhone").val()) == "") {
             alert("핸드폰번호를 입력하세요");
-            $("#stuPhone").val("").focus();
+            $("#teaPhone").val("").focus();
             return false;
         }
 
         //중복체크 관련
-        var chkresult = $("#id-result td").text();
+        var chkresult = $("#id-result2 td").text();
         if (chkresult == "") {
             alert("아이디 중복검사를 해주세요");
             return false;
@@ -77,55 +77,34 @@
             return false;
         }
 
-        //핸드폰번호에서 하이픈을 제거하고 숫자만 포함하는 문자열로 변경- 수정필요
-        const stuPhone = removeHyphen(document.getElementById("stuPhone").value);
-        document.getElementById("stuPhone").value = stuPhone;
+        const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
+        document.getElementById("teaPhone").value = teaPhone;
     }
     function idCheck() {
-        var stuEmail =  $("#stuEmail").val();
+        var teaEmail =  $("#teaEmail").val();
 
         //아이디가 미입력시
-        if (stuEmail === "") {
+        if (teaEmail === "") {
             alert("아이디를 입력하세요");
-            $("#stuEmail").val("").focus();
+            $("#teaEmail").val("").focus();
             return false;
         } else { //아이디 입력시
             $.ajax({
                 type : 'POST',
                 url : "idCheck",
-                data: {"stuEmail" : stuEmail},
+                data: {"teaEmail" : teaEmail},
                 success : function(result) {
                     if (result==1) { //중복 ID
-                        $("#id-result td").html("<font color=red>이미 존재하는 이메일입니다<font>");
-                        $("#stuEmail").focus();
+                        $("#id-result2 td").html("<font color=red>이미 존재하는 이메일입니다<font>");
+                        $("#teaEmail").focus();
                     } else { //사용가능 ID
-                        $("#id-result td").html("<font color=blue>사용가능한 이메일입니다</font>");
-                        $("#stuPwd").focus();
+                        $("#id-result2 td").html("<font color=blue>사용가능한 이메일입니다</font>");
+                        $("#teaPwd").focus();
                     }
                 }
             }); //$.ajax() end
         }
     }
-
-    $(document).ready(function() {
-        //메인 검색 영역 버튼 제어
-        $('.btn-student').click(function() {
-            $(this).addClass('on');
-            $('.btn-teacher').removeClass('on');
-            $('#teacher').hide();
-            $('#student').show();
-            $('.teacher-input').off('input');
-        });
-        $('.btn-teacher').click(function() {
-            $(this).addClass('on');
-            $('.btn-student').removeClass('on');
-            $('#student').hide();
-            $('#teacher').show();
-            $('.student-input').off('input');
-        });
-    });
-
-
 
 </script>
 
@@ -133,45 +112,74 @@
 <body>
 
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<div id="student" name="student">
-    <h2>학생 회원가입</h2>
-    <form method="post" action="/student/join" onsubmit="return boardCheck();">
-        <input type="hidden" id="stuSocial" name="stuSocial" value="normal">
+
+
+<div id="teacher" name="teacher">
+    <h2>선생님 회원가입</h2>
+    <form method="post" action="/teacher/join" onsubmit="return boardCheck();">
+        <input type="hidden" id="teaSocial" name="teaSocial" value="normal">
         <table>
             <tr>
-               <th rowspan="2"> <label for="stuEmail">아이디</label></th>
+                <th rowspan="2"> <label for="teaEmail">아이디</label></th>
                 <td class="colspan2">
-                    <input type="text" name="stuEmail" id="stuEmail" placeholder="이메일을 입력하세요.">
-                    <input type="button" id="id-check" value="중복검사" onclick="return idCheck();">
+                    <input type="text" name="teaEmail" id="teaEmail" placeholder="이메일을 입력하세요.">
+                  <!--수정할것-->
+                    <input type="button" id="id-check2" value="중복검사" onclick="return idCheck();">
                 </td>
             </tr>
-            <tr id="id-result">
+
+            <tr id="id-result2">
                 <td colspan="2"></td>
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td colspan="2"><input type="password" name="stuPwd" id="stuPwd" /></td>
+                <td colspan="2"><input type="password" name="teaPwd" id="teaPwd" /></td>
             </tr>
             <tr>
                 <th>비밀번호 확인</th>
-                <td colspan="2"><input type="password" name="stuPwd2" id="stuPwd2" /></td>
+                <td colspan="2"><input type="password" name="teaPwd2" id="teaPwd2" /></td>
             </tr>
             <tr>
                 <th>이름</th>
-                <td colspan="2"><input type="text" name="stuName" id="stuName" maxlength="8" /></td>
+                <td colspan="2"><input type="text" name="teaName" id="teaName"  /></td>
             </tr>
             <tr>
                 <th>닉네임</th>
-                <td colspan="2"><input type="text" name="stuNickname" id="stuNickname" maxlength="8" /></td>
+                <td colspan="2"><input type="text" name="teaNickname" id="teaNickname" maxlength="8" /></td>
             </tr>
             <tr>
                 <th>핸드폰번호</th>
                 <td colspan="2">
-                    <input type="text" name="stuPhone" id="stuPhone"  maxlength="13"
+                    <input type="text" name="teaPhone" id="teaPhone"  maxlength="13"
                            oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
                            autocomplete="off" />
                 </td>
             </tr>
+            <tr>
+                <th>계좌번호</th>
+                <td colspan="2"><input type="text" name="teaAccount" id="teaAccount" maxlength="8" /></td>
+            </tr>
+            <tr>
+                <th>자기소개</th>
+                <td colspan="2"><input type="text" name="teaIntro" id="teaIntro" maxlength="8" /></td>
+            </tr>
+            <tr>
+                <th>디테일 자기소개 </th>
+                <td colspan="2"><input type="text" name="teaDetail" id="teaDetail" maxlength="8" /></td>
+            </tr>
+            <tr>
+                <th>약력</th>
+                <td colspan="2"><input type="text" name="teaCareer" id="teaCareer" maxlength="8" /></td>
+            </tr>
+            <tr>
+                <th>출신국가</th>
+                <td colspan="2"><input type="text" name="teaNation" id="teaNation" maxlength="8" /></td>
+            </tr>
+            <tr>
+                <th>사진</th>
+                <td colspan="2"><input type="file" name="teaImage" id="teaImage"/></td>
+            </tr>
+
         </table>
         <div class="btns">
             <input type="submit" value="가입하기">

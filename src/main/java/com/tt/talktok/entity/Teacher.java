@@ -8,7 +8,6 @@ import lombok.*;
 @Entity
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Teacher {
 
     @Id
@@ -19,7 +18,8 @@ public class Teacher {
     @Column(name = "tea_name")
     private String teaName;
 
-    private String tea_email;
+    @Column(name = "tea_email")
+    private String teaEmail;
     private String tea_pwd;
     private String tea_phone;
     private String tea_nickname;
@@ -29,5 +29,10 @@ public class Teacher {
     private String tea_career;
     private String tea_nation;
     private String tea_image;
+    private String tea_social;
+
+    public Teacher() {
+        // 기본 생성자 추가
+    }
 
 }
