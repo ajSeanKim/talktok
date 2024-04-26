@@ -5,10 +5,21 @@
     <title>회원정보수정</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
+        //핸드폰번호 자동하이픈 기능
+        const autoHyphen = (target) => {
+            target.value = target.value
+                .replace(/[^0-9]/g, '')
+                .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+        }
         function boardCheck() {
             if ($.trim($("#stuNickname").val()) == "") {
                 alert("닉네임을 입력하세요");
                 $("#stuNickname").val("").focus();
+                return false;
+            }
+            if ($.trim($("#stuName").val()) == "") {
+                alert("이름을 입력하세요");
+                $("#stuNname").val("").focus();
                 return false;
             }
             if ($.trim($("#stuPhone").val()) == "") {
@@ -16,6 +27,8 @@
                 $("#stuPhone").val("").focus();
                 return false;
             }
+            const stuPhone = removeHyphen(document.getElementById("stuPhone").value);
+            document.getElementById("stuPhone").value = stuPhone;
         }
     </script>
 </head>
@@ -30,19 +43,27 @@
             <td th:text="${session.stuEmail}">stuEmail</td>
         </tr>
         <tr>
+            <th>이름</th>
+            <!--            <td th:text="${session.stuName}">stuName</td>-->
+            <td><input type="text" name="stuName" id="stuName" value="" /></td>
+        </tr>
+        <tr>
             <th>닉네임</th>
-            <td><input type="text" name="stuNickname" id="stuNickname" value="${studentDto.stuNickname}" /></td>
+            <td><input type="text" name="stuNickname" id="stuNickname" value="" /></td>
+<!--            <td><input type="text" name="stuNickname" id="stuNickname" value="${studentDto.stuNickname}" /></td>-->
         </tr>
         <tr>
             <th>핸드폰</th>
             <td>
-                <input type="text" name="stuPhone" id="stuPhone" placeholder="ex) 01012345678"
-                       maxlength="11" autocomplete="off" value="${studentDto.stuPhone}" />
+                <input type="text" name="stuPhone" id="stuPhone" maxlength="13" placeholder="ex) 01012345678"
+                       oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
+                       autocomplete="off" value="" />
             </td>
         </tr>
     </table>
     <div class="btns">
         <input type="submit" value="수정하기">
+        <input type="button" value="뒤로가기" onclick="history.go(-1);">
     </div>
 </form>
 </body>

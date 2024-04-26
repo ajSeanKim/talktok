@@ -1,7 +1,10 @@
 package com.tt.talktok.service;
 
+import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.dto.TeacherDto;
+import com.tt.talktok.entity.Student;
 import com.tt.talktok.entity.Teacher;
+import com.tt.talktok.repository.StudentRepository;
 import com.tt.talktok.repository.TeacherRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TeacherService {
     private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
 
     // DTO에서 엔터티로 변환하는 메서드
     public Teacher convertToEntity(TeacherDto dto) {
@@ -64,4 +68,46 @@ public class TeacherService {
         Teacher teacherdetails = teacherRepository.findById(tea_no).orElse(null);
         return convertToDto(teacherdetails);
     }
+    // 강사 정보 조회
+    public TeacherDto findTeacher(int tea_no) {
+        Teacher dbTeacher = teacherRepository.findTeacherByTeaNo(tea_no);
+        TeacherDto dbTeacherDto = new TeacherDto();
+        if(dbTeacher !=null) {
+            dbTeacherDto=convertToDto(dbTeacher);
+        }
+        return dbTeacherDto;
+    }
+
+    // 비밀번호 업데이트/변경
+    public void updatePwd(TeacherDto teacherDto) {
+        int teaNo = teacherDto.getTeaNo();
+        Teacher newTeacher = teacherRepository.findTeacherByTeaNo(teaNo);
+
+        newTeacher.setTeaPwd(teacherDto.getTeaPwd());
+
+        teacherRepository.save(newTeacher);
+
+
+    }
+    // 회원정보 수정
+    public void update(TeacherDto teacherDto) {
+        Teacher teacher = teacherRepository.findTeacherByTeaNo(teacherDto.getTeaNo());
+        if (teacher != null) {
+            // DTO에서 변경된 정보를 Entity에 반영
+            teacher.setTeaName(teacherDto.getTeaName());
+            teacher.setTeaPhone(teacherDto.getTeaPhone());
+            teacher.setTeaNickname(teacherDto.getTeaNickname());
+            teacher.setTeaEmail(teacherDto.getTeaEmail());
+            teacher.setTeaPhone(teacherDto.getTeaPhone());
+            teacher.setTeaAccount(teacherDto.getTeaAccount());
+            teacher.setTeaIntro(teacherDto.getTeaIntro());
+            teacher.setTeaDetail(teacherDto.getTeaDetail());
+            teacher.setTeaCareer(teacherDto.getTeaCareer());
+            teacher.setTeaNation(teacherDto.getTeaNation());
+            teacher.setTeaImage(teacherDto.getTeaImage());
+            teacher.setTeaPwd(passwordEncoder.encode(teacherDto.getTeaPwd())); // 비밀번호도 업데이트할 경우
+            teacherRepository.save(teacher);
+        }
+    }
+
 }

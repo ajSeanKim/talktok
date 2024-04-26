@@ -262,14 +262,15 @@ public class StudentController {
     @PostMapping("/update")
     public String update(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) throws Exception {
         String stuEmail = (String) session.getAttribute("stuEmail");
+        String stuName = (String) session.getAttribute("stuName");
         studentDto.setStuEmail(stuEmail);
+        studentDto.setStuEmail(stuName);
 
         // 최대한 빨리 stuSocial의 null 체크를 수행
         String stuSocial = Optional.ofNullable(studentDto.getStuSocial()).orElse("normal");
         studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
 
         StudentDto dbStudent = this.studentService.findStudent(stuEmail);
-
         // student update
         if (stuSocial.equals("normal")) {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {

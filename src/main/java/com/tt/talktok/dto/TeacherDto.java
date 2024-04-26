@@ -23,5 +23,8 @@ public class TeacherDto {
     private String teaCareer;
     private String teaNation;
     private String teaImage;
+    public TeacherDto() {
+        // 기본 생성자 추가
+    }
 
 }

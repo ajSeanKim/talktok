@@ -105,23 +105,23 @@ public class OauthController {
         student.setStuNickname(((Map<String, Object>) userProfileMap.get("properties")).get("nickname").toString());
         student.setStuEmail(((Map<String, Object>) userProfileMap.get("kakao_account")).get("email").toString());
         student.setStuPwd(UUID.randomUUID().toString()); // 비밀번호는 임의로 생성
-
-
+        System.out.println(student.getStuEmail());
+        System.out.println(student.getStuPwd());
         student.setStuEmail(student.getStuEmail());
         student.setStuNickname(student.getStuNickname());
         student.setStuPwd(student.getStuPwd());
         student.setStuPhone("01000000000");
         student.setStuPwd(student.getStuPwd());
         student.setStuName("kakao");
-        student.setStuSocial("nomal");
+        student.setStuSocial("social");
 
-        if(studentService.findStudent(student.getStuEmail())==null){
+        if(studentService.findStudent(student.getStuEmail()).getStuEmail()==null){
+            System.out.println("ddd");
             studentService.join(student);
             session.setAttribute("stuEmail", student.getStuEmail());
             model.addAttribute("student", student);
             model.addAttribute("stuNickname", student.getStuNickname());
             model.addAttribute("stuEmail", student.getStuEmail());
-
         }
         session.setAttribute("student", student);
         model.addAttribute("email", student.getStuEmail());
