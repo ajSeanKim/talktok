@@ -33,11 +33,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	// email
 	implementation 'org.apache.commons:commons-email:1.5'
-	
-
-
 	// email
 	implementation 'org.apache.commons:commons-email:1.5'
+
 
 
 }

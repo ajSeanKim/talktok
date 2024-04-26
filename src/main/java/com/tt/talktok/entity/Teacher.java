@@ -13,10 +13,14 @@ public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @Column(name = "tea_no")
     private int tea_no;
 
-    private String tea_name;
-    private String tea_email;
+    @Column(name = "tea_name")
+    private String teaName;
+
+    @Column(name = "tea_email")
+    private String teaEmail;
     private String tea_pwd;
     private String tea_phone;
     private String tea_nickname;

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>톡톡스피킹</title>
+</head>
+<body>
+    <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- 포트원 결제 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+    <button id="payment">구매하기</button>
+
+    <script>
+        // 구매자 정보
+        const user_email = "ssapchap@gmail.com"
+        const username = "홍나경"
+
+        // 결제창 함수 넣어주기
+        const buyButton = document.getElementById('payment')
+        buyButton.setAttribute('onclick', `kakaoPay('${user_email}', '${username}')`)
+
+        var IMP = window.IMP;
+
+        var today = new Date();
+        var hours = today.getHours(); // 시
+        var minutes = today.getMinutes();  // 분
+        var seconds = today.getSeconds();  // 초
+        var milliseconds = today.getMilliseconds();
+        var makeMerchantUid = `${hours}` + `${minutes}` + `${seconds}` + `${milliseconds}`;
+
+        function kakaoPay(useremail, username) {
+            if (confirm("구매 하시겠습니까?")) { // 구매 클릭시 한번 더 확인하기
+                // const emoticonName = document.getElementById('title').innerText
+
+                IMP.init("imp35176617"); // 고객사 식별코드
+                IMP.request_pay({
+                    pg: 'kakaopay.TC0ONETIME', // PG사 코드표에서 선택
+                    pay_method: 'card', // 결제 방식
+                    merchant_uid: "IMP" + makeMerchantUid, // 결제 고유 번호
+                    name: '상품명', // 제품명
+                    amount: 100, // 가격
+                    // 구매자 정보
+                    buyer_email: `${useremail}`,
+                    buyer_name: `${username}`
+                }, async function (rsp) { // callback
+                    if (rsp.success) { //결제 성공시
+                        console.log(rsp);
+
+                        //결제 성공시 프로젝트 DB저장 요청
+                        try {
+                            const response = await fetch('/savePayment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    paymentInfo: rsp
+                                })
+                            });
+                            if (response.ok) {
+                                alert('결제 완료!');
+                                window.location.reload();
+                            } else {
+                                alert(`error:[${response.status}]\n결제 정보를 서버에 전송하는 데 실패했습니다.`);
+                            }
+                        } catch (error) {
+                            console.error('결제 정보 전송 에러:', error);
+                            alert('결제 정보를 서버에 전송하는 데 실패했습니다.');
+                        }
+
+                        if (response.status == 200) { // DB저장 성공시
+                            alert('DB 저장 성공 : 결제 완료!')
+                            window.location.reload();
+                        } else { // 결제완료 후 DB저장 실패시
+                            alert(`error:[${response.status}]\n결제요청이 승인된 경우 관리자에게 문의바랍니다.`);
+                            // DB저장 실패시 status에 따라 추가적인 작업 가능성
+                        }
+                    } else if (rsp.success == false) { // 결제 실패시
+                        alert(rsp.error_msg)
+                    }
+                });
+            } else { // 구매 확인 알림창 취소 클릭시 돌아가기
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,19 +1,12 @@
 server:
   port: 80
 
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/talktok
-#    username: talktok
-#    password: choongang
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/talktoktest3
-    username: talktokuser
-    password: 1234
+    url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/talktok
+    username: talktok
+    password: choongang
 
   jpa:
     database: mysql
@@ -31,4 +24,8 @@ spring:
     livereload:
       enabled: true
 
-
+#페이징 페이지 1부터 시작
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true

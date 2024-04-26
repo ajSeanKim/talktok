@@ -26,6 +26,7 @@ public class StudentService {
                 .stuPwd(entity.getStuPwd())
                 .stuPhone(entity.getStuPhone())
                 .stuNickname(entity.getStuNickname())
+                .stuSocial(entity.getStuSocial())
                 .build();
     }
 
@@ -38,6 +39,7 @@ public class StudentService {
                 .stuPwd(dto.getStuPwd())
                 .stuPhone(dto.getStuPhone())
                 .stuNickname(dto.getStuNickname())
+                .stuSocial(dto.getStuSocial())
                 .build();
     }
 

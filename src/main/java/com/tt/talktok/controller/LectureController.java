@@ -9,9 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +22,20 @@ public class LectureController {
     private final LectureService lectureService;
 
     @GetMapping("/list")
-    public String list(Model model,@PageableDefault(size = 1) Pageable pageable) {
+    public String list(Model model,@PageableDefault(page = 0, size = 4) Pageable pageable) {
         Page<LectureDto> lectureList = lectureService.findAll(pageable);
+        int currentPage = lectureList.getNumber(); // 현재 페이지 번호 가져가기(1번부터 시작하기)
         model.addAttribute("lectureList",lectureList);
+        model.addAttribute("currentPage",currentPage);
         return "/lecture/list";
     }
     @GetMapping("/detail")
-    public String detail(@RequestParam("no") int lec_no, Model model) {
+    public String detail(@RequestParam("no") int lec_no, @RequestParam("page") int currentPage, Model model) {
         LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);
+        int page = currentPage;
         model.addAttribute("lectureDto",lectureDto);
+        model.addAttribute("page",page);
         return "/lecture/detail";
     }
+
 }
