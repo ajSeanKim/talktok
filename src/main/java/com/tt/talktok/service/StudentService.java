@@ -4,6 +4,7 @@ import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Student;
 import com.tt.talktok.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -65,10 +66,9 @@ public class StudentService {
         System.out.println("ddd");
         studentRepository.save(newStudent);
     }
-
+    @Transactional
     public void withdraw(String stuEmail) {
-        Student dbStudent = studentRepository.findStudentByStuEmail(stuEmail);
-        studentRepository.delete(dbStudent);
+        studentRepository.deleteStudentByStuEmail(stuEmail);
     }
 
     // 비밀번호 업데이트/변경

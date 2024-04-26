@@ -11,7 +11,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     Student findStudentByStuEmail(String stuEmail);
 
 
-    void deleteStudentByStuNo(int stuNo);
+    void deleteStudentByStuEmail(String stuEmail);
 
 
 }

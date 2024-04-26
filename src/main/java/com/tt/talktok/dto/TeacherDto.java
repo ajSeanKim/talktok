@@ -1,15 +1,13 @@
 package com.tt.talktok.dto;
 
 import com.tt.talktok.entity.Teacher;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
 public class TeacherDto {
     private int teaNo;
     private String teaName;
@@ -23,8 +21,11 @@ public class TeacherDto {
     private String teaCareer;
     private String teaNation;
     private String teaImage;
+    private String teaSocial;
+
     public TeacherDto() {
         // 기본 생성자 추가
     }
+
 
 }

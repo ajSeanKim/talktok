@@ -77,7 +77,7 @@ public class StudentController {
 
          StudentDto dbStudent = studentService.findStudent(stuEmail);
         //가입된 email = 1, 가입안된 email = 0
-        if(dbStudent != null){
+        if(dbStudent.getStuEmail() != null){
             studentService.join(student);
             model.addAttribute("result",result);
             return "student/join";
@@ -127,7 +127,7 @@ public class StudentController {
 
         String stuEmail = studentDto.getStuEmail();
         StudentDto dbStudent = studentService.findStudent(stuEmail);
-        if (dbStudent == null) {
+        if (dbStudent.getStuEmail() == null) {
             model.addAttribute("result",result);
             return "stduent/findPwd";
 
@@ -201,6 +201,7 @@ public class StudentController {
 
         //비밀번호 일치시 회원탈퇴.
         if (passwordEncoder.matches(rawPwd, dbStudent.getStuPwd())) {
+            System.out.println("stuEmail" +stuEmail);
             studentService.withdraw(stuEmail);
             session.invalidate();
 

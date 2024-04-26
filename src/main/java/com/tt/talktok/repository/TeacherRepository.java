@@ -12,5 +12,9 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 
     Page<Teacher> findByTeaNameContaining(String keyword,Pageable pageable);
 
+    Teacher findTeacherByTeaEmail(String teaEmail);
+
+    void deleteTeacherByTeaEmail(String teaEmail);
+
     Teacher findTeacherByTeaNo(int teaNo);
 }

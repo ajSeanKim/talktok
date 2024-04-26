@@ -3,23 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <title>톡톡스피킹</title>
+    <style>
+        body , button {font-family: 'Pretendard', 'sans-serif';}
+        main.wrap {margin:70px auto; display: flex; gap:40px;}
+        a {color: #000;}
+
+        .contents-box {flex-basis: 70%;}
+        .contents-box h3 {color: #f9a01b; font-size: 1.4em;}
+        .float-box {flex-basis: 30%;}
+        .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
+        .float-box .btn-review {margin:10px 0 0 2%; background: #f9a01b; color:#fff;}
+        .float-box .btn-list {width:100%; margin:20px 0; border-color: #ccc; border-radius: unset;}
+        .float-box .btn-list a {display: block;}
+
+    </style>
 </head>
 <body>
     <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
     <main class="wrap">
-        <section>
+        <section class="box contents-box">
             <div>
-                <a th:text="${lectureDto.lec_name}"></a>
-                <a th:text="${lectureDto.lec_day}"></a>
-                <a th:text="${lectureDto.lec_time}"></a>
-                <a th:text="${lectureDto.lec_price}"></a>
-                <a th:text="${lectureDto.lec_detail}"></a>
-                <a th:text="${lectureDto.lec_startdate}"></a>
-                <a th:text="${lectureDto.lec_enddate}"></a>
+                <h3 th:text="${lectureDto.lec_name}"></h3>
+                <p><span th:text="${lectureDto.lec_day}"></span>&nbsp;&nbsp;<span th:text="${lectureDto.lec_time}"></span></p>
+                <p>월 <span th:text="${lectureDto.lec_price}"></span>만원</p>
+                <p><span th:text="${lectureDto.lec_startdate}"></span> ~ <span th:text="${lectureDto.lec_enddate}"></span></p>
+                <p th:text="${lectureDto.lec_detail}"></p>
+                <p>선생님 번호 : <span th:text="${lectureDto.tea_no}"></span></p>
             </div>
-            <button><a th:href="@{/lecture/list(page=${page})}">목록으로 돌아가기</a></button>
         </section>
+        <section class="box float-box">
+            <button class="btn btn-pay" id="payment">구매하기</button>
+            <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+            <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
+        </section>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
+        <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!-- 포트원 결제 -->
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> <!-- iamport.payment.js -->
+        <script>
+            // 구매자 정보
+            const user_email = "ssapchap@gmail.com"
+            const username = "홍나경"
+
+            // 결제창 함수 넣어주기
+            const buyButton = document.getElementById('payment')
+            buyButton.setAttribute('onclick', `kakaoPay('${user_email}', '${username}')`)
+
+            var IMP = window.IMP;
+
+            var today = new Date();
+            var hours = today.getHours(); // 시
+            var minutes = today.getMinutes();  // 분
+            var seconds = today.getSeconds();  // 초
+            var milliseconds = today.getMilliseconds();
+            var makeMerchantUid = `${hours}` + `${minutes}` + `${seconds}` + `${milliseconds}`;
+
+            function kakaoPay(useremail, username) {
+                if (confirm("구매 하시겠습니까?")) { // 구매 클릭시 한번 더 확인하기
+                    // const emoticonName = document.getElementById('title').innerText
+
+                    IMP.init("imp35176617"); // 고객사 식별코드
+                    IMP.request_pay({
+                        pg: 'kakaopay.TC0ONETIME', // PG사 코드표에서 선택
+                        pay_method: 'card', // 결제 방식
+                        merchant_uid: "IMP" + makeMerchantUid, // 결제 고유 번호
+                        name: '상품명', // 제품명
+                        amount: 100, // 가격
+                        // 구매자 정보
+                        buyer_email: `${useremail}`,
+                        buyer_name: `${username}`
+                    }, async function kakaoPayCallback(rsp) {
+                        if (rsp.success) { //결제 성공시
+                            console.log(rsp);
+
+                            // 결제 시각 받아오기
+                            const paymentTime = new Date(rsp.paid_at * 1000);
+
+                            //결제 성공시 프로젝트 DB저장 요청
+                            try {
+                                const response = await fetch('/savePayment', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        paymentInfo: rsp,
+                                        paymentTime: paymentTime
+                                    })
+                                });
+                                if (response.ok) {
+                                    alert('결제 완료!');
+                                    window.location.reload();
+                                } else {
+                                    alert(`error:[${response.status}]\n결제 정보를 서버에 전송하는 데 실패했습니다.`);
+                                }
+                            } catch (error) {
+                                console.error('결제 정보 전송 에러:', error);
+                                alert('결제 정보를 서버에 전송하는 데 실패했습니다.');
+                            }
+                        } else if (rsp.success == false) { // 결제 실패시
+                            alert(rsp.error_msg)
+                        }
+                    });
+                } else { // 구매 확인 알림창 취소 클릭시 돌아가기
+                    return false;
+                }
+            }
+        </script>
     </main>
 
     <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
