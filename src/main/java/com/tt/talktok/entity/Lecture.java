@@ -22,4 +22,6 @@ public class Lecture {
     private String lec_detail;
     private String lec_startdate;
     private String lec_enddate;
+    @Column(name = "tea_no")
+    private int teaNo;
 }
