@@ -30,7 +30,7 @@ public class TeacherController {
     // 선생님 목록 조회
     @GetMapping("/list")
     public String list(
-                        @PageableDefault(size = 6,direction = Sort.Direction.DESC) Pageable pageable,
+                        @PageableDefault(page=0, size = 6,direction = Sort.Direction.DESC) Pageable pageable,
                         @RequestParam(required = false, name = "searchTutorName") String keyword,
                         Model model) {
         Page<TeacherDto> list = null;
