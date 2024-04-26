@@ -1,9 +1,7 @@
 package com.tt.talktok.controller;
 
 import com.tt.talktok.dto.ReviewDto;
-import com.tt.talktok.entity.Review;
 import com.tt.talktok.service.ReviewService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,6 +33,14 @@ public class ReviewController {
         return "review/list";
     }
 
+    @GetMapping("/detail")
+    public String reviewDetail(Model model, int rev_no) {
+        ReviewDto review = reviewService.reviewFindDetail(rev_no);
+        log.info("review: {}", review);
+        model.addAttribute("review", review);
+        return "/review/detail";
+    }
+
     @GetMapping("/write")
     public String writeForm(ReviewDto reviewDto){
         return "review/writeForm";
@@ -45,5 +51,4 @@ public class ReviewController {
         reviewService.reviewWrite(reviewDto);
         return "redirect:/review/list";
     }
-
 }
