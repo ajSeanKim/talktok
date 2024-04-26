@@ -20,7 +20,7 @@ public class Student {
     private String stuPwd;
     private String stuPhone;
     private String stuNickname;
-
+    private String stuSocial;
     public Student() {
         // 기본 생성자 추가
     }

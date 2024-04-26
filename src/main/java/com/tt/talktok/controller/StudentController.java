@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Controller
@@ -211,6 +212,77 @@ public class StudentController {
             model.addAttribute("result",result);
             return "student/withdraw";
         }
-
     }
+
+/*------------------------------------------------------------*/
+    //비밀번호 변경
+    @GetMapping("pwdUpdate")
+    public String pwdUpdate() {
+        return "student/pwdUpdateForm";
+    }
+    @PostMapping("pwdUpdate")
+    public String pwdUpdate(StudentDto studentDto, @RequestParam("stuNewPwd") String stuNewPwd, Model model, HttpSession session) {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        StudentDto dbStudent = studentService.findStudent(stuEmail);
+        int result = 0;
+        // 현재 비밀번호 확인
+        if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
+
+            StudentDto newStudent = new StudentDto();
+            newStudent.setStuPwd((studentDto.getStuPwd()));
+            String encpassword = passwordEncoder.encode(stuNewPwd);
+            newStudent.setStuPwd(encpassword);
+            result = 1;
+//            result = studentService.updatePwd(newStudent);
+
+        }else {
+            result=-1;
+        }
+        System.out.println(result);
+        model.addAttribute("result", result);
+        return "student/pwdUpdate";
+    }
+
+    // 회원정보 수정폼
+    @GetMapping("/update")
+    public String update(HttpSession session, Model model) {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        StudentDto studentDto = studentService.findStudent(stuEmail);
+
+
+        if(studentDto.getStuSocial().equals("normal")) {
+            model.addAttribute("studentDto", studentDto);
+            return "student/updateForm";
+        }else {
+            model.addAttribute("studentDto", studentDto);
+            return "student/updateSocial";
+        }
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) throws Exception {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        studentDto.setStuEmail(stuEmail);
+
+        // 최대한 빨리 stuSocial의 null 체크를 수행
+        String stuSocial = Optional.ofNullable(studentDto.getStuSocial()).orElse("normal");
+        studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
+
+        StudentDto dbStudent = this.studentService.findStudent(stuEmail);
+
+        // student update
+        if (stuSocial.equals("normal")) {
+            if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
+                studentService.update(studentDto);
+                System.out.println("수정완료");
+                return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
+            } else {// 비밀번호 불일치
+                return "student/update";
+            }
+        } else {
+            studentService.update(studentDto);
+            return "redirect:/student/myPage";
+        }
+    }
+
 }

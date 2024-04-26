@@ -69,6 +69,7 @@ public class StudentService {
         studentRepository.delete(dbStudent);
     }
 
+    // 비밀번호 업데이트/변경
     public void updatePwd(StudentDto studentDto) {
         String stuEmail = studentDto.getStuEmail();
         Student newStudent = studentRepository.findStudentByStuEmail(stuEmail);
@@ -78,6 +79,18 @@ public class StudentService {
         studentRepository.save(newStudent);
 
 
+    }
+    // 회원정보 수정
+    public void update(StudentDto studentDto) {
+        Student student = studentRepository.findStudentByStuEmail(studentDto.getStuEmail());
+        if (student != null) {
+            // DTO에서 변경된 정보를 Entity에 반영
+            student.setStuName(studentDto.getStuName());
+            student.setStuPhone(studentDto.getStuPhone());
+            student.setStuNickname(studentDto.getStuNickname());
+            student.setStuPwd(passwordEncoder.encode(studentDto.getStuPwd())); // 비밀번호도 업데이트할 경우
+            studentRepository.save(student);
+        }
     }
 
 
