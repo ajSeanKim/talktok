@@ -115,6 +115,7 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
     <h2>회원가입</h2>
     <form method="post" action="/student/join" onsubmit="return boardCheck();">
+        <input type="hidden" id="stuSocial" name="stuSocial" value="normal">
         <table>
             <tr>
                <th rowspan="2"> <label for="stuEmail">아이디</label></th>
