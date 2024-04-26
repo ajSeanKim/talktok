@@ -40,6 +40,8 @@
     }
     .review_detail {
         width: 950px;
+        color: #666666;
+
     }
     .score_star {
         position: absolute;
@@ -56,8 +58,39 @@
     .writerDay_var2 span {
         padding-right: 20px;
     }
-    .rate{background: url(https://aldo814.github.io/jobcloud/html/images/user/star_bg02.png) no-repeat;width: 121px;height: 20px;position: relative;}
-    .rate span{position: absolute;background: url(https://aldo814.github.io/jobcloud/html/images/user/star02.png);width: auto;height: 20px;}
+    .lec_name{
+       font-size: 14px;
+        color: #ba9f7e;
+        margin-bottom: 10px;
+    }
+    .tea_name{
+        font-size: 12px;
+        color: #800020;
+
+    }
+    .review_name div{
+        display: inline-block;
+    }
+    .review_contents h2{
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+
+
+
+
+    .rate{
+        background: url(https://aldo814.github.io/jobcloud/html/images/user/star_bg02.png) no-repeat;
+        width: 121px;
+        height: 20px;
+        position: relative;
+    }
+    .rate span{
+        position: absolute;
+        background: url(https://aldo814.github.io/jobcloud/html/images/user/star02.png);
+        width: auto;height: 20px;
+    }
     .pagination {
         display: flex;
         justify-content: center;
@@ -88,7 +121,37 @@
     .pagination-list li a:hover {
         background-color: #f8f9fa;
     }
+         /* 추가된 스타일 */
+     .review_detail_short {
+         overflow: hidden;
+         text-overflow: ellipsis;
+         display: -webkit-box;
+         -webkit-line-clamp: 3; /* 라인 수 제한 */
+         -webkit-box-orient: vertical;
+     }
+    .hidden-content {
+        display: none;
+    }
 </style>
+<script>
+
+    function toggleContent(id) {
+        console.log("Toggling content for ID:", id);  // 로그 추가
+        const shortText = document.getElementById('short_' + id);
+        const fullText = document.getElementById('full_' + id);
+        const button = document.querySelector('[data-id="' + id + '"]');
+
+        if (shortText.style.display === 'none') {
+            shortText.style.display = 'block';
+            fullText.style.display = 'none';
+            button.textContent = '더보기'; // 버튼 텍스트를 '더보기'로 변경
+        } else {
+            shortText.style.display = 'none';
+            fullText.style.display = 'block';
+            button.textContent = '닫기'; // 버튼 텍스트를 '닫기'로 변경
+        }
+    }
+</script>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
@@ -103,11 +166,19 @@
             <div class="review_box_items">
                 <div>
                     <div>
-                        <h3 th:text="${review.rev_name}"></h3>
-                        <div class="review_detail" th:text="${review.rev_detail}"></div>
+                        <div class="review_name">
+                            <div class="lec_name" th:text="${review.lec_name}"></div>
+                            <div class="tea_name" th:text="${review.tea_name}"></div>
+                        </div>
+                        <a th:href="@{/review/detail(rev_no=${review.rev_no})}"><h2 th:text="${review.rev_name}"></h2></a>
+                        <div class="review_detail">
+                            <div id="short_${stat.index}" class="review_detail_short" th:utext="${#strings.abbreviate(review.rev_detail, 150)}"></div>
+                            <div id="full_${stat.index}" class="hidden-content" th:utext="${review.rev_detail}"></div>
+                            <button th:if="${#strings.length(review.rev_detail) > 150}" onclick="toggleContent('${stat.index}')" class="btn btn-link" data-id="${stat.index}">더보기</button>
+                        </div>
                         <div class="writerDay_var2">
                             <span th:text="${#strings.substring(review.rev_writer, 0,1)+'**'}"></span>
-                            <span th:text="${review.rev_date}"></span>
+                            <span th:text="${#strings.substring(review.rev_date, 0,10)}"></span>
                         </div>
                         <div class="score_star">
                             <div class="rate">
