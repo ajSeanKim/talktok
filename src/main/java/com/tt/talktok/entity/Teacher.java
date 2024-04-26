@@ -8,7 +8,6 @@ import lombok.*;
 @Entity
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Teacher {
 
     @Id
@@ -30,5 +29,10 @@ public class Teacher {
     private String tea_career;
     private String tea_nation;
     private String tea_image;
+    private String tea_social;
+
+    public Teacher() {
+        // 기본 생성자 추가
+    }
 
 }

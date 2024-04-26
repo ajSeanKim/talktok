@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원탈퇴 양식</title>
+</head>
+<body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<form action="/teacher/withdraw" method="post">
+    비밀번호 <input type="text" id="teaPwd" name="teaPwd" /> <br/>
+    <input type="submit" value="회원탈퇴">
+    <input type="button" value="취소" onclick="history.go(-1)">
+</form>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+</body>
+</html>
