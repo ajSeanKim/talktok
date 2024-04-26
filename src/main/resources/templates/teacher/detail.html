@@ -9,17 +9,17 @@
 <section>
     <div class="teacher-view">
         <div class="teacher-image">
-            <img th:if="${teacherDetail.tea_image != null}" th:src="${teacherDetail.tea_image}" />
-            <img th:unless="${teacherDetail.tea_image != null}" src="/images/noprofile.png" />
+            <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+            <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
         </div>
         <div class="teacherInfo">
-            <h1 class="teacherName" th:text="${teacherDetail.tea_name}"></h1>
-            <p class="teacherSchool" th:text="${teacherDetail.tea_career}"></p>
-            <p class="" th:text="${teacherDetail.tea_email}"></p>
-            <p class="" th:text="${teacherDetail.tea_nickname}"></p>
-            <p class="" th:text="${teacherDetail.tea_intro}"></p>
-            <p class="" th:text="${teacherDetail.tea_detail}"></p>
-            <p class="" th:text="${teacherDetail.tea_nation}"></p>
+            <h1 class="teacherName" th:text="${teacherDetail.teaName}"></h1>
+            <p class="teacherSchool" th:text="${teacherDetail.teaCareer}"></p>
+            <p class="" th:text="${teacherDetail.teaEmail}"></p>
+            <p class="" th:text="${teacherDetail.teaNickname}"></p>
+            <p class="" th:text="${teacherDetail.teaIntro}"></p>
+            <p class="" th:text="${teacherDetail.teaDetail}"></p>
+            <p class="" th:text="${teacherDetail.teaNation}"></p>
 
         </div>
     </div>

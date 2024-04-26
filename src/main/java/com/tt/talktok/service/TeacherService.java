@@ -6,11 +6,11 @@ import com.tt.talktok.repository.TeacherRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Service
@@ -21,40 +21,42 @@ public class TeacherService {
     // DTO에서 엔터티로 변환하는 메서드
     public Teacher convertToEntity(TeacherDto dto) {
         return Teacher.builder()
-                .tea_no(dto.getTea_no())
-                .tea_name(dto.getTea_name())
-                .tea_email(dto.getTea_email())
-                .tea_phone(dto.getTea_phone())
-                .tea_nickname(dto.getTea_nickname())
-                .tea_intro(dto.getTea_intro())
-                .tea_detail(dto.getTea_detail())
-                .tea_career(dto.getTea_career())
-                .tea_nation(dto.getTea_nation())
+                .tea_no(dto.getTeaNo())
+                .teaName(dto.getTeaName())
+                .tea_email(dto.getTeaEmail())
+                .tea_phone(dto.getTeaPhone())
+                .tea_nickname(dto.getTeaNickname())
+                .tea_intro(dto.getTeaIntro())
+                .tea_detail(dto.getTeaDetail())
+                .tea_career(dto.getTeaCareer())
+                .tea_nation(dto.getTeaNation())
                 .build();
     }
 
     // 엔터티에서 DTO로 변환하는 메서드
     public TeacherDto convertToDto(Teacher entity) {
         return TeacherDto.builder()
-                .tea_no(entity.getTea_no())
-                .tea_name(entity.getTea_name())
-                .tea_email(entity.getTea_email())
-                .tea_phone(entity.getTea_phone())
-                .tea_nickname(entity.getTea_nickname())
-                .tea_intro(entity.getTea_intro())
-                .tea_detail(entity.getTea_detail())
-                .tea_career(entity.getTea_career())
-                .tea_nation(entity.getTea_nation())
+                .teaNo(entity.getTea_no())
+                .teaName(entity.getTeaName())
+                .teaEmail(entity.getTea_email())
+                .teaPhone(entity.getTea_phone())
+                .teaNickname(entity.getTea_nickname())
+                .teaIntro(entity.getTea_intro())
+                .teaDetail(entity.getTea_detail())
+                .teaCareer(entity.getTea_career())
+                .teaNation(entity.getTea_nation())
                 .build();
     }
 
-
     //선생 목록 조회
-    public List<TeacherDto> list(){
-        List<Teacher> teacherlists = teacherRepository.findAll();
-        return teacherlists.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public Page<TeacherDto> teacherList(Pageable pageable){
+        Page<Teacher> teachers = teacherRepository.findAll(pageable);
+        return teachers.map(this::convertToDto);
+    }
+    //선생 검색 기능
+    public Page<TeacherDto> teacherSearchList(String keyword, Pageable pageable){
+        Page<Teacher> teacherlists = teacherRepository.findByTeaNameContaining(keyword,pageable);
+        return teacherlists.map(this::convertToDto);
     }
 
     //선생 상세페이지 조회
