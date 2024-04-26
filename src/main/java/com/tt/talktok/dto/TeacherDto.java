@@ -14,8 +14,10 @@ public class TeacherDto {
     private int teaNo;
     private String teaName;
     private String teaEmail;
+    private String teaPwd;
     private String teaPhone;
     private String teaNickname;
+    private String teaAccount;
     private String teaIntro;
     private String teaDetail;
     private String teaCareer;
