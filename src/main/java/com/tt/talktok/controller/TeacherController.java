@@ -2,7 +2,9 @@ package com.tt.talktok.controller;
 
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.TeacherDto;
+import com.tt.talktok.entity.Review;
 import com.tt.talktok.entity.Teacher;
+import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import java.util.List;
 public class TeacherController {
 
     private final TeacherService teacherService;
+    private final ReviewService reviewService;
 
     // 선생님 목록 조회
     @GetMapping("/list")
@@ -50,6 +53,10 @@ public class TeacherController {
 
         System.out.println("tea_no" + tea_no);
         TeacherDto teacherDetail = teacherService.getTeacherDetail(tea_no);
+
+        List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
+
+        model.addAttribute("reviews", reviews);
         model.addAttribute("teacherDetail", teacherDetail);
 
         return "teacher/detail";
