@@ -1,4 +1,3 @@
-
 package com.tt.talktok.service;
 
 import com.tt.talktok.dto.StudentDto;
@@ -16,19 +15,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 @Builder
 @Service
 @RequiredArgsConstructor
-public class TeacherService {
-
+public class TeacherService{
     private final TeacherRepository teacherRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     // DTO에서 엔터티로 변환하는 메서드
     public Teacher convertToEntity(TeacherDto dto) {
         return Teacher.builder()
-                .tea_no(dto.getTeaNo())
+                .teaNo(dto.getTeaNo())
                 .teaName(dto.getTeaName())
                 .teaEmail(dto.getTeaEmail())
                 .tea_pwd(dto.getTeaPwd())
@@ -43,11 +40,10 @@ public class TeacherService {
                 .tea_social(dto.getTeaSocial())
                 .build();
     }
-
     // 엔터티에서 DTO로 변환하는 메서드
     public TeacherDto convertToDto(Teacher entity) {
         return TeacherDto.builder()
-                .teaNo(entity.getTea_no())
+                .teaNo(entity.getTeaNo())
                 .teaName(entity.getTeaName())
                 .teaEmail(entity.getTeaEmail())
                 .teaPwd(entity.getTea_pwd())
@@ -62,7 +58,6 @@ public class TeacherService {
                 .teaSocial(entity.getTea_social())
                 .build();
     }
-
     //선생 목록 조회
     public Page<TeacherDto> teacherList(Pageable pageable){
         Page<Teacher> teachers = teacherRepository.findAll(pageable);
@@ -79,10 +74,20 @@ public class TeacherService {
         Teacher teacherdetails = teacherRepository.findById(tea_no).orElse(null);
         return convertToDto(teacherdetails);
     }
-
+    // 강사 정보 조회
     public TeacherDto findTeacher(String teaEmail) {
         System.out.println("서비스 이동");
         Teacher dbTeacher = teacherRepository.findTeacherByTeaEmail(teaEmail);
+        TeacherDto dbTeacherDto = new TeacherDto();
+        if(dbTeacher !=null) {
+            System.out.println("dbTeacher not null");
+            dbTeacherDto=convertToDto(dbTeacher);
+        }
+        return dbTeacherDto;
+    }
+    // 강사 정보 조회
+    public TeacherDto findTeacher(int tea_no) {
+        Teacher dbTeacher = teacherRepository.findTeacherByTeaNo(tea_no);
         TeacherDto dbTeacherDto = new TeacherDto();
         if(dbTeacher !=null) {
             dbTeacherDto=convertToDto(dbTeacher);
@@ -90,8 +95,42 @@ public class TeacherService {
         return dbTeacherDto;
     }
 
+    // 비밀번호 업데이트/변경
+    public void updatePwd(TeacherDto teacherDto) {
+        String teaEmail = teacherDto.getTeaEmail();
+        Teacher newTeacher = teacherRepository.findTeacherByTeaEmail(teaEmail);
 
+        newTeacher.setTea_pwd(teacherDto.getTeaPwd());
+
+        teacherRepository.save(newTeacher);
+
+
+    }
+
+    // 회원정보 수정
+    public void update(TeacherDto teacherDto) {
+        Teacher teacher = teacherRepository.findTeacherByTeaNo(teacherDto.getTeaNo());
+        if (teacher != null) {
+            // DTO에서 변경된 정보를 Entity에 반영
+            teacher.setTeaName(teacherDto.getTeaName());
+            teacher.setTea_phone(teacherDto.getTeaPhone());
+            teacher.setTea_nickname(teacherDto.getTeaNickname());
+            teacher.setTeaEmail(teacherDto.getTeaEmail());
+            teacher.setTea_phone(teacherDto.getTeaPhone());
+            teacher.setTea_account(teacherDto.getTeaAccount());
+            teacher.setTea_intro(teacherDto.getTeaIntro());
+            teacher.setTea_detail(teacherDto.getTeaDetail());
+            teacher.setTea_career(teacherDto.getTeaCareer());
+            teacher.setTea_nation(teacherDto.getTeaNation());
+            teacher.setTea_image(teacherDto.getTeaImage());
+            teacher.setTea_pwd(passwordEncoder.encode(teacherDto.getTeaPwd())); // 비밀번호도 업데이트할 경우
+            teacherRepository.save(teacher);
+        }
+    }
+
+    // 강사 회원 가입
     public void join(TeacherDto teacherDto) {
+        System.out.println("회원가입 처리: " + teacherDto);
         Teacher newTeacher = new Teacher();
 
         String pwd=teacherDto.getTeaPwd();
@@ -108,17 +147,5 @@ public class TeacherService {
         teacherRepository.deleteTeacherByTeaEmail(teaEmail);
     }
 
-    public void updatePwd(TeacherDto teacherDto) {
-        String teaEmail = teacherDto.getTeaEmail();
-        Teacher newTeacher = teacherRepository.findTeacherByTeaEmail(teaEmail);
-
-        newTeacher.setTea_pwd(teacherDto.getTeaPwd());
-
-        teacherRepository.save(newTeacher);
-
-
-    }
-
 
 }
-

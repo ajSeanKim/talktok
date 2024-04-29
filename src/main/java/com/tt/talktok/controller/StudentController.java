@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Controller
-@RequestMapping("/student")
 @RequiredArgsConstructor
+@RequestMapping("/student")
 public class StudentController {
-
     @Value("${spring.mail.hostSMTPid}")
     String hostSMTPid;
 
@@ -27,11 +27,10 @@ public class StudentController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final StudentService studentService;
 
+    // 학생 로그인
     @GetMapping("/login")
     public String login() {
-        return "student/loginForm";
-    }
-
+        return "student/loginForm";    }
     @PostMapping("/login")
     public String login(@ModelAttribute StudentDto student, Model model, HttpSession session) {
         int result = 0;
@@ -52,6 +51,7 @@ public class StudentController {
 
                 System.out.println("비번이 같을때");
                 session.setAttribute("stuEmail", email);
+                session.setAttribute("stuNo", dbStudent.getStuNo());
                 model.addAttribute("result", result);
             //비번이 다를때
             } else {
@@ -63,11 +63,10 @@ public class StudentController {
         return "student/login";
     }
 
+    // 학생 회원가입
     @GetMapping("/join")
     public String join() {
-        return "student/joinForm";
-    }
-
+        return "student/joinForm";    }
     @PostMapping("/join")
     public String join(@ModelAttribute StudentDto student, Model model) {
         int result = 0;
@@ -85,7 +84,7 @@ public class StudentController {
     }
 
 
-    // 아이디 중복검사(ajax 리턴)
+    // 학생 아이디 중복검사(ajax 리턴)
     @PostMapping("/idCheck")
     @ResponseBody
     public int idcheck(@RequestParam("stuEmail") String stuEmail) {
@@ -101,7 +100,7 @@ public class StudentController {
         return result;
     }
 
-    // 로그아웃
+    // 학생 로그아웃
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -109,17 +108,17 @@ public class StudentController {
         return "student/logout";
     }
 
-    //마이페이지
+    // 학생 마이페이지
     @GetMapping("/myPage")
     public String myPage() {
         return "student/myPage";
     }
 
+    // 학생 비밀번호 찾기
     @GetMapping("/findPwd")
     public String findPwd(){
         return "student/findPwdForm";
     }
-
     @PostMapping("/findPwd")
     public String findPwd(@ModelAttribute StudentDto studentDto, Model model) {
         int result = 0;
@@ -180,14 +179,13 @@ public class StudentController {
         }
     }
 
-    // 회원 탈퇴 양식으로 이동
+    // 학생 회원 탈퇴 양식으로 이동
     @GetMapping("/withdraw")
     public String withdraw() {
         return "student/withdrawForm";
     }
 
-
-    // 회원탈퇴
+    // 학생 회원탈퇴
     @PostMapping("/withdraw")
     public String withdraw(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) {
         int result=0;
@@ -212,6 +210,76 @@ public class StudentController {
             model.addAttribute("result",result);
             return "student/withdraw";
         }
-
     }
+
+/*------------------------------------------------------------*/
+    // 학생 비밀번호 변경
+    @GetMapping("pwdUpdate")
+    public String pwdUpdate() {
+        return "student/pwdUpdateForm";
+    }
+    @PostMapping("pwdUpdate")
+    public String pwdUpdate(StudentDto studentDto, @RequestParam("stuNewPwd") String stuNewPwd, Model model, HttpSession session) {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        StudentDto dbStudent = studentService.findStudent(stuEmail);
+        int result = 0;
+        // 현재 비밀번호 확인
+        if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
+
+            StudentDto newStudent = new StudentDto();
+            newStudent.setStuPwd((studentDto.getStuPwd()));
+            String encpassword = passwordEncoder.encode(stuNewPwd);
+            newStudent.setStuPwd(encpassword);
+            result = 1;
+//            result = studentService.updatePwd(newStudent);
+
+        }else {
+            result=-1;
+        }
+        System.out.println(result);
+        model.addAttribute("result", result);
+        return "student/pwdUpdate";
+    }
+
+    // 학생 회원정보 수정
+    @GetMapping("/update")
+    public String update(HttpSession session, Model model) {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        StudentDto studentDto = studentService.findStudent(stuEmail);
+
+        if(studentDto.getStuSocial().equals("normal")) {
+            model.addAttribute("studentDto", studentDto);
+            return "student/updateForm";
+        }else {
+            model.addAttribute("studentDto", studentDto);
+            return "student/updateSocial";
+        }
+    }
+    @PostMapping("/update")
+    public String update(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) throws Exception {
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        String stuName = (String) session.getAttribute("stuName");
+        studentDto.setStuEmail(stuEmail);
+        studentDto.setStuName(stuName);
+
+        // 최대한 빨리 stuSocial의 null 체크를 수행
+        String stuSocial = Optional.ofNullable(studentDto.getStuSocial()).orElse("normal");
+        studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
+
+        StudentDto dbStudent = this.studentService.findStudent(stuEmail);
+        // student update
+        if (stuSocial.equals("normal")) {
+            if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
+                studentService.update(studentDto);
+                System.out.println("수정완료");
+                return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
+            } else {// 비밀번호 불일치
+                return "student/update";
+            }
+        } else {
+            studentService.update(studentDto);
+            return "redirect:/student/myPage";
+        }
+    }
+
 }

@@ -16,4 +16,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 
     void deleteTeacherByTeaEmail(String teaEmail);
 
+    Teacher findTeacherByTeaNo(int teaNo);
 }
