@@ -3,31 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>detail</title>
+<style>
+    .teacher-view-item {display: flex; gap: 5rem;}
+    .teacher-view-item .teacher-image {padding: 0px;
+        border-radius: 10px;
+        flex: 0 0 auto;
+        width: 300px;
+        height: 300px;
+        border: 1px solid #dddddd;
+        overflow: hidden;
+        text-align: center;}
+    .teacher-view-item .teacher-image .img-wrap {width:100%; height:28rem; border-radius:5px;}
+    .teacher-view-item .teacher-image .img-wrap img {width:100%; height:100%; object-fit:cover;}
+    .teacher-view-item .teacher-info {}
+
+</style>
+
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<section>
-    <div class="teacher-view">
+
+<main class="wrap">
+    <section class="teacher-view-item">
         <div class="teacher-image">
-            <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
-            <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
+            <div class="img-wrap">
+                <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+                <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
+            </div>
         </div>
-        <div class="teacherInfo">
+        <div class="teacher-info">
             <h1 class="teacherName" th:text="${teacherDetail.teaName}"></h1>
             <p class="teacherSchool" th:text="${teacherDetail.teaCareer}"></p>
-            <p class="" th:text="${teacherDetail.teaEmail}"></p>
-            <p class="" th:text="${teacherDetail.teaNickname}"></p>
-            <p class="" th:text="${teacherDetail.teaIntro}"></p>
-            <p class="" th:text="${teacherDetail.teaDetail}"></p>
-            <p class="" th:text="${teacherDetail.teaNation}"></p>
-
+            <p class="teaEmail" th:text="${teacherDetail.teaEmail}"></p>
+            <p class="teaNickname" th:text="${teacherDetail.teaNickname}"></p>
+            <p class="teaIntro" th:text="${teacherDetail.teaIntro}"></p>
+            <p class="teaDetail" th:text="${teacherDetail.teaDetail}"></p>
+            <p class="teaNation" th:text="${teacherDetail.teaNation}"></p>
         </div>
-    </div>
+    </section>
+    <section class="detail-container">
     <div class="teacher-tab">
+        <div clss="course_area">
+            <div class="view_wrap border-bottom">
+                <div class="tab_type_b">
+                    <div id="tab1" class="tab_contents">
+                        <div class="tab_section">
+                            <div class="teacher-box">
+                                <p class="teacherName" th:text="${teacherDetail.teaName}"></p>
+                                <p class="teacherDetail" th:text="${teacherDetail.teaDetail}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab_contents">
+                        <div class="tab_section">
+                            <div class="teacher-box">
+                                선생 수업 후기 글
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </section>
-
+</main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>
