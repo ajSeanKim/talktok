@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>상세 페이지</title>
+    <link rel="stylesheet" type="text/css" href="/css/notice.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
 
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-<table border="1" width="500" align="center">
-    <caption>상세 페이지</caption>
+<main class="wrap">
+<table>
+    <h2>공지사항</h2>
     <tr>
-        <th>번호</th>
+        <td>번호</td>
         <td th:text="${notice.noNo}"></td>
     </tr>
     <tr>
         <th>날짜</th>
-        <td th:text="${notice.getNoDate()}"></td>
+        <td th:text="${notice.noDate}"></td>
+    </tr>
+    <tr>
+        <th>조회수</th>
+        <td th:text="${notice.noReadcount}"></td>
     </tr>
     <tr>
         <th>제목</th>
@@ -27,14 +35,16 @@
         <td><pre th:text="${notice.noContent}"></pre></td>
     </tr>
     <tr>
-        <td colspan="2" align="center">
-            <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}'|">
-            <input type="button" value="삭제" th:onclick="|location.href='delete?noNo=${notice.noNo}'|">
-            <input type="button" value="목록" th:onclick="|location.href='list?page=${page}'|">
-        </td>
+        <th>작성자</th>
+        <td th:text="관리자"></td>
     </tr>
 </table>
-
+    <div class="btns">
+        <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}'|">
+        <input type="button" value="삭제" th:onclick="|location.href='delete?noNo=${notice.noNo}'|">
+        <input type="button" value="목록" th:onclick="|location.href='list?page=${page}'|">
+    </div>
+</main>
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
 </body>

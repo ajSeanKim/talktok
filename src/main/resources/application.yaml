@@ -1,12 +1,18 @@
 server:
   port: 80
 
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/talktok
+#    username: talktok
+#    password: choongang
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/talktok
-    username: talktok
-    password: choongang
+    url: jdbc:mysql://localhost:3306/talktoktest3
+    username: talktokuser
+    password: 1234
 
   jpa:
     database: mysql

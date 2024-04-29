@@ -52,10 +52,11 @@ public class NoticeController {
 
     // 공지사항 상세 정보 출력
     @GetMapping("/detail")
-    public String noticeDetail(@RequestParam("noNo") int noNo, Model model) {
+    public String noticeDetail(@RequestParam("noNo") int noNo, @RequestParam int page, Model model) {
         noticeService.updateCount(noNo);
         Notice noticeDetail = noticeService.getNoticeDetail(noNo);
         model.addAttribute("notice", noticeDetail);
+        model.addAttribute("page", page);
         return "notice/detail";
     }
 

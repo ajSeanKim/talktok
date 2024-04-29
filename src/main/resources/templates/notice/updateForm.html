@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 수정</title>
+    <link rel="stylesheet" type="text/css" href="/css/notice.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
 
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-    <div class="noticeUpdate">
+    <main class="wrap">
         <h2>글수정</h2>
         <form th:action="@{/notice/update}" th:object="${notice}" method="post">
-            <input type="hidden" name="noNo" th:value="${notice.noNo}" />
-            <input type="hidden" name="noDate" th:value="${notice.noDate}" />
-            <input name="noSubject" type="text" th:value="${notice.noSubject}">
-            <textarea name="noContent" th:text="${notice.noContent}"></textarea>
-            <button type="submit">수정</button>
+            <table>
+                <input type="hidden" name="noNo" th:value="${notice.noNo}" />
+                <input type="hidden" name="noDate" th:value="${notice.noDate}" />
+                <input type="hidden" name="noReadcount" th:value="${notice.noReadcount}" />
+                <tr>
+                    <th>제목</th>
+                    <td><input id="noSubject" name="noSubject" type="text" th:value="${notice.noSubject}"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td><textarea id="noContent" name="noContent" th:text="${notice.noContent}"></textarea></td>
+                </tr>
+            </table>
+            <div class="btns">
+                <input type="submit" class="btn-submit" value="수정">
+                <input type="button" value="목록" th:onclick="|location.href='list?page=${page}'|">
+            </div>
         </form>
-</div>
+    </main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
