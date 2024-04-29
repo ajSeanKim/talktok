@@ -225,11 +225,9 @@ public class StudentController {
         int result = 0;
         // 현재 비밀번호 확인
         if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
-
-            StudentDto newStudent = new StudentDto();
-            newStudent.setStuPwd((studentDto.getStuPwd()));
             String encpassword = passwordEncoder.encode(stuNewPwd);
-            newStudent.setStuPwd(encpassword);
+            dbStudent.setStuPwd(encpassword);
+            studentService.updatePwd(dbStudent);
             result = 1;
 //            result = studentService.updatePwd(newStudent);
 
@@ -270,7 +268,7 @@ public class StudentController {
         // student update
         if (stuSocial.equals("normal")) {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
-                studentService.update(studentDto);
+                studentService.update(dbStudent);
                 System.out.println("수정완료");
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치

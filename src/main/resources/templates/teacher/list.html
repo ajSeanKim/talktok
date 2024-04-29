@@ -51,6 +51,7 @@
             </div>
         </form>
     </div>
+
     <form class="teacher-contents">
         <div class="list-wrap" >
             <div class="teacher-item" th:each="list : ${teacherList}" th:onclick="|window.location.href = '@{/teacher/detail(teaNo=${list.teaNo})}'|">
@@ -70,12 +71,13 @@
         </div>
         </div>
     </form>
+<!-- 페이징 처리 -->
     <nav aria-label="Page navigation example">
         <!--th:with로 변수 선언, start 현재 페이지 그룹의 시작 페이지를 구하는 로직, last 전체 페이지 수와 현재페이지 그룹의 시작 페이지를 통해 현재 페이지 그룹의 마지막 페이지를 구하는 로직 -->
         <ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(teacherList.number/10)*10+1}, last=(${start + 9 < teacherList.totalPages ? start + 9 : teacherList.totalPages})">
-            <li class="page-item disabled">
+            <li th:class="${teacherList.first ? 'page-item disabled' : 'page-item'}">
                 <!--이전 페이지로 이동 -->
-                <a class="page-link" th:href="${teacherList.first} ? '#' : '@{/teacher/list(page=${teacherList.number})}'" aria-label="Previous">
+                <a class="page-link" th:href="${teacherList.first} ? '#' : '@{/teacher/list(page=${teacherList.number - 1})}' " aria-label="Previous">
                     <span aria-hidden="true">Previous</span>
                 </a>
             </li>
@@ -84,8 +86,8 @@
                 <a class="page-link" th:text="${page}" th:href="@{/teacher/list(page=${page})}"></a>
             </li>
             <!--다음 페이지로 이동 -->
-            <li class="page-item">
-                <a th:href="${teacherList.last} ? '#' : '@{/teacher/list(page=${teacherList.number + 2})}'" aria-label="Next">
+            <li th:class="${teacherList.last ? 'page-item disabled' : 'page-item'}">
+                <a th:href="${teacherList.last} ? '#' : '@{/teacher/list(page=${teacherList.number + 1})}'" aria-label="Next">
                     <span aria-hidden="true">Next</span>
                 </a>
             </li>

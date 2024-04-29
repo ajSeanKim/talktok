@@ -31,14 +31,21 @@ public class PaymentController {
 
     @PostMapping("/savePayment")
     @ResponseBody
-    public ResponseEntity<String> savePayment(@RequestBody Map<String, Object> reqeustData) {
+    public ResponseEntity<String> savePayment(@RequestBody Map<String, Object> requestData) {
+
+        System.out.println("requestData="+requestData.toString()); // 값 전달 되었는지 확인
 
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setPay_time(LocalDate.now());
-        paymentDto.setPay_price((String) reqeustData.get("price"));
-        paymentDto.setLec_no((int) reqeustData.get("lecNo"));
-        paymentDto.setLec_name((String) reqeustData.get("lecName"));
-        paymentDto.setStu_Email((String) reqeustData.get("email"));
+        paymentDto.setPay_price((String) requestData.get("price"));
+
+        String lecNo = (String) requestData.get("lecNo");
+        System.out.println(lecNo);
+//        paymentDto.setLec_no(lecNo); // 형변환의 문제인듯
+
+
+        paymentDto.setLec_name((String) requestData.get("lecName"));
+        paymentDto.setStu_Email((String) requestData.get("email"));
 
         int result = paymentService.save(paymentDto);
         if(result == 1) {
