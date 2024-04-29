@@ -1,6 +1,6 @@
 body {font-family: 'Pretendard', 'sans-serif';}
 
-table {
+.notice-page table {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
@@ -8,28 +8,28 @@ table {
     border-top:4px solid #FAA11B; border-bottom:1px solid #dee2e6;
     margin:30px auto;
 }
-table input, table textarea {width:100%;}
-th, td {padding: 10px; border: 1px solid #dee2e6; text-decoration: none; }
-pre {text-align: left;}
+.notice-page table input, table textarea {width:100%;}
+.notice-page th, td {padding: 10px; border: 1px solid #dee2e6; text-decoration: none; }
+.notice-page pre {text-align: left;}
 
 /*페이지네이션*/
-.pagination {display: flex; list-style: none; padding: 0; justify-content: center; margin-top: 20px;}
-.pagination li {margin: 0 5px;}
-.pagination li a {display: block; padding: 5px 10px; color: #000; text-decoration: none; border: 1px solid #dee2e6; background-color: #fff;}
-.pagination .active a {color: #fff; background-color: #FAA11B; border-color: #FAA11B;}
+.notice-page .pagination {display: flex; list-style: none; padding: 0; justify-content: center; margin-top: 20px;}
+.notice-page .pagination li {margin: 0 5px;}
+.notice-page .pagination li a {display: block; padding: 5px 10px; color: #000; text-decoration: none; border: 1px solid #dee2e6; background-color: #fff;}
+.notice-page .pagination .active a {color: #fff; background-color: #FAA11B; border-color: #FAA11B;}
 
-.wrap {padding: 20px;}
-.wrap h2 {font-size: 200%; text-align:center;}
-.wrap input {border:1px solid #dee2e6; height: 35px;}
-.btn-submit {
+.notice-page {padding: 20px;}
+.notice-page h2 {font-size: 200%; text-align:center;}
+.notice-page input {border:1px solid #dee2e6; height: 35px;}
+.notice-page .btn-submit {
     padding: 5px 20px;
     background-color: #FAA11B;
     border: none;
     color: white;
     cursor: pointer;
 }
-.btns {text-align:right;}
-.btns input[type="button"] {
+.notice-page .btns {text-align:right;}
+.notice-page .btns input[type="button"] {
     padding: 5px 20px;
     background-color: #FAA11B;
     border: none;
