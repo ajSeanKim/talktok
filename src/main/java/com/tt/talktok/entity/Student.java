@@ -3,6 +3,8 @@ package com.tt.talktok.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -21,6 +23,10 @@ public class Student {
     private String stuPhone;
     private String stuNickname;
     private String stuSocial;
+
+/*    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Review> reviews;*/
+
     public Student() {
         // 기본 생성자 추가
     }

@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping("/")
     public String Main(){
-        return "student/loginForm";
+        return "main";
     }
 }

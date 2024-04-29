@@ -1,15 +1,18 @@
 package com.tt.talktok.service;
 
 import com.tt.talktok.dto.ReviewDto;
+import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.entity.Review;
 import com.tt.talktok.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,11 +42,6 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public Page<ReviewDto> reviewFindAll(Pageable pageable) {
-        Page<Review> reviews = reviewRepository.findAll(pageable);
-        return reviews.map(this::convertToDto);
-    }
-
     private ReviewDto convertToDto(Review review) {
         ReviewDto reviewDto = new ReviewDto();
         reviewDto.setRev_no(review.getRevNo());
@@ -62,6 +60,15 @@ public class ReviewService {
         return reviewDto;
     }
 
+    public Page<ReviewDto> reviewFindAll(Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findAll(pageable);
+        if (reviews == null || !reviews.hasContent()) {
+            return new PageImpl<>(new ArrayList<>(), pageable, 0); // 비어 있는 페이지 객체 반환
+        }
+        return reviews.map(this::convertToDto);
+    }
+
+
     public ReviewDto reviewFindDetail(int rev_no) {
         Review review = reviewRepository.findByRevNo(rev_no);
         return convertToDto(review);
@@ -73,4 +80,10 @@ public class ReviewService {
         return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
 
     }
+
+    public List<ReviewDto> findReviewsByStudentNo(int stuNo) {
+        List<Review> reviews = reviewRepository.findByStuNo(stuNo);
+        return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
 }

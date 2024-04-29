@@ -17,8 +17,18 @@
             </ol>
         </nav>
         <div class="util-menu">
-            <a href="/user/login">로그인</a>
-            <a href="/user/join">회원가입</a>
+            <div th:if="${session.stuNo == null} and ${session.teaNo == null}">
+                <a href="/student/login">로그인</a>
+                <a href="/student/join">회원가입</a>
+            </div>
+            <div th:if="${session.stuNo != null}">
+                <a href="/student/mypage">마이페이지</a>
+                <a href="/student/logout">로그아웃</a>
+            </div>
+            <div th:if="${session.teaNo != null}">
+                <a href="/teacher/mypage">마이페이지</a>
+                <a href="/teacher/logout">로그아웃</a>
+            </div>
         </div>
     </div>
 </header>

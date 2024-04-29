@@ -43,8 +43,7 @@ public class StudentService {
                 .stuSocial(dto.getStuSocial())
                 .build();
     }
-
-
+    // 학생 정보 조회
     public StudentDto findStudent(String stuEmail) {
 
         Student dbStudent = studentRepository.findStudentByStuEmail(stuEmail);
@@ -55,6 +54,7 @@ public class StudentService {
         return dbStudentDto;
     }
 
+    // 학생 회원 가입
     public void join(StudentDto studentDto) {
         Student newStudent = new Student();
 

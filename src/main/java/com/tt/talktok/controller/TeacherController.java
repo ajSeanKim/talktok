@@ -16,9 +16,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Random;
@@ -70,11 +70,11 @@ public class TeacherController {
         return "teacher/detail";
     }
 
+    // 강사 로그인
     @GetMapping("/login")
     public String login() {
         return "teacher/loginForm";
     }
-
     @PostMapping("/login")
     public String login(@ModelAttribute TeacherDto teacher, Model model, HttpSession session) {
         int result = 0;
@@ -106,30 +106,33 @@ public class TeacherController {
         return "teacher/login";
     }
 
-
+    // 강사 회원가입
     @GetMapping("/join")
     public String join() {
         return "teacher/joinForm";
     }
-
     @PostMapping("/join")
     public String join(@ModelAttribute TeacherDto teacher, Model model) {
+        System.out.println("가입 요청: " + teacher);
         int result = 0;
 
         String teaEmail = teacher.getTeaEmail();
 
         TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
+        System.out.println("컨트롤러 돌아옴");
         //가입된 email = 1, 가입안된 email = 0
-        if(dbTeacher.getTeaEmail() != null){
-
+        if(dbTeacher.getTeaEmail() == null){
+            System.out.println("이메일 존재안한다면");
             teacherService.join(teacher);
-            model.addAttribute("result",result);
+            model.addAttribute("result", 1);  // 성공 코드
             return "teacher/join";
         }
+        System.out.println("이메일 이미 존재");
+        model.addAttribute("result", 0);  // 실패 코드
         return "teacher/join";
     }
 
-    // 아이디 중복검사(ajax 리턴)
+    // 강사 아이디 중복검사(ajax 리턴)
     @PostMapping("/idCheck")
     @ResponseBody
     public int idcheck(@RequestParam("teaEmail") String teaEmail) {
@@ -146,7 +149,7 @@ public class TeacherController {
     }
 
 
-    // 로그아웃
+    // 강사 로그아웃
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -154,18 +157,17 @@ public class TeacherController {
         return "teacher/logout";
     }
 
-    //마이페이지
+    // 강사 마이페이지
     @GetMapping("/myPage")
     public String myPage() {
         return "teacher/myPage";
     }
 
+    // 강사 비밀번호 찾기
     @GetMapping("/findPwd")
     public String findPwd(){
         return "teacher/findPwdForm";
     }
-
-
     @PostMapping("/findPwd")
     public String findPwd(@ModelAttribute TeacherDto teacherDto, Model model) {
         int result = 0;
@@ -226,14 +228,13 @@ public class TeacherController {
         }
     }
 
-    // 회원 탈퇴 양식으로 이동
+    // 강사 회원 탈퇴 양식으로 이동
     @GetMapping("/withdraw")
     public String withdraw() {
         return "teacher/withdrawForm";
     }
 
-
-    // 회원탈퇴
+    // 강사 회원탈퇴
     @PostMapping("/withdraw")
     public String withdraw(@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) {
         int result=0;
@@ -260,21 +261,16 @@ public class TeacherController {
 
     }
 
-
-
-
-
-
 /*----------------------------------------------------------------------------------*/
-    //비밀번호 변경
+    // 강사 비밀번호 변경
     @GetMapping("pwdUpdate")
     public String pwdUpdate() {
         return "teacher/pwdUpdateForm";
     }
     @PostMapping("pwdUpdate")
     public String pwdUpdate(TeacherDto teacherDto, @RequestParam("teaNewPwd") String teaNewPwd, Model model, HttpSession session) {
-        int teaNo = (int) session.getAttribute("teaNo");
-        TeacherDto dbTeacher = teacherService.findTeacher(teaNo);
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
         int result = 0;
         // 현재 비밀번호 확인
         if (passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
@@ -294,21 +290,20 @@ public class TeacherController {
         return "teacher/pwdUpdate";
     }
 
-    // 회원정보 수정폼
+    // 강사 회원정보 수정
     @GetMapping("/update")
     public String update(HttpSession session, Model model) {
-        int teaNo = (int) session.getAttribute("teaNo");
-        TeacherDto teacherDto = teacherService.findTeacher(teaNo);
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        TeacherDto teacherDto = teacherService.findTeacher(teaEmail);
         model.addAttribute("teacherDto", teacherDto);
         return "teacher/updateForm";
     }
-
     @PostMapping("/update")
     public String update(@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
-        int teaNo = (int) session.getAttribute("teaNo");
-        teacherDto.setTeaNo(teaNo);
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        teacherDto.setTeaEmail(teaEmail);
 
-        TeacherDto dbTeacher = this.teacherService.findTeacher(teaNo);
+        TeacherDto dbTeacher = this.teacherService.findTeacher(teaEmail);
         // student update
         if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
             teacherDto.setTeaPwd(dbTeacher.getTeaPwd());

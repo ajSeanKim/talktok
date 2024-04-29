@@ -11,6 +11,10 @@
                 .replace(/[^0-9]/g, '')
                 .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
         }
+        // 하이픈 제거 함수
+        const removeHyphen = (value) => {
+            return value.replace(/-/g, '');
+        }
         function boardCheck() {
             if ($.trim($("#stuNickname").val()) == "") {
                 alert("닉네임을 입력하세요");
@@ -27,13 +31,15 @@
                 $("#stuPhone").val("").focus();
                 return false;
             }
+            const stuPhone = removeHyphen(document.getElementById("stuPhone").value);
+            document.getElementById("stuPhone").value = stuPhone;
+
             if ($.trim($("#stuPwd").val()) == "") {
                 alert("비밀번호를 입력하세요");
                 $("#stuPwd").val("").focus();
                 return false;
             }
-            const stuPhone = removeHyphen(document.getElementById("stuPhone").value);
-            document.getElementById("stuPhone").value = stuPhone;
+
         }
     </script>
 </head>
@@ -51,18 +57,18 @@
         <tr>
             <th>이름</th>
 <!--            <td th:text="${session.stuName}">stuName</td>-->
-            <td><input type="text" name="stuName" id="stuName" value="" /></td>
+            <td><input type="text" name="stuName" id="stuName" th:value="${studentDto.stuName}" /></td>
         </tr>
         <tr>
             <th>닉네임</th>
-            <td><input type="text" name="stuNickname" id="stuNickname" value="" /></td>
+            <td><input type="text" name="stuNickname" id="stuNickname" th:value="${studentDto.stuNickname}" /></td>
         </tr>
         <tr>
             <th>핸드폰</th>
             <td>
                 <input type="text" name="stuPhone" id="stuPhone" maxlength="13" placeholder="ex) 01012345678"
                        oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
-                       autocomplete="off" value="" />
+                       autocomplete="off" th:value="${studentDto.stuPhone}" />
             </td>
         </tr>
         <tr>

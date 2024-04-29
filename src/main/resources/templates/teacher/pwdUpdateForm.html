@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>강사비밀번호변경폼</title>
+    <title>강사 비밀번호 변경</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-
         function check() {
             if ($.trim($("#teaPwd").val()) === "") {
                 alert("현재 비밀번호를 입력하세요!");
@@ -32,45 +31,32 @@
     </script>
 </head>
 <body>
-    <h2>비밀번호 변경</h2>
-    <form action="/teacher/pwdUpdate" method="post" onsubmit="return check()">
-        <input type="hidden" name="teaNo" value="${session.teaNo }" />
-        <input type="hidden" name="teaEmail" value="${session.teaEmail }" />
-        <table>
-            <tr>
-                <th>강사번호</th>
-                <td th:text="${session.teaNo}">teaNo</td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td th:text="${session.stuEmail}">stuEmail</td>
-            </tr>
-            <tr>
-                <th></th>
-                <td><input type="password" id="stuPwd" name="stuPwd"></td>
-            </tr>
+<h2>비밀번호 변경</h2>
+<form action="/teacher/pwdUpdate" method="post" onsubmit="return check()">
+    <input type="hidden" name="teaEmail" value="${session.teaEmail}" />
+    <table>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${session.teaEmail}">teaEmail</td>
+        </tr>
 
-
-
-
-
-            <tr>
-                <th>현재 비밀번호</th>
-                <td><input type="password" id="stuPwd" name="stuPwd"></td>
-            </tr>
-            <tr>
-                <th>신규 비밀번호</th>
-                <td><input type="password" id="stuNewPwd" name="stuNewPwd"></td>
-            </tr>
-            <tr>
-                <th>비밀번호 확인</th>
-                <td><input type="password" id="stuPwd2" name="stuPwd2"></td>
-            </tr>
-        </table>
-        <div class="btns">
-            <input type="submit" value="등록">
-            <input type="button" value="뒤로가기" onclick="history.go(-1);">
-        </div>
-    </form>
+        <tr>
+            <th>현재 비밀번호</th>
+            <td><input type="password" id="teaPwd" name="teaPwd"></td>
+        </tr>
+        <tr>
+            <th>신규 비밀번호</th>
+            <td><input type="password" id="teaNewPwd" name="teaNewPwd"></td>
+        </tr>
+        <tr>
+            <th>비밀번호 확인</th>
+            <td><input type="password" id="teaPwd2" name="teaPwd2"></td>
+        </tr>
+    </table>
+    <div class="btns">
+        <input type="submit" value="등록">
+        <input type="button" value="뒤로가기" onclick="history.go(-1);">
+    </div>
+</form>
 </body>
 </html>
