@@ -128,12 +128,9 @@ public class TeacherController {
 
         TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
         //가입된 email = 1, 가입안된 email = 0
-        if(dbTeacher.getTeaEmail() != null){
 
             teacherService.join(teacher);
             model.addAttribute("result",result);
-            return "teacher/join";
-        }
         return "teacher/join";
     }
 
