@@ -11,11 +11,11 @@
 
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-<main class="wrap">
+<main class="notice-page wrap">
 <table>
     <h2>공지사항</h2>
     <tr>
-        <td>번호</td>
+        <th>번호</th>
         <td th:text="${notice.noNo}"></td>
     </tr>
     <tr>

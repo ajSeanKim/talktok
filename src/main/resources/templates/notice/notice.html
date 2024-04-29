@@ -9,7 +9,7 @@
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-<main class="wrap">
+<main class="notice-page wrap">
     <h2>공지사항</h2>
     <form th:action="@{/notice/list}" method="get">
         <input name="keyword" id="keyword" placeholder="제목"/>
