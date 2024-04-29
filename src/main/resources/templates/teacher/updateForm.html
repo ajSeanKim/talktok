@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>강사 정보수정</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        //핸드폰번호 자동하이픈 기능
+        const autoHyphen = (target) => {
+            target.value = target.value
+                .replace(/[^0-9]/g, '')
+                .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+        }
+        // 하이픈 제거 함수
+        const removeHyphen = (value) => {
+            return value.replace(/-/g, '');
+        }
+        function boardCheck() {
+            if ($.trim($("#teaName").val()) == "") {
+                alert("이름을 입력하세요");
+                $("#teaNname").val("").focus();
+                return false;
+            }
+            if ($.trim($("#teaNickname").val()) == "") {
+                alert("닉네임을 입력하세요");
+                $("#teaNickname").val("").focus();
+                return false;
+            }
+            if ($.trim($("#teaPhone").val()) == "") {
+                alert("핸드폰번호를 입력하세요");
+                $("#teaPhone").val("").focus();
+                return false;
+            }
+            const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
+            document.getElementById("teaPhone").value = teaPhone;
+            // 계좌번호 필드 검사 (선택적 입력)
+            if ($.trim($("#teaAccount").val()) != "" && !/^\d{10,14}$/.test($("#teaAccount").val())) {
+                alert("계좌번호는 10자리에서 14자리 사이여야 합니다");
+                $("#teaAccount").focus();
+                return false;
+            }
+            if ($.trim($("#teaIntro").val()).length > 500) {
+                alert("자기소개는 500자 이내로 입력하세요");
+                $("#teaIntro").focus();
+                return false;
+            }
+            if ($.trim($("#teaDetail").val()).length > 2000) {
+                alert("디테일 자기소개는 2000자 이내로 입력하세요");
+                $("#teaDetail").focus();
+                return false;
+            }
+            var nation = $("#teaNation").val();
+            if (nation === "" || !["원어민", "영어사용국", "비영어권"].includes(nation)) {
+                alert("출신국가를 올바르게 선택하세요");
+                $("#teaNation").focus();
+                return false;
+            }
+/*            if ($.trim($("#teaImage").val()) == "") {
+                alert("이미지를 입력하세요");
+                $("#teaImage").val("").focus();
+                return false;
+            }*/
+            if ($.trim($("#teaPwd").val()) == "") {
+                alert("비밀번호를 입력하세요");
+                $("#teaPwd").val("").focus();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<h2>강사 회원정보변경</h2>
+<form method="post" action="update" onsubmit="return boardCheck();">
+    <input type="hidden" name= "teaEmail" value="${teacherDto.teaEmail}">
+    <input type="hidden" name="teaEmail" value="${session.teaEmail}" />
+    <table>
+        <tr>
+            <th>이메일</th>
+<!--            <td><input type="text" name="teaEmail" id="teaEmail" th:value="${teacherDto.teaEmail}" readonly /></td>-->
+            <td th:text="${session.teaEmail}">teaEmail</td>
+        </tr>
+        <tr>
+            <th>이름</th>
+<!--            <td th:text="${session.stuName}">stuName</td>-->
+            <td><input type="text" name="teaName" id="teaName" th:value="${teacherDto.teaName}" /></td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td><input type="text" name="teaNickname" id="teaNickname" th:value="${teacherDto.teaNickname}" /></td>
+        </tr>
+        <tr>
+            <th>핸드폰</th>
+            <td>
+                <input type="text" name="teaPhone" id="teaPhone" maxlength="13" placeholder="ex) 01012345678"
+                       oninput="autoHyphen(this)" autocomplete="off" th:value="${teacherDto.teaPhone}"/>
+            </td>
+        </tr>
+        <tr>
+            <th>계좌번호</th>
+            <td><input type="text" name="teaAccount" id="teaAccount" th:value="${teacherDto.teaAccount}"maxlength="14" /></td>
+        </tr>
+        <tr>
+            <th>자기소개</th>
+            <td><input type="text" name="teaIntro" id="teaIntro" th:value="${teacherDto.teaIntro}"/></td>
+        </tr>
+        <tr>
+            <th>디테일 자기소개</th>
+            <td><input type="text" name="teaDetail" id="teaDetail" th:value="${teacherDto.teaDetail}"/></td>
+        </tr>
+        <tr>
+            <th>커리어( 약력 )</th>
+            <td><input type="text" name="teaCareer" id="teaCareer"th:value="${teacherDto.teaCareer}" /></td>
+        </tr>
+        <tr>
+            <th>출신국가</th>
+            <td>
+                <select name="teaNation" id="teaNation">
+                    <option value="">출신국가선택</option>
+                    <option value="원어민">원어민</option>
+                    <option value="영어사용국">영어사용국</option>
+                    <option value="비영어권">비영어권</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>사진</th>
+            <td><input type="text" name="teaImage" id="teaImage" /></td>
+        </tr>
+        <tr>
+            <th>비밀번호 확인</th>
+            <td><input type="password" name="teaPwd" id="teaPwd" /></td>
+        </tr>
+    </table>
+    <div class="btns">
+        <input type="submit" value="수정하기">
+        <input type="button" value="뒤로가기" onclick="history.go(-1);">
+    </div>
+</form>
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+</body>
+</html>

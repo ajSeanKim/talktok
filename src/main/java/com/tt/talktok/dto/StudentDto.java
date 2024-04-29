@@ -18,10 +18,10 @@ public class StudentDto {
     private String stuPwd;
     private String stuPhone;
     private String stuNickname;
-    private String stuSocial;
-
+    private String stuSocial = "normal"; // 기본값 설정
     public StudentDto() {
         // 기본 생성자 추가
+        this.stuSocial = "normal"; // 기본값으로 "normal" 설정
     }
 
 }

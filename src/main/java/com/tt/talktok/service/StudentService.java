@@ -43,8 +43,7 @@ public class StudentService {
                 .stuSocial(dto.getStuSocial())
                 .build();
     }
-
-
+    // 학생 정보 조회
     public StudentDto findStudent(String stuEmail) {
 
         Student dbStudent = studentRepository.findStudentByStuEmail(stuEmail);
@@ -55,6 +54,7 @@ public class StudentService {
         return dbStudentDto;
     }
 
+    // 학생 회원 가입
     public void join(StudentDto studentDto) {
         Student newStudent = new Student();
 
@@ -63,7 +63,7 @@ public class StudentService {
 
         newStudent = convertToEntity(studentDto);
         newStudent.setStuPwd(encodePwd);
-
+        System.out.println("ddd");
         studentRepository.save(newStudent);
     }
     @Transactional
@@ -71,6 +71,7 @@ public class StudentService {
         studentRepository.deleteStudentByStuEmail(stuEmail);
     }
 
+    // 비밀번호 업데이트/변경
     public void updatePwd(StudentDto studentDto) {
         String stuEmail = studentDto.getStuEmail();
         Student newStudent = studentRepository.findStudentByStuEmail(stuEmail);
@@ -80,6 +81,18 @@ public class StudentService {
         studentRepository.save(newStudent);
 
 
+    }
+    // 회원정보 수정
+    public void update(StudentDto studentDto) {
+        Student student = studentRepository.findStudentByStuEmail(studentDto.getStuEmail());
+        if (student != null) {
+            // DTO에서 변경된 정보를 Entity에 반영
+            student.setStuName(studentDto.getStuName());
+            student.setStuPhone(studentDto.getStuPhone());
+            student.setStuNickname(studentDto.getStuNickname());
+            student.setStuPwd(passwordEncoder.encode(studentDto.getStuPwd())); // 비밀번호도 업데이트할 경우
+            studentRepository.save(student);
+        }
     }
 
 
