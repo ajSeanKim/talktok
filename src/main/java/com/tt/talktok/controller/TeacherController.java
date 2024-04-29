@@ -42,7 +42,7 @@ public class TeacherController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ReviewService reviewService;
 
-    // 선생님 목록 조회
+    // teacher 목록 조회
     @GetMapping("/list")
     public String list(
                         @PageableDefault(page=0, size = 12,direction = Sort.Direction.DESC) Pageable pageable,
@@ -60,12 +60,14 @@ public class TeacherController {
         return "teacher/list";
     }
 
+    //Teacher 상세페이지
     @GetMapping("/detail")
     public String teacherDetail(@RequestParam("teaNo") int tea_no, Model model) {
 
         System.out.println("tea_no" + tea_no);
+        //상세페이지
         TeacherDto teacherDetail = teacherService.getTeacherDetail(tea_no);
-
+        //후기글
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
 
         model.addAttribute("reviews", reviews);
@@ -74,6 +76,7 @@ public class TeacherController {
         return "teacher/detail";
     }
 
+    //teacher 로그인
     @GetMapping("/login")
     public String login() {
         return "teacher/loginForm";

@@ -17,7 +17,6 @@ public class Teacher {
 
     @Column(name = "tea_name")
     private String teaName;
-
     @Column(name = "tea_email")
     private String teaEmail;
     private String tea_pwd;

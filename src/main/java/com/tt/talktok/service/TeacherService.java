@@ -80,6 +80,7 @@ public class TeacherService {
         return convertToDto(teacherdetails);
     }
 
+    //선생 계정 이메일로 검색
     public TeacherDto findTeacher(String teaEmail) {
         System.out.println("서비스 이동");
         Teacher dbTeacher = teacherRepository.findTeacherByTeaEmail(teaEmail);
