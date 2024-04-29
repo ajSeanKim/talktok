@@ -75,6 +75,9 @@
         font-size: 18px;
         margin-bottom: 15px;
     }
+    a{
+        color : black;
+    }
 
 
 
@@ -161,14 +164,27 @@
 
 <div class="review_contents">
     <div class="wrapper_small">
+        <form method="get" th:action="@{/review/list}">
+            <select class="form-select" style="width:10%;" name="search_target">
+                <option value="lecture">과정명</option>
+                <option value="teacher">강사명</option>
+                <option value="name">제목</option>
+                <option value="detail">내용</option>
+                <option value="name_detail">제목+내용</option>
+            </select>
+            검색어
+            <input type="text" class="form-control mt-3" id="search-input" name="keyword"/>
+            <input type="submit" class="btn btn-primary btn-sm" value="검색">
+        </form>
         <a href="/review/write"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" width=""/></a>
+        <a th:href="@{/review/able(stu_no=${1})}"><div>나의 후기</div></a>
         <div class="review_container" th:each="review : ${reviews}">
             <div class="review_box_items">
                 <div>
                     <div>
                         <div class="review_name">
-                            <div class="lec_name" th:text="${review.lec_name}"></div>
-                            <div class="tea_name" th:text="${review.tea_name}"></div>
+                            <a th:href="@{/lecture/detail(no=${review.tea_no}, page=0)}"><div class="lec_name" th:text="${review.lec_name}"></div></a>
+                            <a th:href="@{/teacher/detail(tea_no=${review.tea_no})}"><div class="tea_name" th:text="${review.tea_name}"></div></a>
                         </div>
                         <a th:href="@{/review/detail(rev_no=${review.rev_no})}"><h2 th:text="${review.rev_name}"></h2></a>
                         <div class="review_detail">
@@ -206,8 +222,10 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li th:each="pageNumber : ${#numbers.sequence(0, page.totalPages - 1)}">
-                    <a th:href="@{'/review/list?page=' + ${pageNumber}}" th:text="${pageNumber + 1}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
+                <li th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}">
+                    <a th:if="${search_target!=null}" th:href="@{'/review/list?page=' + ${pageNumber} + '&keyword=' + ${keyword} + '&search_target=' + ${search_target}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
+                    <a th:if="${search_target == null}" th:href="@{'/review/list?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
+
                 </li>
                 <li th:if="${page.hasNext()}">
                     <a th:href="@{'/review/list?page=' + ${page.number + 1}}" aria-label="Next">
