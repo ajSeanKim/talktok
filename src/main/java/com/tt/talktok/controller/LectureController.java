@@ -4,6 +4,7 @@ import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,18 +33,27 @@ public class LectureController {
         model.addAttribute("currentPage",currentPage);
         return "/lecture/list";
     }
-    @GetMapping("/detail")
-    public String detail(@RequestParam("no") int lec_no, @RequestParam("page") int currentPage, Model model) {
-        LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);
 
+    @GetMapping("/detail")
+    public String detail(@RequestParam("no") int lec_no, @RequestParam("page") int currentPage,
+                         Model model, HttpSession session) {
+        // 강의 목록
+        LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);
+        model.addAttribute("lectureDto",lectureDto);
+        
+        // 리뷰
         int tea_no = lectureDto.getTea_no();
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
+        model.addAttribute("reviews", reviews);
+        
+        // 유저정보
+        String email = (String) session.getAttribute("stuEmail");
+        System.out.println(email);
+        model.addAttribute("email", email);
 
         int page = currentPage;
-
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("lectureDto",lectureDto);
         model.addAttribute("page",page);
+
         return "/lecture/detail";
     }
 

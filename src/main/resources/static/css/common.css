@@ -1,7 +1,7 @@
 .wrap {width: 96%; max-width: 1280px; margin: auto;}
 
 /*header*/
-#hd {position: sticky; left: 0; top: 0; border-bottom: 1px solid #000; background-color: #fff; z-index: 100;}
+#hd {position: sticky; left: 0; top: 0; border-bottom: 1px solid #ccc; background-color: #fff; z-index: 100;}
 #hd .wrap {display: flex; justify-content: space-between; align-items: center;}
 #hd .wrap .logo {width: 140px;}
 #hd .wrap .logo a {display: block; width: 100%;}
@@ -12,4 +12,4 @@
 #hd .wrap .util-menu {line-height: 50px;}
 
 /*footer*/
-#ft {border-top: 1px solid #000;}
+#ft {border-top: 1px solid #ccc;}
