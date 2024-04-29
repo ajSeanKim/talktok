@@ -30,7 +30,7 @@ public class Review {
     @Column(name = "rev_writer")
     private String revWriter;
     @Column(name = "rev_readcount")
-    private String revReadCount;
+    private Integer  revReadCount;
     @Column(name = "rev_score")
     private int revScore;
     @CreationTimestamp
@@ -47,4 +47,9 @@ public class Review {
     @Column(name = "stu_no")
     private int stuNo;
 
+/*
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
+*/
 }

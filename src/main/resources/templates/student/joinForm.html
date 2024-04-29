@@ -107,13 +107,34 @@
         }
     }
 
+    $(document).ready(function() {
+        //메인 검색 영역 버튼 제어
+        $('.btn-student').click(function() {
+            $(this).addClass('on');
+            $('.btn-teacher').removeClass('on');
+            $('#teacher').hide();
+            $('#student').show();
+            $('.teacher-input').off('input');
+        });
+        $('.btn-teacher').click(function() {
+            $(this).addClass('on');
+            $('.btn-student').removeClass('on');
+            $('#student').hide();
+            $('#teacher').show();
+            $('.student-input').off('input');
+        });
+    });
+
+
 
 </script>
 
 </head>
 <body>
+
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-    <h2>회원가입</h2>
+<div id="student" name="student">
+    <h2>학생 회원가입</h2>
     <form method="post" action="/student/join" onsubmit="return boardCheck();">
         <input type="hidden" id="stuSocial" name="stuSocial" value="normal">
         <table>
@@ -155,8 +176,11 @@
         <div class="btns">
             <input type="submit" value="가입하기">
             <input type="button" value="뒤로가기" onclick="history.go(-1);">
+            <input type="button" value="선생님회원가입" onclick="location='/teacher/join'">
         </div>
     </form>
+</div>
+
     <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>
 </html>

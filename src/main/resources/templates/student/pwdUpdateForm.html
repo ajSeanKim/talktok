@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호변경폼</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+
+        function check() {
+            if ($.trim($("#stuPwd").val()) === "") {
+                alert("현재 비밀번호를 입력하세요!");
+                $("#stuPwd").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($.trim($("#stuNewPwd").val()) === "") {
+                alert("신규 비밀번호를 입력하세요!");
+                $("#stuNewPwd").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($.trim($("#stuPwd2").val()) === "") {
+                alert("비밀번호 확인을 입력하세요!");
+                $("#stuPwd2").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($("#stuNewPwd").val() !== $("#stuPwd2").val()) {
+                alert("신규 비밀번호와 비밀번호 확인이 일치하지 않습니다!");
+                $("#stuPwd2").focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>비밀번호 변경</h2>
+    <form action="/student/pwdUpdate" method="post" onsubmit="return check()">
+        <input type="hidden" name="stuEmail" value="${session.stuEmail }" />
+        <table>
+            <tr>
+                <th>이메일</th>
+                <td th:text="${session.stuEmail}">stuEmail</td>
+            </tr>
+            <tr>
+                <th>현재 비밀번호</th>
+                <td><input type="password" id="stuPwd" name="stuPwd"></td>
+            </tr>
+            <tr>
+                <th>신규 비밀번호</th>
+                <td><input type="password" id="stuNewPwd" name="stuNewPwd"></td>
+            </tr>
+            <tr>
+                <th>비밀번호 확인</th>
+                <td><input type="password" id="stuPwd2" name="stuPwd2"></td>
+            </tr>
+        </table>
+        <div class="btns">
+            <input type="submit" value="등록">
+            <input type="button" value="뒤로가기" onclick="history.go(-1);">
+        </div>
+    </form>
+</body>
+</html>

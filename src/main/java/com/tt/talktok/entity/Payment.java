@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,11 +17,11 @@ public class Payment {
     @Id
     @Column(name = "pay_no")
     private int payNo;
-    private Date pay_time;
+    private LocalDate pay_time;
     private String pay_price;
-    private String pay_status;
-    @Column(name = "stu_no")
-    private int stuNo;
     @Column(name = "lec_no")
     private int lecNo;
+    private String lec_name;
+    @Column(name = "stu_email")
+    private int stuEmail;
 }

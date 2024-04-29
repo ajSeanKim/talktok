@@ -1,7 +1,11 @@
 package com.tt.talktok.controller;
 
 import com.tt.talktok.dto.ReviewDto;
+import com.tt.talktok.dto.StudentDto;
+import com.tt.talktok.entity.Review;
 import com.tt.talktok.service.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -78,5 +82,24 @@ public class ReviewController {
     public String deleteForm(){
         return "review/deleteForm";
     }
+    @GetMapping("/mylist")
+    public String myReview(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
+        HttpSession session = request.getSession();
+        int stuNo = (int) session.getAttribute("stuNo"); // 세션에서 사용자 번호 가져오기
+        System.out.println(stuNo);
+        List<ReviewDto> stuReview = reviewService.findReviewsByStudentNo(stuNo);
+        Page<ReviewDto> reviews = reviewService.reviewFindAll(pageable);
+        log.info("review: {}", reviews.getContent());
+
+        model.addAttribute("reviews", reviews.getContent());
+        model.addAttribute("page", reviews);
+        model.addAttribute("stuReviews", stuReview);
+        model.addAttribute("stuNo", stuNo); // 모델에 사용자 번호 추가
+
+        System.out.println(stuNo);
+        System.out.println(session.getAttribute("stuNo"));
+        return "review/myReview";
+    }
+
 
 }

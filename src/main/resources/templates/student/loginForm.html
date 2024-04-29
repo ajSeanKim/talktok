@@ -29,12 +29,21 @@
 <form method="post" action="/student/login" onsubmit="return check()">
     아이디 <input type="text" id="stuEmail" name="stuEmail" placeholder="이메일을 입력하세요." /> <br/>
     비밀번호 <input type="text" id="stuPwd" name="stuPwd" /> <br/>
-    <input type="submit" value="로그인">
+    <input type="submit" value="로그인" >
     <input type="button" value="회원가입" onclick="location='/student/join'">
     <input type="button" value="비밀번호 찾기" onclick="location='/student/findPwd'">
-
+    <input type="button" value="선생님로그인" onclick="location='/teacher/login'">
 </form>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+<div>
+    <a href="https://kauth.kakao.com/oauth/authorize?client_id=425f66c4214454a68dfaa2dc66f30387&redirect_uri=http://localhost:80/oauth/kakao/callback&response_type=code">
+        <img src="/images/kakao_login_medium_narrow.png">
+    </a>
+<!--    <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=mdKA6sN55zOmRKVIwSKl
+&redirect_uri=http:localhost:80/oauth/naver/callback&state=1234">
+        <img src="/images/btnG_naver.png">
+    </a>-->
+</div>
 </body>
 </html>
