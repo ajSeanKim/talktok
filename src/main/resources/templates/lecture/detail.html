@@ -142,7 +142,7 @@
                             const paymentInfo = {
                                 price: rsp.paid_amount,
                                 email: rsp.buyer_email,
-                                lecNo: lectureNo,
+                                lecNo: parseInt(lectureNo),
                                 lecName: rsp.name,
                             }
                             console.log('DB저장 정보: ' + JSON.stringify(paymentInfo));

@@ -13,15 +13,17 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 <main class="wrap">
     <button id="payment">구매하기</button>
-    <div id="email" th:text="${email}"></div>
+    <div id="lecNo">1</div>
 </main>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!-- 포트원 결제 -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> <!-- iamport.payment.js -->
 <script>
-    // 구매자 정보
-    const email = document.getElementById('email').innerText;
-    console.log(email);
+    // 구매자 정보 및 필요한 정보 추출
+    const email = 'ssapchap@gmail.com';
+    const lecPrice = '50000';
+    const lectureName = 'test';
+    const lectureNo = document.getElementById('lecNo').innerText;
 
     // 결제창 함수 넣어주기
     const buyButton = document.getElementById('payment')
@@ -31,34 +33,35 @@
 
     let today = new Date();
     let hours = today.getHours(); // 시
-    let minutes = today.getMinutes();  // 분
-    let seconds = today.getSeconds();  // 초
+    let minutes = today.getMinutes(); // 분
+    let seconds = today.getSeconds(); // 초
     let milliseconds = today.getMilliseconds();
     let makeMerchantUid = `${hours}` + `${minutes}` + `${seconds}` + `${milliseconds}`;
 
-    console.log("결제고유번호:"+makeMerchantUid);
-
     function kakaoPay(email) {
-        if (confirm("구매 하시겠습니까?")) { // 구매 클릭시 한번 더 확인하기
-            // const emoticonName = document.getElementById('title').innerText
+        if (confirm("구매하시겠습니까?")) { // 구매 클릭 시 확인
 
             IMP.init("imp35176617"); // 고객사 식별코드
             IMP.request_pay({
                 pg: 'kakaopay.TC0ONETIME', // PG사 코드표에서 선택
                 pay_method: 'card', // 결제 방식
                 merchant_uid: "IMP" + makeMerchantUid, // 결제 고유 번호
-                name: '상품명', // 제품명
-                amount: 100, // 가격
-                // 구매자 정보
-                buyer_email: email
+                name: lectureName, // 강의 이름
+                amount: lecPrice, // 가격
+                buyer_email: email // 구매자 정보
             }, async function kakaoPayCallback(rsp) {
-                if (rsp.success) { //결제 성공시
+                if (rsp.success) { // 결제 성공시
                     console.log(rsp);
 
-                    // 결제 시각 받아오기
-                    const paymentTime = new Date(rsp.paid_at * 1000);
+                    const paymentInfo = {
+                        price: rsp.paid_amount,
+                        email: rsp.buyer_email,
+                        lecNo: lectureNo,
+                        lecName: rsp.name,
+                    }
+                    console.log('DB저장 정보: ' + JSON.stringify(paymentInfo));
 
-                    //결제 성공시 프로젝트 DB저장 요청
+                    // DB 저장 요청
                     try {
                         const response = await fetch('/savePayment', {
                             method: 'POST',
@@ -66,8 +69,7 @@
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                paymentInfo: rsp,
-                                paymentTime: paymentTime
+                                paymentInfo: paymentInfo
                             })
                         });
                         if (response.ok) {
