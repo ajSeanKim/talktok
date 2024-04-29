@@ -56,6 +56,7 @@ public class StudentService {
 
     // 학생 회원 가입
     public void join(StudentDto studentDto) {
+        System.out.println("서비스 진입");
         Student newStudent = new Student();
 
         String pwd=studentDto.getStuPwd();
@@ -64,6 +65,7 @@ public class StudentService {
         newStudent = convertToEntity(studentDto);
         newStudent.setStuPwd(encodePwd);
         System.out.println("ddd");
+        
         studentRepository.save(newStudent);
     }
     @Transactional
