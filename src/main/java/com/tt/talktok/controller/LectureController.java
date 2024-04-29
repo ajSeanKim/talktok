@@ -32,6 +32,7 @@ public class LectureController {
         model.addAttribute("currentPage",currentPage);
         return "/lecture/list";
     }
+
     @GetMapping("/detail")
     public String detail(@RequestParam("no") int lec_no, @RequestParam("page") int currentPage, Model model) {
         LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);

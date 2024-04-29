@@ -22,5 +22,6 @@ public class ReviewDto {
     private String lec_name;
     private int tea_no;
     private String tea_name;
+    private int stu_no;
 
 }

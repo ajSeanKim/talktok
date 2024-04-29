@@ -44,5 +44,7 @@ public class Review {
     private String teaName;
     @Column(name = "tea_no")
     private int teaNo;
+    @Column(name = "stu_no")
+    private int stuNo;
 
 }
