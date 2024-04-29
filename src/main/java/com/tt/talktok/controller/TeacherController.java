@@ -95,6 +95,8 @@ public class TeacherController {
 
                 System.out.println("비번이 같을때");
                 session.setAttribute("teaEmail", email);
+                session.setAttribute("stuEmail", email);
+                session.setAttribute("teaNo", dbTeacher.getTeaNo());
                 model.addAttribute("result", result);
                 //비번이 다를때
             } else {
@@ -274,11 +276,9 @@ public class TeacherController {
         int result = 0;
         // 현재 비밀번호 확인
         if (passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
-
-            TeacherDto newTeacher = new TeacherDto();
-            newTeacher.setTeaPwd((teacherDto.getTeaPwd()));
             String encpassword = passwordEncoder.encode(teaNewPwd);
-            newTeacher.setTeaPwd(encpassword);
+            dbTeacher.setTeaPwd(encpassword);
+            teacherService.updatePwd(dbTeacher);
             result = 1;
 //            result = studentService.updatePwd(newStudent);
 
@@ -306,7 +306,18 @@ public class TeacherController {
         TeacherDto dbTeacher = this.teacherService.findTeacher(teaEmail);
         // student update
         if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
-            teacherDto.setTeaPwd(dbTeacher.getTeaPwd());
+            dbTeacher.setTeaName(teacherDto.getTeaName());
+            dbTeacher.setTeaNickname(teacherDto.getTeaNickname());
+            dbTeacher.setTeaPhone(teacherDto.getTeaPhone());
+            dbTeacher.setTeaAccount(teacherDto.getTeaAccount());
+            dbTeacher.setTeaIntro(teacherDto.getTeaIntro());
+            dbTeacher.setTeaDetail(teacherDto.getTeaDetail());
+            dbTeacher.setTeaCareer(teacherDto.getTeaCareer());
+            dbTeacher.setTeaImage(teacherDto.getTeaImage());
+            dbTeacher.setTeaNation(teacherDto.getTeaNation());
+            dbTeacher.setTeaPwd(teacherDto.getTeaPwd());
+
+            teacherService.update(dbTeacher);
             System.out.println("수정완료");
             return "redirect:/teacher/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
         } else{ //비밀번호 불일치
