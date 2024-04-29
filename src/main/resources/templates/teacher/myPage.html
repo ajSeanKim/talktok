@@ -6,6 +6,8 @@
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+강사 로그인 성공
+<p th:text="${session.teaEmail}">teaEmail</p>
 <input type="button" value="회원탈퇴" onclick="location='/teacher/withdraw'">
 <input type="button" value="강의목록" onclick="location='/teacher/'">
 <input type="button" value="로그아웃" onclick="location='/teacher/logout'">
