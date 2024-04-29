@@ -50,7 +50,7 @@ public class NoticeService {
         Notice notice = Notice.builder()
                         .noSubject(noticeDto.getNoSubject())
                         .noContent(noticeDto.getNoContent())
-                        .noDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                        .noDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .build();
 
         noticeRepository.save(notice);

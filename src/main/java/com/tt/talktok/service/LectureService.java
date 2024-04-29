@@ -42,6 +42,7 @@ public class LectureService {
         dto.setLec_detail(lecture.getLec_detail());
         dto.setLec_startdate(lecture.getLec_startdate());
         dto.setLec_enddate(lecture.getLec_enddate());
+        dto.setTea_no(lecture.getTeaNo());
         return dto; // 마지막으로 변환된 LectureDto 객체를 반환한다
     }
     

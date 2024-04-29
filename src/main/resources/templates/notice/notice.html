@@ -28,7 +28,7 @@
             <tr th:each="notice : ${list}">
                 <td th:text="${notice.noNo}"></td>
                 <td>
-                    <a th:href="@{/notice/detail(noNo=${notice.noNo}, page=${list.number})}" th:text="${notice.noSubject}"></a>
+                    <a th:href="@{/notice/detail(noNo=${notice.noNo}, page=${list.number}+1)}" th:text="${notice.noSubject}"></a>
                 </td>
                 <td th:text="관리자"></td>
                 <td th:text="${notice.noReadcount}"></td>

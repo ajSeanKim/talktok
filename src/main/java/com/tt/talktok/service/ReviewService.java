@@ -1,17 +1,18 @@
 package com.tt.talktok.service;
 
 import com.tt.talktok.dto.ReviewDto;
+import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.entity.Review;
 import com.tt.talktok.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class ReviewService {
 
     public void reviewWrite(ReviewDto reviewDto) {
 
-        LocalDateTime currentDateTime = LocalDateTime.now();
+//        LocalDateTime currentDateTime = LocalDateTime.now();
 
         Review review = Review
                 .builder()
@@ -32,16 +33,13 @@ public class ReviewService {
                 .revDetail(reviewDto.getRev_detail())
                 .revWriter(reviewDto.getRev_writer())
                 .revScore(reviewDto.getRev_score())
-                .revDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+//                .revDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .lecNo(reviewDto.getLec_no())
+                .lecName(reviewDto.getLec_name())
                 .teaNo(reviewDto.getTea_no())
+                .teaName(reviewDto.getTea_name())
                 .build();
         reviewRepository.save(review);
-    }
-
-    public Page<ReviewDto> reviewFindAll(Pageable pageable) {
-        Page<Review> reviews = reviewRepository.findAll(pageable);
-        return reviews.map(this::convertToDto);
     }
 
     private ReviewDto convertToDto(Review review) {
@@ -53,10 +51,39 @@ public class ReviewService {
         reviewDto.setRev_score(review.getRevScore());
         reviewDto.setRev_date(review.getRevDate());
         reviewDto.setLec_no(review.getLecNo());
+        reviewDto.setLec_name(review.getLecName());
         reviewDto.setTea_no(review.getTeaNo());
-        reviewDto.setRev_detail(reviewDto.getRev_detail().replace("\\n","<br/>"));
+        reviewDto.setTea_name(review.getTeaName());
+        reviewDto.setRev_detail(reviewDto.getRev_detail().replace("\n","<br>"));
         // 엔티티 클래스의 필드를 DTO 클래스에 설정
 
         return reviewDto;
     }
+
+    public Page<ReviewDto> reviewFindAll(Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findAll(pageable);
+        if (reviews == null || !reviews.hasContent()) {
+            return new PageImpl<>(new ArrayList<>(), pageable, 0); // 비어 있는 페이지 객체 반환
+        }
+        return reviews.map(this::convertToDto);
+    }
+
+
+    public ReviewDto reviewFindDetail(int rev_no) {
+        Review review = reviewRepository.findByRevNo(rev_no);
+        return convertToDto(review);
+
+    }
+
+    public List<ReviewDto> reviewFindTeacher(int tea_no) {
+        List<Review> reviews = reviewRepository.findByTeaNo(tea_no);
+        return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
+
+    }
+
+    public List<ReviewDto> findReviewsByStudentNo(int stuNo) {
+        List<Review> reviews = reviewRepository.findByStuNo(stuNo);
+        return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
 }

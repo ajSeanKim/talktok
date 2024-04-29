@@ -70,9 +70,9 @@ public class NoticeController {
 
     // 공지사항 수정 후 db저장
     @PostMapping("/update")
-    public String update(NoticeDto noticeDto){
+    public String update(@RequestParam(value = "page", defaultValue = "1") int page, NoticeDto noticeDto){
         noticeService.noticeUpdate(noticeDto);
-        return "redirect:detail?noNo="+noticeDto.getNoNo();
+        return "redirect:detail?noNo="+noticeDto.getNoNo() + "&page="+page;
     }
 
     // 공지사항 삭제

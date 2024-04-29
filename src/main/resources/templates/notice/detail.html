@@ -40,7 +40,7 @@
     </tr>
 </table>
     <div class="btns">
-        <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}'|">
+        <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}&page=${page}'|">
         <input type="button" value="삭제" th:onclick="|location.href='delete?noNo=${notice.noNo}'|">
         <input type="button" value="목록" th:onclick="|location.href='list?page=${page}'|">
     </div>
