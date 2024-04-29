@@ -11,7 +11,7 @@
 
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-<main class="wrap">
+<main class="notice-page wrap">
     <form th:action="@{/notice/write}" th:object="${notice}" method="post">
         <table>
             <h2>글작성</h2>
