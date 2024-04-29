@@ -53,7 +53,6 @@ public class ReviewService {
         if (search_target == null || search_target == null) {
             System.out.println("keyword is null");
             reviews = reviewRepository.findAll(pageable);
-
         } else if (search_target.equals("lecture")) {
             reviews = reviewRepository.findByLecNameContaining(pageable, keyword);
         } else if (search_target.equals("teacher")) {
