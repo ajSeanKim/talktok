@@ -16,19 +16,13 @@ button, input, textarea, label {
     margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline;
 }
 
-body {line-height: 1.6;
-    /*font-family: 'Pretendard', sans-serif;*/
-}
+body {line-height: 1.6; font-family: 'Pretendard', sans-serif;}
 ol, ul {list-style: none; list-style-type: none;}
 /*table {border-collapse: collapse; border-spacing: 0;}*/
-a {text-decoration: none;}
+a {text-decoration: none; color: #000;}
 img {vertical-align: middle;}
 button {cursor: pointer;}
-button,input,label,textarea {
-    line-height: 1.6;
-    /*font-family: 'Pretendard', sans-serif; */
-    background: transparent;
-}
+button,input,label,textarea,pre {line-height: 1.6; font-family: 'Pretendard', sans-serif; background: transparent;}
 button:focus,input:focus,select:focus {outline: 0}
 select {-webkit-appearance: none; -moz-appearance: none; cursor: pointer;}
 select::-ms-expand {display: none;}
