@@ -98,8 +98,10 @@
             }
         </script>
 
-        <div id="email" th:text="${email}"></div>
-        <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        <div style="opacity: 0;">
+            <div id="email" th:text="${email}"></div>
+            <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        </div>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
         <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!-- 포트원 결제 -->
