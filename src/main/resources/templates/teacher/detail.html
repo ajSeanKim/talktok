@@ -4,19 +4,30 @@
     <meta charset="UTF-8">
     <title>detail</title>
 <style>
-    .teacher-view-item {display: flex; gap: 5rem;}
-    .teacher-view-item .teacher-image {padding: 0px;
-        border-radius: 10px;
-        flex: 0 0 auto;
-        width: 300px;
-        height: 300px;
-        border: 1px solid #dddddd;
-        overflow: hidden;
-        text-align: center;}
-    .teacher-view-item .teacher-image .img-wrap {width:100%; height:28rem; border-radius:5px;}
-    .teacher-view-item .teacher-image .img-wrap img {width:100%; height:100%; object-fit:cover;}
-    .teacher-view-item .teacher-info {}
+    .teacher-view-item {}
+    .teacher-view-item .teacher-detail {margin: 5rem;}
+    .teacher-view-item .teacher-detail .teacher-image-info {display: flex; gap: 5rem;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image {padding: 0px; border-radius: 10px; flex: 0 0 auto; width: 300px; height: 300px; border: 1px solid #dddddd; overflow: hidden; text-align: center;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; border-radius:5px;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; object-fit:cover;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-info {}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab {}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab .on {color: #fff; background-color: #fcba03; border-bottom-color: #000;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab .bg{height: 1rem; transition: 0.5s;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab .teacher-info {min-width: 130px; height: 55px; padding: 0 40px; text-align: center; font-size: 16px; font-weight: 500; line-height: 55px;border-radius: 30px;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab .teacher-review { min-width: 130px; height: 55px; padding: 0 40px; text-align: center; font-size: 16px; font-weight: 500; line-height: 55px;  border-radius: 30px;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-info-area {margin-top: 40px;}
 
+
+
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area {}
+    .teacher-review-area {position: relative; display: inline-block; width: 100%; height: 200px; overflow: auto;}
+    .teacher-review-area .teacher-review { width: 1150px; margin: 0 auto; position: relative;}
+    .teacher-review-area .teacher-review .teacher_review_box_items {padding: 24px 10px; border-bottom: 1px solid #e5e5e5; position: relative;}
+    .teacher-review-area .teacher-review .teacher_review_box_items .review_detail {width: 950px; color: #666666;}
+    .teacher-review-area .teacher-review .teacher_review_box_items .writerDay_var2 {padding-top: 20px;}
+    .teacher-review-area .teacher-review .teacher_review_box_items .writerDay_var2 span {padding-right: 20px;}
+    .teacher-review-area .teacher-review .teacher_review_box_items .score_star{font-size: 18px; margin-bottom: 15px;}
 </style>
 
 </head>
@@ -24,51 +35,89 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
 <main class="wrap">
-    <section class="teacher-view-item">
-        <div class="teacher-image">
-            <div class="img-wrap">
-                <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
-                <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
-            </div>
-        </div>
-        <div class="teacher-info">
-            <h1 class="teacherName" th:text="${teacherDetail.teaName}"></h1>
-            <p class="teacherSchool" th:text="${teacherDetail.teaCareer}"></p>
-            <p class="teaEmail" th:text="${teacherDetail.teaEmail}"></p>
-            <p class="teaNickname" th:text="${teacherDetail.teaNickname}"></p>
-            <p class="teaIntro" th:text="${teacherDetail.teaIntro}"></p>
-            <p class="teaDetail" th:text="${teacherDetail.teaDetail}"></p>
-            <p class="teaNation" th:text="${teacherDetail.teaNation}"></p>
-        </div>
-    </section>
-    <section class="detail-container">
-    <div class="teacher-tab">
-        <div clss="course_area">
-            <div class="view_wrap border-bottom">
-                <div class="tab_type_b">
-                    <div id="tab1" class="tab_contents">
-                        <div class="tab_section">
-                            <div class="teacher-box">
-                                <p class="teacherName" th:text="${teacherDetail.teaName}"></p>
-                                <p class="teacherDetail" th:text="${teacherDetail.teaDetail}"></p>
-                            </div>
-                        </div>
+    <div class="teacher-view-item">
+        <div class="teacher-detail">
+            <div class="teacher-image-info">
+                <div class="teacher-image">
+                    <div class="img-wrap">
+                        <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+                        <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
                     </div>
-                    <div id="tab2" class="tab_contents">
-                        <div class="tab_section">
-                            <div class="teacher-box">
-                                선생 수업 후기 글
+                </div>
+                <div class="teacher-info">
+                    <h1 class="teacherName">이름: <span th:text="${teacherDetail.teaName}"></span></h1>
+                    <p class="teacherSchool">학력: <span th:text="${teacherDetail.teaCareer}"></span></p>
+                    <p class="teaEmail">이메일: <span th:text="${teacherDetail.teaEmail}"></span></p>
+                    <p class="teaNation">국적: <span th:text="${teacherDetail.teaNation}"></span></p>
+                </div>
+            </div>
+            <div class="detail-container">
+                <div class="teacher-tab">
+                    <div class="bg"></div>
+                    <button class="teacher-info on">튜터소개</button>
+                    <button class="teacher-review">수업후기</button>
+                </div>
+                <div class="teacher-info-area">
+                    <p class="teacherIntro">한 줄 소개: <span th:text="${teacherDetail.teaIntro}"></p><br>
+                    <p class="teacher-infoDetail">상세 소개: <span th:text="${teacherDetail.teaDetail}"></span></p>
+                </div>
+
+                <div class="teacher-review-area">
+                    <div class="teacher-review" th:each="review : ${reviews}" >
+                        <div class="teacher_review_box_items">
+                            <a th:href="@{/review/detail(rev_no=${review.rev_no})}"><h2 th:text="${review.rev_name}"></h2></a>
+                            <div class="review_detail">
+                                <div id="short_${stat.index}" class="review_detail_short" th:utext="${#strings.abbreviate(review.rev_detail, 150)}"></div>
+                                <div id="full_${stat.index}" class="hidden-content" th:utext="${review.rev_detail}"></div>
+                                <button th:if="${#strings.length(review.rev_detail) > 150}" onclick="toggleContent('${stat.index}')" class="btn btn-link" data-id="${stat.index}">더보기</button>
+                            </div>
+                            <div class="writerDay_var2">
+                                <span th:text="${#strings.substring(review.rev_writer, 0,1)+'**'}"></span>
+                                <span th:text="${#strings.substring(review.rev_date, 0,10)}"></span>
+                            </div>
+                            <div class="score_star">
+                                <div class="rate">
+                                    <span th:if="${review.rev_score >= 10}" style="width: 100%"></span>
+                                    <span th:if="${review.rev_score >= 9}" style="width: 92%"></span>
+                                    <span th:if="${review.rev_score >= 8}" style="width: 80%"></span>
+                                    <span th:if="${review.rev_score >= 7}" style="width: 72%"></span>
+                                    <span th:if="${review.rev_score >= 6}" style="width: 60%"></span>
+                                    <span th:if="${review.rev_score >= 5}" style="width: 52%"></span>
+                                    <span th:if="${review.rev_score >= 4}" style="width: 40%"></span>
+                                    <span th:if="${review.rev_score >= 3}" style="width: 30%"></span>
+                                    <span th:if="${review.rev_score >= 2}" style="width: 20%"></span>
+                                    <span th:if="${review.rev_score >= 1}" style="width: 10%"></span>
+                                </div>
+                                <div th:text="|${review.rev_score}점|"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</section>
 </main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+    //버튼 영역 제어
+    $('.teacher-review-area').hide();
+    $('.teacher-info').click(function() {
+        $(this).addClass('on');
+        $('.teacher-tab .bg').css('left','5px');
+        $('.teacher-review').removeClass('on');
+        $('.teacher-review-area').hide();
+        $('.teacher-info-area').show();
+    });
+    $('.teacher-review').click(function() {
+        $(this).addClass('on');
+        $('.teacher-tab .bg').css('left','33%');
+        $('.teacher-info').removeClass('on');
+        $('.teacher-info-area').hide();
+        $('.teacher-review-area').show();
+    });
+</script>
+
 </body>
 </html>

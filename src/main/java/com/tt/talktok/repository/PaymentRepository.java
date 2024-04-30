@@ -12,12 +12,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
     // 결제 정보 저장
     //public int savePayment(PaymentDto paymentDto);
-    public int save(PaymentDto paymentDto);
+    public Payment save(Payment payment);
 
     List<Payment> findByStuEmail(String stuEmail);
 
-
-    // JpaRepository에서 제공하는 save() 메서드를 사용하여 저장
-//    @Override
-//    <S extends Payment> S save(S entity);
 }

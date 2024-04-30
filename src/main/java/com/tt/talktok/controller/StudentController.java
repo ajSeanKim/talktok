@@ -87,11 +87,8 @@ public class StudentController {
 
          StudentDto dbStudent = studentService.findStudent(stuEmail);
         //가입된 email = 1, 가입안된 email = 0
-        if(dbStudent.getStuEmail() != null){
             studentService.join(student);
             model.addAttribute("result",result);
-            return "student/join";
-        }
         return "student/join";
     }
 

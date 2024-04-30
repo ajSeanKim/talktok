@@ -5,7 +5,6 @@
     <title>톡톡스피킹</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
-        body {font-family: 'Pretendard', 'sans-serif';}
         main.wrap {margin:70px auto;}
         a {color: #000;}
         .list-box {display:flex; flex-wrap:wrap; gap:2rem; margin-bottom: 30px;}
@@ -37,23 +36,20 @@
             </div>
             <div th:if="${lectureList.totalPages > 1}" class="paging-box">
                 <ul class="paging">
-                    <li><a th:if="${not lectureList.first}" th:href="@{/lecture/list(page=0)}">
+                    <li th:if="${not lectureList.first}">
+                        <a th:href="@{/lecture/list(page=1)}">
                         <i class="fa-solid fa-chevron-left"></i><i class="fa-solid fa-chevron-left"></i>
-                    </a></li>
-<!--                    <li><a th:href="@{/lecture/list(page=0)}">-->
-<!--                        <i class="fa-solid fa-chevron-left"></i><i class="fa-solid fa-chevron-left"></i>-->
-<!--                    </a></li>-->
-
-                    <li th:each="pageNumber : ${#numbers.sequence(0, lectureList.totalPages - 1)}" th:class="${pageNumber == lectureList.number ? 'active' : ''}">
-                        <a th:href="@{'/lecture/list?page=' + ${pageNumber}}">[[${pageNumber + 1}]]</a>
+                        </a>
                     </li>
-
-                    <li><a th:if="${not lectureList.last}" th:href="@{/lecture/list(page=${lectureList.totalPages - 1})}">
-                        <i class="fa-solid fa-chevron-right"></i><i class="fa-solid fa-chevron-right"></i>
-                    </a></li>
-<!--                    <li><a th:href="@{/lecture/list(page=${lectureList.totalPages - 1})}">-->
-<!--                        <i class="fa-solid fa-chevron-right"></i><i class="fa-solid fa-chevron-right"></i>-->
-<!--                    </a></li>-->
+                    <li th:each="pageNumber : ${#numbers.sequence(1, lectureList.totalPages)}"
+                        th:class="${pageNumber == lectureList.number + 1 ? 'active' : ''}">
+                        <a th:href="@{'/lecture/list?page=' + ${pageNumber}}">[[${pageNumber}]]</a>
+                    </li>
+                    <li th:if="${not lectureList.last}">
+                        <a th:href="@{/lecture/list(page=${lectureList.totalPages})}">
+                            <i class="fa-solid fa-chevron-right"></i><i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </section>

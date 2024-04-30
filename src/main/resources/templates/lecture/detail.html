@@ -5,16 +5,13 @@
     <title>톡톡스피킹</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
-        body , button {font-family: 'Pretendard', 'sans-serif';}
         main.wrap {margin:70px auto; display: flex; gap:40px; flex-wrap: wrap;}
-        a {color: #000;}
-
         .contents-box {flex-basis: calc(70% - 40px);}
         .contents-box h3 {color: #f9a01b; font-size: 1.4em;}
         .float-box {flex-basis: 30%;}
         .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
-        .float-box .btn-review {margin:10px 0 0 2%; background: #f9a01b; color:#fff;}
-        .float-box .btn-list {width:100%; margin:20px 0; border-color: #ccc; border-radius: unset;}
+        .float-box .btn-review {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
+        .float-box .btn-list {width:100%; border-color: #ccc; border-radius: unset;}
         .float-box .btn-list a {display: block;}
         .review-box {width:100%;}
         .review-box .none {color: #666;}
@@ -47,8 +44,14 @@
             </div>
         </section>
         <section class="box float-box">
-            <button class="btn btn-pay" id="payment">구매하기</button>
-            <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+            <div th:if="${session.stuNo != null || session.teaNo != null}">
+                <button class="btn btn-pay" id="payment">구매하기</button>
+                <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+            </div>
+            <div th:if="${session.stuNo == null && session.teaNo == null}">
+                <button class="btn btn-pay" onclick="location.href='/student/login'">구매하기</button>
+                <button class="btn btn-review" onclick="location.href='/student/login'">후기등록</button>
+            </div>
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>
 
@@ -98,8 +101,10 @@
             }
         </script>
 
-        <div id="email" th:text="${email}"></div>
-        <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        <div style="opacity: 0;">
+            <div id="email" th:text="${email}"></div>
+            <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        </div>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
         <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!-- 포트원 결제 -->
@@ -142,7 +147,7 @@
                             const paymentInfo = {
                                 price: rsp.paid_amount,
                                 email: rsp.buyer_email,
-                                lecNo: lectureNo,
+                                lecNo: parseInt(lectureNo),
                                 lecName: rsp.name,
                             }
                             console.log('DB저장 정보: ' + JSON.stringify(paymentInfo));
