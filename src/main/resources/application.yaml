@@ -7,6 +7,12 @@ spring:
     url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/talktok
     username: talktok
     password: choongang
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false  # 개발 중에는 캐시를 비활성화하는 것이 좋습니다.
 
   security:
     oauth2:
