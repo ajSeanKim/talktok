@@ -3,6 +3,8 @@ package com.tt.talktok.controller;
 import com.tt.talktok.dto.PaymentDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.StudentDto;
+import com.tt.talktok.entity.Lecture;
+import com.tt.talktok.repository.LectureRepository;
 import com.tt.talktok.service.PaymentService;
 import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.StudentService;
@@ -22,21 +24,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/student")
 public class StudentController {
+
+    private final PaymentService paymentService;
+    private final ReviewService reviewService;
+    private final LectureRepository lectureRepository;
     @Value("${spring.mail.hostSMTPid}")
     String hostSMTPid;
 
     @Value("${spring.mail.hostSMTPpwd}")
     String hostSMTPpwd;
 
-    private final PaymentService paymentService;
-    private final ReviewService reviewService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final StudentService studentService;
 
@@ -312,17 +318,15 @@ public class StudentController {
     public String myLecture(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
         HttpSession session = request.getSession();
         String stuEmail = (String) session.getAttribute("stuEmail"); // 세션에서 사용자 번호 가져오기
-        System.out.println(stuEmail);
-        List<PaymentDto> stuPayment = paymentService.findPaymentByStudentEmail(stuEmail);
         Page<ReviewDto> reviews = reviewService.reviewFindAll(pageable);
-//        log.info("review: {}", reviews.getContent());
 
         StudentDto studentDto = studentService.findStudent(stuEmail);
 
+        List<PaymentDto> lecture = paymentService.findPaymentByStudentEmail(stuEmail);
         List<Integer> reviewCheck = new ArrayList<>();
 
-        for(int i = 0;i<stuPayment.size();i++) {
-            int result = reviewService.reviewCheck(studentDto.getStuNo(),stuPayment.get(i).getLec_no());
+        for(int i = 0;i<lecture.size();i++) {
+            int result = reviewService.reviewCheck(studentDto.getStuNo(),lecture.get(i).getLec_no());
             reviewCheck.add(result);
         }
 
@@ -330,14 +334,15 @@ public class StudentController {
 
         model.addAttribute("studentDto", studentDto);
         model.addAttribute("reviewCheck", reviewCheck);
+        Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
+
+        model.addAttribute("stuLecture", stuLecture);
         model.addAttribute("reviews", reviews.getContent());
         model.addAttribute("page", reviews);
-        model.addAttribute("stuPayment", stuPayment);
-        model.addAttribute("stuEmail", stuEmail); // 모델에 사용자 번호 추가
 
         System.out.println("세션 이메일: " + session.getAttribute("stuEmail"));
-        System.out.println("결제 내역 확인 : " + stuPayment);
-        return "student/payment";
+        System.out.println("강의 내역 확인 : " + stuLecture);
+        return "student/lecture";
     }
 
 
