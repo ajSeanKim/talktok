@@ -1,9 +1,14 @@
 package com.tt.talktok.controller;
 
+import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.StudentDto;
+import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Review;
+import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
+import com.tt.talktok.service.StudentService;
+import com.tt.talktok.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +34,9 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final StudentService studentService;
+    private final LectureService lectureService;
+    private final TeacherService teacherService;
 
     @GetMapping("/list")
     public String reviewAllFind(Model model, @PageableDefault(page = 0, size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable
@@ -48,14 +56,28 @@ public class ReviewController {
 
     @GetMapping("/detail")
     public String reviewDetail(Model model, int rev_no) {
+        reviewService.reviewCountUpdate(rev_no);
         ReviewDto review = reviewService.reviewFindDetail(rev_no);
+
         log.info("review: {}", review);
         model.addAttribute("review", review);
         return "/review/detail";
     }
 
     @GetMapping("/write")
-    public String writeForm(ReviewDto reviewDto){
+    public String writeForm(@RequestParam(name = "lec_no") int lec_no, @RequestParam(name = "tea_no") int tea_no, Model model, HttpSession session){
+        StudentDto studentDto = studentService.findStudent((String)session.getAttribute("stuEmail"));
+        System.out.println(studentDto.getStuNo());
+
+        LectureDto lectureDto = lectureService.findLectureByLecNo(lec_no);
+        TeacherDto teacherDto = teacherService.findTeacher(tea_no);
+
+        model.addAttribute("teacher", teacherDto);
+        model.addAttribute("lecture", lectureDto);
+        model.addAttribute("student", studentDto);
+        model.addAttribute("lec_no", lec_no);
+        model.addAttribute("tea_no", tea_no);
+
         return "review/writeForm";
     }
     @PostMapping("/write")
@@ -71,12 +93,21 @@ public class ReviewController {
 
         Page<ReviewDto> reviews = reviewService.reviewFindAble(stu_no, pageable);
         model.addAttribute("reviews", reviews.getContent());
+        model.addAttribute("page", reviews);
         return "review/able";
     }
 
     @GetMapping("/update")
-    public String updateForm(){
+    public String updateForm(int rev_no, Model model){
+        ReviewDto review = reviewService.reviewFindDetail(rev_no);
+        model.addAttribute("review", review);
         return "review/updateForm";
+    }
+    @PostMapping("/update")
+    public String update(ReviewDto reviewDto){
+        System.out.println(reviewDto);
+        reviewService.reviewUpdate(reviewDto);
+        return "redirect:/review/able";
     }
     @GetMapping("/delete")
     public String deleteForm(){

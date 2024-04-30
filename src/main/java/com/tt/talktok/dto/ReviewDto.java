@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class ReviewDto {
 
-    private long rev_no;
+    private int rev_no;
     private String rev_name;
     private String rev_detail;
     private String rev_writer;

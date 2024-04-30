@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private static final Logger log = LoggerFactory.getLogger(ReviewService.class);
     private final ReviewRepository reviewRepository;
 
 
@@ -40,7 +39,7 @@ public class ReviewService {
                 .lecName(reviewDto.getLec_name())
                 .teaNo(reviewDto.getTea_no())
                 .teaName(reviewDto.getTea_name())
-                .teaNo(reviewDto.getStu_no())
+                .stuNo(reviewDto.getStu_no())
                 .build();
         reviewRepository.save(review);
 
@@ -121,4 +120,37 @@ public class ReviewService {
         return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    public void reviewCountUpdate(int revNo) {
+        reviewRepository.reviewCountUpdate(revNo);
+    }
+
+    public void reviewUpdate(ReviewDto reviewDto) {
+
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        Review review = Review
+                .builder()
+                .revNo(reviewDto.getRev_no())
+                .revName(reviewDto.getRev_name())
+                .revDetail(reviewDto.getRev_detail())
+                .revWriter(reviewDto.getRev_writer())
+                .revScore(reviewDto.getRev_score())
+//                .revDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+//                .lecNo(reviewDto.getLec_no())
+//                .lecName(reviewDto.getLec_name())
+//                .teaNo(reviewDto.getTea_no())
+//                .teaName(reviewDto.getTea_name())
+//                .teaNo(reviewDto.getStu_no())
+                .build();
+        reviewRepository.save(review);
+
+    }
+
+    public int reviewCheck(int stuNo, int lecNo) {
+        return reviewRepository.existsByStuNoAndLecNo(stuNo, lecNo);
+    }
+
+//    public void reviewUpdate(ReviewDto reviewDto) {
+//        reviewRepository.reviewUpdate(reviewDto);
+//    }
 }

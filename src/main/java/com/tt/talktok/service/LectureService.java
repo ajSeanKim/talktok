@@ -45,7 +45,20 @@ public class LectureService {
         dto.setTea_no(lecture.getTeaNo());
         return dto; // 마지막으로 변환된 LectureDto 객체를 반환한다
     }
-    
+    private Lecture convertToEntity(LectureDto dto) { // LectureDto 객체를 파라미터로 받는다
+        Lecture lecture = new Lecture(); // 새로운 Lecture 엔티티 객체를 생성
+        lecture.setLecNo(dto.getLec_no()); // DTO의 각 필드 값을 엔티티의 해당 필드에 복사한다
+        lecture.setLec_name(dto.getLec_name());
+        lecture.setLec_day(dto.getLec_day());
+        lecture.setLec_time(dto.getLec_time());
+        lecture.setLec_price(dto.getLec_price());
+        lecture.setLec_detail(dto.getLec_detail());
+        lecture.setLec_startdate(dto.getLec_startdate());
+        lecture.setLec_enddate(dto.getLec_enddate());
+        lecture.setTeaNo(dto.getTea_no());
+        return lecture; // 마지막으로 변환된 Lecture 엔티티 객체를 반환한다
+    }
+
     // 강의 하나 가져오기
     public LectureDto findLectureByLecNo(int lec_no) {
         Lecture lecture = lectureRepository.findByLecNo(lec_no);
@@ -54,5 +67,10 @@ public class LectureService {
         } else { // 강의가 없을 경우 처리
             return null;
         }
+    }
+    //강의 생성
+    public void lecJoin(LectureDto lectureDto) {
+        Lecture newlecture = convertToEntity(lectureDto);
+        lectureRepository.save(newlecture);
     }
 }

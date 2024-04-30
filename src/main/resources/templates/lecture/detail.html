@@ -5,16 +5,13 @@
     <title>톡톡스피킹</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
-        body , button {font-family: 'Pretendard', 'sans-serif';}
         main.wrap {margin:70px auto; display: flex; gap:40px; flex-wrap: wrap;}
-        a {color: #000;}
-
         .contents-box {flex-basis: calc(70% - 40px);}
         .contents-box h3 {color: #f9a01b; font-size: 1.4em;}
         .float-box {flex-basis: 30%;}
         .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
-        .float-box .btn-review {margin:10px 0 0 2%; background: #f9a01b; color:#fff;}
-        .float-box .btn-list {width:100%; margin:20px 0; border-color: #ccc; border-radius: unset;}
+        .float-box .btn-review {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
+        .float-box .btn-list {width:100%; border-color: #ccc; border-radius: unset;}
         .float-box .btn-list a {display: block;}
         .review-box {width:100%;}
         .review-box .none {color: #666;}
@@ -47,6 +44,14 @@
             </div>
         </section>
         <section class="box float-box">
+            <div th:if="${session.stuNo != null || session.teaNo != null}">
+                <button class="btn btn-pay" id="payment">구매하기</button>
+                <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+            </div>
+            <div th:if="${session.stuNo == null && session.teaNo == null}">
+                <button class="btn btn-pay" onclick="location.href='/student/login'">구매하기</button>
+                <button class="btn btn-review" onclick="location.href='/student/login'">후기등록</button>
+            </div>
             <button class="btn btn-pay" id="payment">구매하기</button>
             <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
             <form th:action="@{/cart/add}" method="post">
@@ -56,51 +61,51 @@
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>
 
-<!--        <section class="box review-box">-->
-<!--            <h3>선생님 후기</h3>-->
-<!--            <div class="none" th:if="${reviews.size() == 0}">-->
-<!--                <p>등록된 후기가 존재하지 않습니다.</p>-->
-<!--            </div>-->
-<!--            <div class="list-wrap">-->
-<!--                <div class="list" th:each="list : ${reviews}">-->
-<!--                    <input type="hidden" th:data-score="${list.rev_score}" class="score"> &lt;!&ndash; 점수를 data-score 에 저장 &ndash;&gt;-->
-<!--                    <p><span class="starRating"></span> <span th:text="'('+${list.rev_score}+'점)'"></span></p>-->
-<!--                    <p class="title"><span th:text="${list.rev_name}"></span></p>-->
-<!--                    <p class="detail"><span th:utext="${list.rev_detail}"></span></p>-->
-<!--                    <p>-->
-<!--                        <span th:text="${#strings.substring(list.rev_writer, 0,1)+'*'+#strings.substring(list.rev_writer, 2,3)}"></span>-->
-<!--                        &nbsp;&nbsp;-->
-<!--                        <span th:text="${#strings.substring(list.rev_date, 0,10)}"></span>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
+        <section class="box review-box">
+            <h3>선생님 후기</h3>
+            <div class="none" th:if="${reviews.size() == 0}">
+                <p>등록된 후기가 존재하지 않습니다.</p>
+            </div>
+            <div class="list-wrap">
+                <div class="list" th:each="list : ${reviews}">
+                    <input type="hidden" th:data-score="${list.rev_score}" class="score"> <!-- 점수를 data-score 에 저장 -->
+                    <p><span class="starRating"></span> <span th:text="'('+${list.rev_score}+'점)'"></span></p>
+                    <p class="title"><span th:text="${list.rev_name}"></span></p>
+                    <p class="detail"><span th:utext="${list.rev_detail}"></span></p>
+                    <p>
+                        <span th:text="${#strings.substring(list.rev_writer, 0,1)+'*'+#strings.substring(list.rev_writer, 2,3)}"></span>
+                        &nbsp;&nbsp;
+                        <span th:text="${#strings.substring(list.rev_date, 0,10)}"></span>
+                    </p>
+                </div>
+            </div>
+        </section>
 
-<!--        <script>-->
-<!--            // 모든 .score 요소에 대해 별점생성 함수 호출-->
-<!--            var scores = document.querySelectorAll('.score');-->
-<!--            scores.forEach(function(scoreElement) {-->
-<!--                var score = parseInt(scoreElement.getAttribute('data-score'));-->
-<!--                var ratingElement = scoreElement.nextElementSibling.querySelector('.starRating');-->
-<!--                generateStarRating(score, ratingElement);-->
-<!--            });-->
-<!--            // 별점생성 함수-->
-<!--            function generateStarRating(score, ratingElement) {-->
-<!--                var fullStars = Math.floor(score / 2);-->
-<!--                var halfStar = score % 2 === 1;-->
-<!--                var starsHtml = '';-->
+        <script>
+            // 모든 .score 요소에 대해 별점생성 함수 호출
+            var scores = document.querySelectorAll('.score');
+            scores.forEach(function(scoreElement) {
+                var score = parseInt(scoreElement.getAttribute('data-score'));
+                var ratingElement = scoreElement.nextElementSibling.querySelector('.starRating');
+                generateStarRating(score, ratingElement);
+            });
+            // 별점생성 함수
+            function generateStarRating(score, ratingElement) {
+                var fullStars = Math.floor(score / 2);
+                var halfStar = score % 2 === 1;
+                var starsHtml = '';
 
-<!--                for (var i = 0; i < fullStars; i++) {-->
-<!--                    starsHtml += '<i class="fa-solid fa-star"></i>';-->
-<!--                }-->
+                for (var i = 0; i < fullStars; i++) {
+                    starsHtml += '<i class="fa-solid fa-star"></i>';
+                }
 
-<!--                if (halfStar) {-->
-<!--                    starsHtml += '<i class="fa-regular fa-star-half-stroke"></i>';-->
-<!--                }-->
+                if (halfStar) {
+                    starsHtml += '<i class="fa-regular fa-star-half-stroke"></i>';
+                }
 
-<!--                ratingElement.innerHTML = starsHtml;-->
-<!--            }-->
-<!--        </script>-->
+                ratingElement.innerHTML = starsHtml;
+            }
+        </script>
 
         <div style="opacity: 0;">
             <div id="email" th:text="${email}"></div>

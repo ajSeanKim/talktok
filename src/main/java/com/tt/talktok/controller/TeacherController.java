@@ -1,10 +1,14 @@
 package com.tt.talktok.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Review;
 import com.tt.talktok.entity.Teacher;
+import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.TeacherService;
 import jakarta.servlet.http.HttpSession;
@@ -20,8 +24,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -37,6 +44,7 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ReviewService reviewService;
+    private final LectureService lectureService;
 
     // teacher 목록 조회
     @GetMapping("/list")
@@ -71,13 +79,11 @@ public class TeacherController {
 
         return "teacher/detail";
     }
-
     //teacher 로그인
     @GetMapping("/login")
     public String login() {
         return "teacher/loginForm";
     }
-
 
     @PostMapping("/login")
     public String login(@ModelAttribute TeacherDto teacher, Model model, HttpSession session) {
@@ -261,8 +267,30 @@ public class TeacherController {
 
     }
 
+    //강의 등록
+    @GetMapping("/lecJoin")
+    public String lecJoin(HttpSession session, Model model){
 
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        TeacherDto teacher = teacherService.findTeacher(teaEmail);
+        model.addAttribute("teaNo",teacher.getTeaNo());
+        model.addAttribute("teaEmail", teaEmail);
 
+        return "teacher/lecJoinForm";
+    }
+    //강의 등록
+    @PostMapping("/lecJoin")
+    public String lecJoin(@ModelAttribute LectureDto lectureDto,
+                          @ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) {
+        int result = 0;
 
+        lectureDto.setTea_no(teacherDto.getTeaNo());
+        lectureService.lecJoin(lectureDto);
+
+        model.addAttribute("result",result);
+
+        return "teacher/lecJoin";
+
+    }
 
 }

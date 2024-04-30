@@ -35,9 +35,13 @@
 
     <div class="container mt-3" >
         <form action="/review/write" method="post">
-            <input type="hidden" name="rev_writer" value="홍길순">
-            <input type="hidden" name="lec_no" value="1">
-            <input type="hidden" name="tea_no" value="1">
+            <input type="hidden" name="rev_writer" th:value="${student.getStuName()}">
+            <input type="hidden" name="lec_no" th:value="${lecture.getLec_no()}">
+            <input type="hidden" name="lec_name" th:value="${lecture.getLec_name()}">
+            <input type="hidden" name="tea_no" th:value="${teacher.getTeaNo()}">
+            <input type="hidden" name="tea_name" th:value="${teacher.getTeaName()}">
+            <input type="hidden" name="stu_no" th:value="${student.getStuNo()}">
+
 
             <div class="mb-3 mt-3">
                 제목
