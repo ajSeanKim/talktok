@@ -1,10 +1,14 @@
 package com.tt.talktok.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Review;
 import com.tt.talktok.entity.Teacher;
+import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.TeacherService;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +25,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -37,6 +43,7 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ReviewService reviewService;
+    private final LectureService lectureService;
 
     // teacher 목록 조회
     @GetMapping("/list")
@@ -58,6 +65,7 @@ public class TeacherController {
 
     //Teacher 상세페이지
     @GetMapping("/detail")
+    @ResponseBody
     public String teacherDetail(@RequestParam("teaNo") int tea_no, Model model) {
 
         System.out.println("tea_no" + tea_no);
@@ -66,10 +74,19 @@ public class TeacherController {
         //후기글
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
 
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("teacherDetail", teacherDetail);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonData;
+        try {
+            Map<String, Object> data = new HashMap<>();
+            data.put("teacherDetail", teacherDetail);
+            data.put("reviews", reviews);
+            jsonData = mapper.writeValueAsString(data);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            jsonData = "{\"error\": \"Failed to process JSON data\"}";
+        }
 
-        return "teacher/detail";
+        return jsonData;
     }
 
     //teacher 로그인
@@ -260,8 +277,30 @@ public class TeacherController {
 
     }
 
+    //강의 등록
+    @GetMapping("/lecJoin")
+    public String lecJoin(HttpSession session, Model model){
 
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        TeacherDto teacher = teacherService.findTeacher(teaEmail);
+        model.addAttribute("teaNo",teacher.getTeaNo());
+        model.addAttribute("teaEmail", teaEmail);
 
+        return "teacher/lecJoinForm";
+    }
+    //강의 등록
+    @PostMapping("/lecJoin")
+    public String lecJoin(@ModelAttribute LectureDto lectureDto,
+                          @ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) {
+        int result = 0;
 
+        lectureDto.setTea_no(teacherDto.getTeaNo());
+        lectureService.lecJoin(lectureDto);
+
+        model.addAttribute("result",result);
+
+        return "teacher/lecJoin";
+
+    }
 
 }
