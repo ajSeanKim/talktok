@@ -10,12 +10,15 @@
 <section>
     <div class="list-box">
         <div th:if="${not #lists.isEmpty(stuLecture)}">
-            <div th:each="entry : ${stuLecture}">
-                <a th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
+            <div th:each="entry, iter: ${stuLecture}">
+                <div class="payment_name" th:with="reviewCheck=${reviewCheck[iter.index]}">
+                    <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${entry.value.getLecNo()},tea_no=${studentDto.getStuNo()})}"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                    <a th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
                     <h3 th:text="${entry.value.lec_name}" class="title"></h3>
                     <p><span th:text="${entry.value.lec_day}"></span>&nbsp;&nbsp;<span th:text="${entry.value.lec_time}"></span></p>
                     <p><span th:text="${entry.value.lec_startdate}"></span> ~ <span th:text="${entry.value.lec_enddate}"></span></p>
                 </a>
+                </div>
             </div>
         </div>
         <div th:if="${#lists.isEmpty(stuLecture)}">
