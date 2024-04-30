@@ -2,13 +2,18 @@ package com.tt.talktok.service;
 
 import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.PaymentDto;
+import com.tt.talktok.entity.Lecture;
 import com.tt.talktok.entity.Payment;
+import com.tt.talktok.repository.LectureRepository;
 import com.tt.talktok.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.sql.Timestamp;
 @RequiredArgsConstructor
@@ -16,6 +21,7 @@ import java.sql.Timestamp;
 public class PaymentService {
 
     private final PaymentRepository paymentRepository;
+    private final LectureRepository lectureRepository;
 
     // 결제 정보 저장
     public PaymentDto save(PaymentDto paymentDto) {
@@ -44,8 +50,20 @@ public class PaymentService {
         return dto; // 변환된 Dto 객체를 반환
     }
 
+    // 강의 결제 내역
     public List<PaymentDto> findPaymentByStudentEmail(String stuEmail) {
         List<Payment> payment = paymentRepository.findByStuEmail(stuEmail);
         return payment.stream().map(this::convertToDto).collect(Collectors.toList());
     }
+
+    // 결제한 강의 목록
+    public Map<Integer, Lecture> findLecturesForPayments(List<PaymentDto> payments) {
+        Set<Integer> lecIds = payments.stream()
+                .map(PaymentDto::getLec_no) // PaymentDto에서 강의 번호 추출
+                .collect(Collectors.toSet()); // 중복 제거
+        List<Lecture> lectures = lectureRepository.findAllById(lecIds);
+        return lectures.stream()
+                .collect(Collectors.toMap(Lecture::getLecNo, Function.identity()));
+    }
+
 }
