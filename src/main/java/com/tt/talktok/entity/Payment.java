@@ -17,11 +17,14 @@ public class Payment {
     @Id
     @Column(name = "pay_no")
     private int payNo;
+    @Column(name = "payTime")
     private LocalDate pay_time;
+    @Column(name = "payPrice")
     private String pay_price;
     @Column(name = "lec_no")
     private int lecNo;
+    @Column(name = "lecName")
     private String lec_name;
     @Column(name = "stu_email")
-    private int stuEmail;
+    private String stuEmail;
 }

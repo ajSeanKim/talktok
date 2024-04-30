@@ -4,11 +4,13 @@ import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,5 +58,6 @@ public class LectureController {
 
         return "/lecture/detail";
     }
+
 
 }
