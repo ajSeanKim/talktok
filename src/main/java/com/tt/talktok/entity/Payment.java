@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
@@ -18,7 +19,7 @@ public class Payment {
     @Column(name = "pay_no")
     private int payNo;
     @Column(name = "payTime")
-    private LocalDate pay_time;
+    private Timestamp pay_time;
     @Column(name = "payPrice")
     private String pay_price;
     @Column(name = "lec_no")

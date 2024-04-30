@@ -15,7 +15,6 @@
 <input type="button" value="정보수정" onclick="location='/student/update'">
 <input type="button" value="비밀번호변경" onclick="location='/student/pwdUpdate'">
 <input type="button" value="강의결제내역" onclick="location='/student/payment'">
-<input type="button" value="강의후기" onclick="location='/review/mylist'">
 <a th:href="@{'/review/able?stu_no='+${session.stuNo}}"><input type="button" value="강의후기"></a>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
