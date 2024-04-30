@@ -48,7 +48,9 @@ public class ReviewController {
 
     @GetMapping("/detail")
     public String reviewDetail(Model model, int rev_no) {
+        reviewService.reviewCountUpdate(rev_no);
         ReviewDto review = reviewService.reviewFindDetail(rev_no);
+
         log.info("review: {}", review);
         model.addAttribute("review", review);
         return "/review/detail";
@@ -71,12 +73,21 @@ public class ReviewController {
 
         Page<ReviewDto> reviews = reviewService.reviewFindAble(stu_no, pageable);
         model.addAttribute("reviews", reviews.getContent());
+        model.addAttribute("page", reviews);
         return "review/able";
     }
 
     @GetMapping("/update")
-    public String updateForm(){
+    public String updateForm(int rev_no, Model model){
+        ReviewDto review = reviewService.reviewFindDetail(rev_no);
+        model.addAttribute("review", review);
         return "review/updateForm";
+    }
+    @PostMapping("/update")
+    public String update(ReviewDto reviewDto){
+        System.out.println(reviewDto);
+        reviewService.reviewUpdate(reviewDto);
+        return "redirect:/review/able";
     }
     @GetMapping("/delete")
     public String deleteForm(){

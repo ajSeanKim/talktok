@@ -1,9 +1,12 @@
 package com.tt.talktok.repository;
 
+import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.entity.Review;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     Page<Review> findAll(Pageable pageable);
 
@@ -32,6 +35,17 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     //Page<Review> findByRevNameContainingAndRevDetailContaining(Pageable pageable, String keyword);
     // 특정 학생이 작성한 후기 리스트를 학생 번호(stu_no)로 검색
     List<Review> findByStuNo(int stuNo);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Review set revReadCount=revReadCount+1 where revNo=:revNo")
+    void reviewCountUpdate(int revNo);
+
+//    @Transactional
+//    @Modifying
+//    @Query(value = "update Review set revName=:revName, revDetail=:revDetail, revScore=:revScore where revNo=:revNo")
+//    void reviewUpdate(ReviewDto reviewDto);
+
 
 }
 
