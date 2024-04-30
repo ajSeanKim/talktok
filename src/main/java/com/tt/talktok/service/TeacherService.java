@@ -58,6 +58,7 @@ public class TeacherService{
                 .teaSocial(entity.getTea_social())
                 .build();
     }
+
     //선생 목록 조회
     public Page<TeacherDto> teacherList(Pageable pageable){
         Page<Teacher> teachers = teacherRepository.findAll(pageable);
