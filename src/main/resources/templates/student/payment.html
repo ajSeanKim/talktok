@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>학생 결제한 강의</title>
+</head>
+<body>
+<h1>결제한 강의 목록</h1>
+<div class="payment_container">
+    <div th:if="${not #lists.isEmpty(stuPayment)}">
+        <div th:each="payment : ${stuPayment}">
+<!--            <input type="hidden" name="stuEmail" value="${session.stuEmail}" />-->
+            <div class="payment_name">
+                <div class="pay_no" th:text="${payment.pay_no}"></div>
+                <div class="stu_email" th:text="${payment.stu_Email}"></div>
+                <div class="pay_time" th:text="${payment.pay_time}"></div>
+                <div class="pay_price" th:text="${payment.pay_price}"></div>
+                <div class="lec_no" th:text="${payment.lec_no}"></div>
+                <div class="lec_name" th:text="${payment.lec_name}"></div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(stuPayment)}">
+        <p>강의 결제내역이 없습니다.</p>
+    </div>
+</div>
+</body>
+</html>

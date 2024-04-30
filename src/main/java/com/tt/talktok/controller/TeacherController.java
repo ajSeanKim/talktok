@@ -95,7 +95,6 @@ public class TeacherController {
         return "teacher/loginForm";
     }
 
-
     @PostMapping("/login")
     public String login(@ModelAttribute TeacherDto teacher, Model model, HttpSession session) {
         int result = 0;

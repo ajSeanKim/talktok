@@ -8,16 +8,14 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 학생 로그인 성공
 <p th:text="${session.stuEmail}">stuEmail</p>
-<span th:text="${session.stuNo}"></span>
+
 <input type="button" value="회원탈퇴" onclick="location='/student/withdraw'">
-<input type="button" value="내강의목록" onclick="location='/lecture/'">
+<input type="button" value="내강의목록" onclick="location='/student/lecture'">
 <input type="button" value="로그아웃" onclick="location='/student/logout'">
 <input type="button" value="정보수정" onclick="location='/student/update'">
 <input type="button" value="비밀번호변경" onclick="location='/student/pwdUpdate'">
-<input type="button" value="강의장바구니" onclick="location=''">
-<input type="button" value="강의결제내역" onclick="location=''">
-<input type="button" value="강의후기" onclick="location='/review/able'">
-
+<input type="button" value="강의결제내역" onclick="location='/student/payment'">
+<a th:href="@{'/review/able?stu_no='+${session.stuNo}}"><input type="button" value="강의후기"></a>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>

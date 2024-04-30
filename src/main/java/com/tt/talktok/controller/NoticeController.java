@@ -84,4 +84,5 @@ public class NoticeController {
 
         return "redirect:list?page=0";
     }
+
 }
