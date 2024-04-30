@@ -39,7 +39,7 @@ public class ReviewService {
                 .lecName(reviewDto.getLec_name())
                 .teaNo(reviewDto.getTea_no())
                 .teaName(reviewDto.getTea_name())
-                .teaNo(reviewDto.getStu_no())
+                .stuNo(reviewDto.getStu_no())
                 .build();
         reviewRepository.save(review);
 
@@ -144,6 +144,10 @@ public class ReviewService {
                 .build();
         reviewRepository.save(review);
 
+    }
+
+    public int reviewCheck(int stuNo, int lecNo) {
+        return reviewRepository.existsByStuNoAndLecNo(stuNo, lecNo);
     }
 
 //    public void reviewUpdate(ReviewDto reviewDto) {
