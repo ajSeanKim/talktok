@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/student")
 public class StudentController {
+
     private final PaymentService paymentService;
     private final ReviewService reviewService;
     private final LectureRepository lectureRepository;
@@ -318,7 +320,20 @@ public class StudentController {
         String stuEmail = (String) session.getAttribute("stuEmail"); // 세션에서 사용자 번호 가져오기
         Page<ReviewDto> reviews = reviewService.reviewFindAll(pageable);
 
+        StudentDto studentDto = studentService.findStudent(stuEmail);
+
         List<PaymentDto> lecture = paymentService.findPaymentByStudentEmail(stuEmail);
+        List<Integer> reviewCheck = new ArrayList<>();
+
+        for(int i = 0;i<lecture.size();i++) {
+            int result = reviewService.reviewCheck(studentDto.getStuNo(),lecture.get(i).getLec_no());
+            reviewCheck.add(result);
+        }
+
+        System.out.println("reviewCheck"+reviewCheck.toString());
+
+        model.addAttribute("studentDto", studentDto);
+        model.addAttribute("reviewCheck", reviewCheck);
         Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
 
         model.addAttribute("stuLecture", stuLecture);
