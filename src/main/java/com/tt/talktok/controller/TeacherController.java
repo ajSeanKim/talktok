@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,6 @@ public class TeacherController {
 
     //Teacher 상세페이지
     @GetMapping("/detail")
-    @ResponseBody
     public String teacherDetail(@RequestParam("teaNo") int tea_no, Model model) {
 
         System.out.println("tea_no" + tea_no);
@@ -74,21 +74,11 @@ public class TeacherController {
         //후기글
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonData;
-        try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("teacherDetail", teacherDetail);
-            data.put("reviews", reviews);
-            jsonData = mapper.writeValueAsString(data);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            jsonData = "{\"error\": \"Failed to process JSON data\"}";
-        }
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("teacherDetail", teacherDetail);
 
-        return jsonData;
+        return "teacher/detail";
     }
-
     //teacher 로그인
     @GetMapping("/login")
     public String login() {
