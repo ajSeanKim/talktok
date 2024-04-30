@@ -49,7 +49,7 @@ public class LectureController {
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
         model.addAttribute("reviews", reviews);
 
-        
+
         // 유저정보
         String email = (String) session.getAttribute("stuEmail");
         System.out.println(email);
