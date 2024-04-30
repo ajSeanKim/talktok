@@ -43,7 +43,7 @@ public class ReviewService {
                 .teaNo(reviewDto.getStu_no())
                 .build();
         reviewRepository.save(review);
-        
+
     }
 
     public Page<ReviewDto> reviewFindAll(String search_target, String keyword, Pageable pageable) {

@@ -1,7 +1,5 @@
 package com.tt.talktok.service;
 
-import com.tt.talktok.dto.LectureDto;
-import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.entity.Cart;
 import com.tt.talktok.entity.Lecture;
 import com.tt.talktok.entity.Student;
@@ -11,6 +9,8 @@ import com.tt.talktok.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -18,17 +18,6 @@ public class CartService {
     private final CartRepository cartRepository;
     private final StudentRepository studentRepository;
     private final LectureRepository lectureRepository;
-
-    public void saveCart(String stuNo, Long teaNo) {
-//        Student student = StudentRepository.findById(stuNo).orElseThrow();
-//        Teacher teacher = TeacherRepository.findById(teaNo).orElseThrow();
-//
-//        CartDto dibDto = new CartDto();
-//        dibDto.setStudent(student);
-//        dibDto.setTeacher(teacher);
-//
-//        dibRepository.save(dib);
-    }
 
     public void addCart(int stuNo, int lec_no) {
 
@@ -45,5 +34,10 @@ public class CartService {
                 .build();
 
         cartRepository.save(cart);
+    }
+
+
+    public List<Cart> getCartItems(int stuNo) {
+        return cartRepository.findByStudentStuNo(stuNo);
     }
 }

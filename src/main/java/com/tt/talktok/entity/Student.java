@@ -3,7 +3,9 @@ package com.tt.talktok.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -34,6 +36,6 @@ public class Student {
 
     //수강 장바구니 조인
     @OneToMany(mappedBy = "student")
-    private Set<Cart> carts = new HashSet<>(); //중복값 방지 및 데이터 일관성 유지
+    private List<Cart> carts = new ArrayList<>();
 
 }

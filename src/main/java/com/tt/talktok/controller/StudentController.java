@@ -52,6 +52,9 @@ public class StudentController {
                 System.out.println("비번이 같을때");
                 session.setAttribute("stuEmail", email);
                 session.setAttribute("stuNo", dbStudent.getStuNo());
+
+                session.setAttribute("studentDto", dbStudent); //장바구니용 테스트
+
                 model.addAttribute("result", result);
             //비번이 다를때
             } else {
@@ -75,11 +78,8 @@ public class StudentController {
 
          StudentDto dbStudent = studentService.findStudent(stuEmail);
         //가입된 email = 1, 가입안된 email = 0
-        if(dbStudent.getStuEmail() == null){
             studentService.join(student);
             model.addAttribute("result",result);
-            return "student/join";
-        }
         return "student/join";
     }
 

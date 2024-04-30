@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
@@ -35,20 +36,22 @@ public class PaymentController {
 
         System.out.println("requestData="+requestData.toString()); // 값 전달 되었는지 확인
 
+        Map<String, Object> paymentInfo = (Map<String, Object>) requestData.get("paymentInfo");
+        System.out.println("Price: " + paymentInfo.get("price"));
+        System.out.println("Lecture Name: " + paymentInfo.get("lecName"));
+        System.out.println("Email: " + paymentInfo.get("email"));
+        System.out.println("Lecture No: " + paymentInfo.get("lecNo"));
+
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setPay_time(LocalDate.now());
-        paymentDto.setPay_price((String) requestData.get("price"));
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        paymentDto.setPay_time(currentTime);
+        paymentDto.setPay_price(String.valueOf(paymentInfo.get("price")));
+        paymentDto.setLec_name((String) paymentInfo.get("lecName"));
+        paymentDto.setStu_Email((String) paymentInfo.get("email"));
+        paymentDto.setLec_no(((int) paymentInfo.get("lecNo")));
 
-        String lecNo = (String) requestData.get("lecNo");
-        System.out.println(lecNo);
-//        paymentDto.setLec_no(lecNo); // 형변환의 문제인듯
-
-
-        paymentDto.setLec_name((String) requestData.get("lecName"));
-        paymentDto.setStu_Email((String) requestData.get("email"));
-
-        int result = paymentService.save(paymentDto);
-        if(result == 1) {
+        paymentDto = paymentService.save(paymentDto);
+        if(paymentDto != null) {
             return ResponseEntity.ok("Payment 저장 완료");
         } else {
             return (ResponseEntity<String>) ResponseEntity.badRequest();

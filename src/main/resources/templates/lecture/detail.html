@@ -49,58 +49,63 @@
         <section class="box float-box">
             <button class="btn btn-pay" id="payment">구매하기</button>
             <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
-            <button class="btn btn-list" onclick="location.href='/cart/add'">장바구니 담기</button>
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="lec_no" th:value="${lectureDto.lec_no}" />
+                <button type="submit" class="btn btn-list">장바구니 담기</button>
+            </form>
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>
 
-        <section class="box review-box">
-            <h3>선생님 후기</h3>
-            <div class="none" th:if="${reviews.size() == 0}">
-                <p>등록된 후기가 존재하지 않습니다.</p>
-            </div>
-            <div class="list-wrap">
-                <div class="list" th:each="list : ${reviews}">
-                    <input type="hidden" th:data-score="${list.rev_score}" class="score"> <!-- 점수를 data-score 에 저장 -->
-                    <p><span class="starRating"></span> <span th:text="'('+${list.rev_score}+'점)'"></span></p>
-                    <p class="title"><span th:text="${list.rev_name}"></span></p>
-                    <p class="detail"><span th:utext="${list.rev_detail}"></span></p>
-                    <p>
-                        <span th:text="${#strings.substring(list.rev_writer, 0,1)+'*'+#strings.substring(list.rev_writer, 2,3)}"></span>
-                        &nbsp;&nbsp;
-                        <span th:text="${#strings.substring(list.rev_date, 0,10)}"></span>
-                    </p>
-                </div>
-            </div>
-        </section>
+<!--        <section class="box review-box">-->
+<!--            <h3>선생님 후기</h3>-->
+<!--            <div class="none" th:if="${reviews.size() == 0}">-->
+<!--                <p>등록된 후기가 존재하지 않습니다.</p>-->
+<!--            </div>-->
+<!--            <div class="list-wrap">-->
+<!--                <div class="list" th:each="list : ${reviews}">-->
+<!--                    <input type="hidden" th:data-score="${list.rev_score}" class="score"> &lt;!&ndash; 점수를 data-score 에 저장 &ndash;&gt;-->
+<!--                    <p><span class="starRating"></span> <span th:text="'('+${list.rev_score}+'점)'"></span></p>-->
+<!--                    <p class="title"><span th:text="${list.rev_name}"></span></p>-->
+<!--                    <p class="detail"><span th:utext="${list.rev_detail}"></span></p>-->
+<!--                    <p>-->
+<!--                        <span th:text="${#strings.substring(list.rev_writer, 0,1)+'*'+#strings.substring(list.rev_writer, 2,3)}"></span>-->
+<!--                        &nbsp;&nbsp;-->
+<!--                        <span th:text="${#strings.substring(list.rev_date, 0,10)}"></span>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
 
-        <script>
-            // 모든 .score 요소에 대해 별점생성 함수 호출
-            var scores = document.querySelectorAll('.score');
-            scores.forEach(function(scoreElement) {
-                var score = parseInt(scoreElement.getAttribute('data-score'));
-                var ratingElement = scoreElement.nextElementSibling.querySelector('.starRating');
-                generateStarRating(score, ratingElement);
-            });
-            // 별점생성 함수
-            function generateStarRating(score, ratingElement) {
-                var fullStars = Math.floor(score / 2);
-                var halfStar = score % 2 === 1;
-                var starsHtml = '';
+<!--        <script>-->
+<!--            // 모든 .score 요소에 대해 별점생성 함수 호출-->
+<!--            var scores = document.querySelectorAll('.score');-->
+<!--            scores.forEach(function(scoreElement) {-->
+<!--                var score = parseInt(scoreElement.getAttribute('data-score'));-->
+<!--                var ratingElement = scoreElement.nextElementSibling.querySelector('.starRating');-->
+<!--                generateStarRating(score, ratingElement);-->
+<!--            });-->
+<!--            // 별점생성 함수-->
+<!--            function generateStarRating(score, ratingElement) {-->
+<!--                var fullStars = Math.floor(score / 2);-->
+<!--                var halfStar = score % 2 === 1;-->
+<!--                var starsHtml = '';-->
 
-                for (var i = 0; i < fullStars; i++) {
-                    starsHtml += '<i class="fa-solid fa-star"></i>';
-                }
+<!--                for (var i = 0; i < fullStars; i++) {-->
+<!--                    starsHtml += '<i class="fa-solid fa-star"></i>';-->
+<!--                }-->
 
-                if (halfStar) {
-                    starsHtml += '<i class="fa-regular fa-star-half-stroke"></i>';
-                }
+<!--                if (halfStar) {-->
+<!--                    starsHtml += '<i class="fa-regular fa-star-half-stroke"></i>';-->
+<!--                }-->
 
-                ratingElement.innerHTML = starsHtml;
-            }
-        </script>
+<!--                ratingElement.innerHTML = starsHtml;-->
+<!--            }-->
+<!--        </script>-->
 
-        <div id="email" th:text="${email}"></div>
-        <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        <div style="opacity: 0;">
+            <div id="email" th:text="${email}"></div>
+            <div id="lecNo" th:text="${lectureDto.lec_no}"></div>
+        </div>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
         <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!-- 포트원 결제 -->

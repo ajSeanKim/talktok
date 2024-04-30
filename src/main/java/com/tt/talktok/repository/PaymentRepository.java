@@ -10,5 +10,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
     // 결제 정보 저장
     //public int savePayment(PaymentDto paymentDto);
-    public int save(PaymentDto paymentDto);
+    public Payment save(Payment payment);
 }

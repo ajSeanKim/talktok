@@ -32,6 +32,7 @@ public class Teacher {
     private String tea_image;
     private String tea_social;
 
+
     public Teacher() {
         // 기본 생성자 추가
     }

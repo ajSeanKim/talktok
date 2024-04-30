@@ -29,12 +29,8 @@ import java.util.Random;
 @RequestMapping("/teacher")
 @Slf4j
 public class TeacherController {
-
-
-
     @Value("${spring.mail.hostSMTPid}")
     String hostSMTPid;
-
     @Value("${spring.mail.hostSMTPpwd}")
     String hostSMTPpwd;
 
@@ -82,6 +78,7 @@ public class TeacherController {
         return "teacher/loginForm";
     }
 
+
     @PostMapping("/login")
     public String login(@ModelAttribute TeacherDto teacher, Model model, HttpSession session) {
         int result = 0;
@@ -127,12 +124,9 @@ public class TeacherController {
 
         TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
         //가입된 email = 1, 가입안된 email = 0
-        if(dbTeacher.getTeaEmail() != null){
 
             teacherService.join(teacher);
             model.addAttribute("result",result);
-            return "teacher/join";
-        }
         return "teacher/join";
     }
 
