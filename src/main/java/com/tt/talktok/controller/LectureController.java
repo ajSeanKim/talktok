@@ -48,6 +48,7 @@ public class LectureController {
         int tea_no = lectureDto.getTea_no();
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
         model.addAttribute("reviews", reviews);
+
         
         // 유저정보
         String email = (String) session.getAttribute("stuEmail");
