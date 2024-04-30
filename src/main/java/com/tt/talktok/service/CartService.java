@@ -19,12 +19,12 @@ public class CartService {
     private final StudentRepository studentRepository;
     private final LectureRepository lectureRepository;
 
-    public void addCart(int stuNo, int lec_no) {
+    public void addCart(int stuNo, int LecNo) {
 
         Student student = studentRepository.findById(stuNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다: " + stuNo));
-        Lecture lecture = lectureRepository.findById(lec_no)
-                .orElseThrow(() -> new IllegalArgumentException("해당 강의가 존재하지 않습니다: " + lec_no));
+        Lecture lecture = lectureRepository.findById(LecNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 강의가 존재하지 않습니다: " + LecNo));
 
         Cart cart = Cart.builder()
                 .student(student)
@@ -40,4 +40,6 @@ public class CartService {
     public List<Cart> getCartItems(int stuNo) {
         return cartRepository.findByStudentStuNo(stuNo);
     }
+
+
 }

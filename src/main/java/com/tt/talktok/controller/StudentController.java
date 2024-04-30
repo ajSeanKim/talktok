@@ -50,6 +50,7 @@ public class StudentController {
                 result = 1;
 
                 System.out.println("비번이 같을때");
+
                 session.setAttribute("stuEmail", email);
                 session.setAttribute("stuNo", dbStudent.getStuNo());
 
