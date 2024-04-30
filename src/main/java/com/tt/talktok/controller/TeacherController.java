@@ -29,12 +29,8 @@ import java.util.Random;
 @RequestMapping("/teacher")
 @Slf4j
 public class TeacherController {
-
-
-
     @Value("${spring.mail.hostSMTPid}")
     String hostSMTPid;
-
     @Value("${spring.mail.hostSMTPpwd}")
     String hostSMTPpwd;
 
