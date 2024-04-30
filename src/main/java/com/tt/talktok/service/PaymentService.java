@@ -2,15 +2,15 @@ package com.tt.talktok.service;
 
 import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.PaymentDto;
-import com.tt.talktok.entity.Lecture;
 import com.tt.talktok.entity.Payment;
 import com.tt.talktok.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.sql.Timestamp;
-
 @RequiredArgsConstructor
 @Service
 public class PaymentService {
@@ -42,5 +42,10 @@ public class PaymentService {
         dto.setLec_no(payment.getLecNo());
         dto.setPay_time(payment.getPay_time());
         return dto; // 변환된 Dto 객체를 반환
+    }
+
+    public List<PaymentDto> findPaymentByStudentEmail(String stuEmail) {
+        List<Payment> payment = paymentRepository.findByStuEmail(stuEmail);
+        return payment.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }

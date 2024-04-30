@@ -4,6 +4,7 @@ import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -58,5 +59,6 @@ public class LectureController {
 
         return "/lecture/detail";
     }
+
 
 }
