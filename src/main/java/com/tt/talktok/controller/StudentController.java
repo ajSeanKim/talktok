@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -28,14 +29,14 @@ import java.util.Random;
 @RequiredArgsConstructor
 @RequestMapping("/student")
 public class StudentController {
-    private final PaymentService paymentService;
-    private final ReviewService reviewService;
     @Value("${spring.mail.hostSMTPid}")
     String hostSMTPid;
 
     @Value("${spring.mail.hostSMTPpwd}")
     String hostSMTPpwd;
 
+    private final PaymentService paymentService;
+    private final ReviewService reviewService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final StudentService studentService;
 
@@ -316,6 +317,19 @@ public class StudentController {
         Page<ReviewDto> reviews = reviewService.reviewFindAll(pageable);
 //        log.info("review: {}", reviews.getContent());
 
+        StudentDto studentDto = studentService.findStudent(stuEmail);
+
+        List<Integer> reviewCheck = new ArrayList<>();
+
+        for(int i = 0;i<stuPayment.size();i++) {
+            int result = reviewService.reviewCheck(studentDto.getStuNo(),stuPayment.get(i).getLec_no());
+            reviewCheck.add(result);
+        }
+
+        System.out.println("reviewCheck"+reviewCheck.toString());
+
+        model.addAttribute("studentDto", studentDto);
+        model.addAttribute("reviewCheck", reviewCheck);
         model.addAttribute("reviews", reviews.getContent());
         model.addAttribute("page", reviews);
         model.addAttribute("stuPayment", stuPayment);

@@ -8,9 +8,10 @@
 <h1>결제한 강의 목록</h1>
 <div class="payment_container">
     <div th:if="${not #lists.isEmpty(stuPayment)}">
-        <div th:each="payment : ${stuPayment}">
+        <div th:each="payment, iter : ${stuPayment}">
 <!--            <input type="hidden" name="stuEmail" value="${session.stuEmail}" />-->
-            <div class="payment_name">
+            <div class="payment_name" th:with="reviewCheck=${reviewCheck[iter.index]}">
+                <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${payment.getLec_no()},tea_no=${studentDto.getStuNo()})}"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                 <div class="pay_no" th:text="${payment.pay_no}"></div>
                 <div class="stu_email" th:text="${payment.stu_Email}"></div>
                 <div class="pay_time" th:text="${payment.pay_time}"></div>
