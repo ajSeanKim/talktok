@@ -24,7 +24,20 @@
         font-size: 25px;
         color: #ba9f7e;
     }
+    .review_lecName{
 
+        padding: 11px;
+        border-top: 1px solid #FAA11B;
+        border-bottom: 1px solid #FAA11B;
+        background: #fcfcfc;
+        font-size: 20px;
+        color: #ba9f7e;
+
+    }
+    .review_teaName{
+        font-size: 12px;
+        color: #800020;
+    }
 </style>
 </head>
 <body>
@@ -32,6 +45,9 @@
 
 <div class="review_contents">
     <div class="wrapper_small">
+        <div class="review_lecName" th:text="${review.lec_name}"></div>
+        <div class="review_teaName" th:text="${review.tea_name}"></div>
+        <div class="review_reaCount" th:text="${'조회수 : '+review.rev_ReadCount}"></div>
         <div class="review_name" th:text="${review.rev_name}"></div>
         <div class="review_detail" th:text="${review.rev_detail}"></div>
     </div>
