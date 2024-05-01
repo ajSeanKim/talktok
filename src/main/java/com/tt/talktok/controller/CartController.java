@@ -61,6 +61,7 @@ public class CartController {
             model.addAttribute("cartItems", cartItems);
             model.addAttribute("page", page);
         }
+
         return "cart/list";
     }
 }

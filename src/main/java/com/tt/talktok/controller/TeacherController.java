@@ -105,6 +105,7 @@ public class TeacherController {
 
                 System.out.println("비번이 같을때");
                 session.setAttribute("teaEmail", email);
+                session.setAttribute("teaNo", dbTeacher.getTeaNo());
                 model.addAttribute("result", result);
                 //비번이 다를때
             } else {

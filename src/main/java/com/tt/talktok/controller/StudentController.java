@@ -22,11 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -232,7 +228,6 @@ public class StudentController {
         }
     }
 
-/*------------------------------------------------------------*/
     // 학생 비밀번호 변경
     @GetMapping("pwdUpdate")
     public String pwdUpdate() {
@@ -264,7 +259,6 @@ public class StudentController {
     public String update(HttpSession session, Model model) {
         String stuEmail = (String) session.getAttribute("stuEmail");
         StudentDto studentDto = studentService.findStudent(stuEmail);
-
         if(studentDto.getStuSocial().equals("normal")) {
             model.addAttribute("studentDto", studentDto);
             return "student/updateForm";
@@ -279,6 +273,7 @@ public class StudentController {
         String stuName = (String) session.getAttribute("stuName");
         studentDto.setStuEmail(stuEmail);
         studentDto.setStuName(stuName);
+        int result = 0;
 
         // 최대한 빨리 stuSocial의 null 체크를 수행
         String stuSocial = Optional.ofNullable(studentDto.getStuSocial()).orElse("normal");
@@ -290,8 +285,10 @@ public class StudentController {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
                 studentService.update(dbStudent);
                 System.out.println("수정완료");
+                result = 1;
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
+                result = -1;
                 return "student/update";
             }
         } else {
@@ -299,6 +296,8 @@ public class StudentController {
             return "redirect:/student/myPage";
         }
     }
+    
+    // 학생 결제내역
     @GetMapping("/payment")
     public String myPayment(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
         HttpSession session = request.getSession();
@@ -318,6 +317,7 @@ public class StudentController {
         return "student/payment";
     }
 
+    // 학생 결제한 강의 내역
     @GetMapping("/lecture")
     public String myLecture(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
         HttpSession session = request.getSession();
@@ -327,18 +327,25 @@ public class StudentController {
         StudentDto studentDto = studentService.findStudent(stuEmail);
 
         List<PaymentDto> lecture = paymentService.findPaymentByStudentEmail(stuEmail);
+        Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
+        Set<Integer> keySet = stuLecture.keySet();
+        List<Integer> keyList = new ArrayList<>(keySet);
         List<Integer> reviewCheck = new ArrayList<>();
 
-        for(int i = 0;i<lecture.size();i++) {
-            int result = reviewService.reviewCheck(studentDto.getStuNo(),lecture.get(i).getLec_no());
+        for(int i = 0;i<stuLecture.size();i++) {
+            int result = reviewService.reviewCheck(studentDto.getStuNo(),keyList.get(i));
+            System.out.println("stuNo"+studentDto.getStuNo());
+            System.out.println("lecNo"+lecture.get(i).getLec_no());
             reviewCheck.add(result);
+            System.out.println(lecture.get(i).getLec_no());
+            System.out.println(stuLecture.get(lecture.get(i).getLec_no()));
         }
+
 
         System.out.println("reviewCheck"+reviewCheck.toString());
 
         model.addAttribute("studentDto", studentDto);
         model.addAttribute("reviewCheck", reviewCheck);
-        Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
 
         model.addAttribute("stuLecture", stuLecture);
         model.addAttribute("reviews", reviews.getContent());
@@ -348,6 +355,4 @@ public class StudentController {
         System.out.println("강의 내역 확인 : " + stuLecture);
         return "student/lecture";
     }
-
-
 }

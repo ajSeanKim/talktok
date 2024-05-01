@@ -145,15 +145,13 @@
 
 <div class="review_contents">
     <div class="wrapper_small">
-        <a href="/review/write"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" width=""/></a>
-        <a th:href="@{/review/able(stu_no=${1})}"><div>나의 후기</div></a>
         <div class="review_container" th:each="review : ${reviews}">
             <div class="review_box_items">
                 <div>
                     <div>
                         <div class="review_edit" th:if="${session.stuNo == review.stu_no}">
-                            <a th:href="@{/review/update(rev_no=${review.rev_no})}"><input type="button" value="수정하기"></a>
-                            <input type="button" value="삭제하기">
+                            <a th:href="@{/review/update(rev_no=${review.rev_no})}"><input type="button" value="수정하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                            <a th:href="@{/review/delete(rev_no=${review.rev_no})}"><input type="button" value="삭제 하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                         </div>
                         <div class="review_name">
                             <a th:href="@{/lecture/detail(no=${review.tea_no}, page=0)}"><div class="lec_name" th:text="${review.lec_name}"></div></a>
@@ -166,7 +164,7 @@
                             <button th:if="${#strings.length(review.rev_detail) > 150}" onclick="toggleContent('${stat.index}')" class="btn btn-link" data-id="${stat.index}">더보기</button>
                         </div>
                         <div class="writerDay_var2">
-                            <span th:text="${#strings.substring(review.rev_writer, 0,1)+'**'}"></span>
+                            <span th:text="${review.rev_writer}"></span>
                             <span th:text="${#strings.substring(review.rev_date, 0,10)}"></span>
                         </div>
                         <div class="score_star">

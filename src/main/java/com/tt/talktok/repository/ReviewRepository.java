@@ -46,6 +46,11 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query(value = "SELECT COUNT(*) FROM Review r WHERE r.stuNo =:stuNo AND r.lecNo =:lecNo")
     int existsByStuNoAndLecNo(@Param("stuNo")int stuNo,@Param("lecNo")int lecNo);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Review r SET r.revName = :#{#review.revName}, r.revDetail = :#{#review.revDetail}, r.revScore = :#{#review.revScore} WHERE r.revNo = :#{#review.revNo}")
+    void updateReviewDetails(Review review);
+
 //    @Transactional
 //    @Modifying
 //    @Query(value = "update Review set revName=:revName, revDetail=:revDetail, revScore=:revScore where revNo=:revNo")
