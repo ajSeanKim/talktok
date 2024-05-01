@@ -17,7 +17,7 @@ public class ReviewDto {
     private String rev_name;
     private String rev_detail;
     private String rev_writer;
-    private Integer revReadCount;
+    private Integer rev_ReadCount;
     private int rev_score;
     private Timestamp rev_date;
     private int lec_no;

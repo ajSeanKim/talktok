@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
+<main class="notice-page wrap">
+    <h2>장바구니</h2>
+    <div th:if="${cartItems.isEmpty()}">
+        <h3>장바구니에 상품이 없습니다.</h3>
+    </div>
+    <div th:unless="${cartItems.isEmpty()}">
+    <table>
+        <thead>
+        <tr>
+            <th>강의명</th>
+            <th>금액</th>
+            <th>수량</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cart : ${cartItems}">
+            <td><a th:href="@{/lecture/detail(page=${page}, no=${cart.getLecture().getLecNo()})}" th:text="${cart.getLecture().getLec_name()}"></a></td>
+            <td th:text="${cart.getLecPrice()}"></td>
+            <td th:text="${cart.getCaCount()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="total-price">
+        <strong>Total Price: </strong>
+<!--        <span th:text="${#aggregates.sum(cartItems.![lecPrice * caCount])}">0</span> 원-->
+    </div>
+    </div>
+</main>
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
 </body>
 </html>

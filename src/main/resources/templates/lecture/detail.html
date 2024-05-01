@@ -52,6 +52,12 @@
                 <button class="btn btn-pay" onclick="location.href='/student/login'">구매하기</button>
                 <button class="btn btn-review" onclick="location.href='/student/login'">후기등록</button>
             </div>
+            <button class="btn btn-pay" id="payment">구매하기</button>
+            <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="lec_no" th:value="${lectureDto.lec_no}" />
+                <button type="submit" class="btn btn-list">장바구니 담기</button>
+            </form>
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>
 
