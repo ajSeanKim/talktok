@@ -22,11 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -323,18 +319,25 @@ public class StudentController {
         StudentDto studentDto = studentService.findStudent(stuEmail);
 
         List<PaymentDto> lecture = paymentService.findPaymentByStudentEmail(stuEmail);
+        Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
+        Set<Integer> keySet = stuLecture.keySet();
+        List<Integer> keyList = new ArrayList<>(keySet);
         List<Integer> reviewCheck = new ArrayList<>();
 
-        for(int i = 0;i<lecture.size();i++) {
-            int result = reviewService.reviewCheck(studentDto.getStuNo(),lecture.get(i).getLec_no());
+        for(int i = 0;i<stuLecture.size();i++) {
+            int result = reviewService.reviewCheck(studentDto.getStuNo(),keyList.get(i));
+            System.out.println("stuNo"+studentDto.getStuNo());
+            System.out.println("lecNo"+lecture.get(i).getLec_no());
             reviewCheck.add(result);
+            System.out.println(lecture.get(i).getLec_no());
+            System.out.println(stuLecture.get(lecture.get(i).getLec_no()));
         }
+
 
         System.out.println("reviewCheck"+reviewCheck.toString());
 
         model.addAttribute("studentDto", studentDto);
         model.addAttribute("reviewCheck", reviewCheck);
-        Map<Integer, Lecture> stuLecture = paymentService.findLecturesForPayments(lecture);
 
         model.addAttribute("stuLecture", stuLecture);
         model.addAttribute("reviews", reviews.getContent());

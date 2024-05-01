@@ -58,10 +58,14 @@ public class PaymentService {
 
     // 결제한 강의 목록
     public Map<Integer, Lecture> findLecturesForPayments(List<PaymentDto> payments) {
-        Set<Integer> lecIds = payments.stream()
+        List<Integer> lecIds = payments.stream()
                 .map(PaymentDto::getLec_no) // PaymentDto에서 강의 번호 추출
-                .collect(Collectors.toSet()); // 중복 제거
+                .collect(Collectors.toList()); // 중복 제거
         List<Lecture> lectures = lectureRepository.findAllById(lecIds);
+        for(int i = 0; i<lectures.size(); i++) {
+        System.out.println("service:"+lectures.get(i).getLecNo());
+
+        }
         return lectures.stream()
                 .collect(Collectors.toMap(Lecture::getLecNo, Function.identity()));
     }

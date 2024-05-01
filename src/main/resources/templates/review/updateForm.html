@@ -35,9 +35,8 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
 <div class="container mt-3" >
-    <form action="/review/write" method="post">
+    <form action="/review/update" method="post">
         <input type="hidden" th:value="${review.rev_no}" name="rev_no">
-        <input type="hidden" th:value="${review.rev_writer}" name="rev_writer">
         <div class="mb-3 mt-3">
             제목
             <input type="text" class="form-control" name="rev_name" th:value="${review.rev_name}" >

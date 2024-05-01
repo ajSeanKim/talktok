@@ -186,18 +186,13 @@
             <input type="text" class="form-control mt-3" id="search-input" style="width:20%;" name="keyword" placeholder="검색어를 입력해주세요."/>
             <input type="submit" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B" value="검색">
         </form>
-        <a href="/review/write"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
-        <a th:href="@{/review/able(stu_no=${1})}"><div>나의 후기</div></a>
         <div class="review_container" th:each="review : ${reviews}">
             <div class="review_box_items">
                 <div>
                     <div>
-                        <div class="review_edit" th:if="${session.stuNo == review.stu_no}">
-                            <input type="button" value="수정하기">
-                            <input type="button" value="삭제하기">
                         </div>
                         <div class="review_name">
-                            <a th:href="@{/lecture/detail(no=${review.tea_no}, page=0)}"><div class="lec_name" th:text="${review.lec_name}"></div></a>
+                            <div class="lec_name" th:text="${review.lec_name}"></div>
                             <a th:href="@{/teacher/detail(teaNo=${review.tea_no})}"><div class="tea_name" th:text="${review.tea_name}"></div></a>
                         </div>
                         <a th:href="@{/review/detail(rev_no=${review.rev_no})}"><h2 th:text="${review.rev_name}"></h2></a>
@@ -209,6 +204,7 @@
                         <div class="writerDay_var2">
                             <span th:text="${#strings.substring(review.rev_writer, 0,1)+'**'}"></span>
                             <span th:text="${#strings.substring(review.rev_date, 0,10)}"></span>
+                            조회수 : <span th:text="${review.rev_ReadCount}"></span>
                         </div>
                         <div class="score_star">
                             <div class="rate">
