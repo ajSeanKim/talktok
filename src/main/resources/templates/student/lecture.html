@@ -10,7 +10,7 @@
 <section>
     <div class="list-box">
         <div th:if="${not #lists.isEmpty(stuLecture)}">
-            <div th:each="entry, iter: ${stuLecture}">
+            <div th:each="., iter: ${stuLecture}">
                 <div class="payment_name" th:with="reviewCheck=${reviewCheck[iter.index]}">
                     <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${entry.value.getLecNo()},tea_no=${studentDto.getStuNo()})}"><input type="button" value="후기 등록" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                     <a th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
@@ -24,6 +24,24 @@
         </div>
         <div th:if="${#lists.isEmpty(stuLecture)}">
             <p>수강한 강의가 없습니다.</p>
+        </div>
+        <div th:if="${lectureList.totalPages > 1}" class="paging-box">
+            <ul class="paging">
+                <li th:if="${not lectureList.first}">
+                    <a th:href="@{/lecture/list(page=1)}">
+                        <i class="fa-solid fa-chevron-left"></i><i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(1, lectureList.totalPages)}"
+                    th:class="${pageNumber == lectureList.number + 1 ? 'active' : ''}">
+                    <a th:href="@{'/lecture/list?page=' + ${pageNumber}}">[[${pageNumber}]]</a>
+                </li>
+                <li th:if="${not lectureList.last}">
+                    <a th:href="@{/lecture/list(page=${lectureList.totalPages})}">
+                        <i class="fa-solid fa-chevron-right"></i><i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </section>
