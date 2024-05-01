@@ -42,4 +42,8 @@ public class CartService {
     }
 
 
+    public int countCart(int lecNo, int stuNo) {
+
+        return cartRepository.countByLectureLecNoAndStudentStuNo(lecNo, stuNo);
+    }
 }

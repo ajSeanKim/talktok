@@ -11,5 +11,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     List<Cart> findByStudentStuNo(int stuNo);
 
+    int countByLectureLecNoAndStudentStuNo(int lecNo, int stuNo);
 }
 
