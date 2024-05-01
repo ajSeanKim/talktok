@@ -47,7 +47,7 @@ public class NoticeController {
     @PostMapping("/write")
     public String write(NoticeDto noticeDto) {
         noticeService.noticeWrite(noticeDto);
-        return "redirect:list";
+        return "notice/writemessage";
     }
 
     // 공지사항 상세 정보 출력
@@ -72,16 +72,21 @@ public class NoticeController {
     @PostMapping("/update")
     public String update(@RequestParam(value = "page", defaultValue = "1") int page, NoticeDto noticeDto){
         noticeService.noticeUpdate(noticeDto);
-        return "redirect:detail?noNo="+noticeDto.getNoNo() + "&page="+page;
+        return "notice/updateMessage";
+    }
+
+    // 공지사항 삭제 컨펌
+    @GetMapping("/delete")
+    public String checkDelete(@RequestParam("noNo") int noNo, Model model){
+        model.addAttribute("noNo", noNo);
+        return "notice/deleteMessage";
     }
 
     // 공지사항 삭제
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam("noNo") int noNo, Pageable pageable){
         noticeService.delete(noNo);
-
         System.out.println("pn : "+ pageable.getPageNumber());
-
         return "redirect:list?page=0";
     }
 

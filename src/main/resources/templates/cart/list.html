@@ -18,6 +18,8 @@
         <thead>
         <tr>
             <th>강의명</th>
+            <th>강의 시작일</th>
+            <th>강의 종료일</th>
             <th>금액</th>
             <th>수량</th>
         </tr>
@@ -25,6 +27,8 @@
         <tbody>
         <tr th:each="cart : ${cartItems}">
             <td><a th:href="@{/lecture/detail(page=${page}, no=${cart.getLecture().getLecNo()})}" th:text="${cart.getLecture().getLec_name()}"></a></td>
+            <td th:text="${cart.getLecture().getLec_startdate()}"></td>
+            <td th:text="${cart.getLecture().getLec_enddate()}"></td>
             <td th:text="${cart.getLecPrice()}"></td>
             <td th:text="${cart.getCaCount()}"></td>
         </tr>
