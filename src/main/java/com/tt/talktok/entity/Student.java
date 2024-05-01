@@ -3,7 +3,10 @@ package com.tt.talktok.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,5 +33,9 @@ public class Student {
     public Student() {
         // 기본 생성자 추가
     }
+
+    //수강 장바구니 조인
+    @OneToMany(mappedBy = "student")
+    private List<Cart> carts = new ArrayList<>();
 
 }

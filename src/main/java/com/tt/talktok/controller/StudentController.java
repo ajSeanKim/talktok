@@ -65,8 +65,12 @@ public class StudentController {
                 result = 1;
 
                 System.out.println("비번이 같을때");
+
                 session.setAttribute("stuEmail", email);
                 session.setAttribute("stuNo", dbStudent.getStuNo());
+
+                session.setAttribute("studentDto", dbStudent); //장바구니용 테스트
+
                 model.addAttribute("result", result);
             //비번이 다를때
             } else {

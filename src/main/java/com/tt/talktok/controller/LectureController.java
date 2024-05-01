@@ -2,6 +2,7 @@ package com.tt.talktok.controller;
 
 import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.dto.ReviewDto;
+import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,6 +61,5 @@ public class LectureController {
 
         return "/lecture/detail";
     }
-
 
 }
