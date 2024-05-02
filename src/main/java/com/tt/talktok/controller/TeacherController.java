@@ -46,7 +46,7 @@ public class TeacherController {
     private final ReviewService reviewService;
     private final LectureService lectureService;
 
-    // teacher 목록 조회
+    // 강사 목록 조회
     @GetMapping("/list")
     public String list(
                         @PageableDefault(page=0, size = 12,direction = Sort.Direction.DESC) Pageable pageable,
@@ -64,7 +64,7 @@ public class TeacherController {
         return "teacher/list";
     }
 
-    //Teacher 상세페이지
+    //강사 목록 상세페이지
     @GetMapping("/detail")
     public String teacherDetail(@RequestParam("teaNo") int tea_no, Model model) {
 
@@ -73,7 +73,10 @@ public class TeacherController {
         TeacherDto teacherDetail = teacherService.getTeacherDetail(tea_no);
         //후기글
         List<ReviewDto> reviews = reviewService.reviewFindTeacher(tea_no);
+        //강사 강의 조회
+        List<LectureDto> lecture = lectureService.findAllByTeaNo(tea_no);
 
+        model.addAttribute("lecture", lecture);
         model.addAttribute("reviews", reviews);
         model.addAttribute("teacherDetail", teacherDetail);
 
@@ -105,7 +108,8 @@ public class TeacherController {
 
                 System.out.println("비번이 같을때");
                 session.setAttribute("teaEmail", email);
-                session.setAttribute("teaNo", dbTeacher.getTeaNo());
+                session.setAttribute("teaNo",dbTeacher.getTeaNo());
+                System.out.println("teaNo"+dbTeacher.getTeaNo());
                 model.addAttribute("result", result);
                 //비번이 다를때
             } else {
@@ -272,26 +276,37 @@ public class TeacherController {
     @GetMapping("/lecJoin")
     public String lecJoin(HttpSession session, Model model){
 
-        String teaEmail = (String) session.getAttribute("teaEmail");
-        TeacherDto teacher = teacherService.findTeacher(teaEmail);
-        model.addAttribute("teaNo",teacher.getTeaNo());
-        model.addAttribute("teaEmail", teaEmail);
+        Integer teaNo = (Integer) session.getAttribute("teaNo");
+        model.addAttribute("teaNo",teaNo);
 
         return "teacher/lecJoinForm";
     }
     //강의 등록
     @PostMapping("/lecJoin")
     public String lecJoin(@ModelAttribute LectureDto lectureDto,
-                          @ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) {
+                          HttpSession session, Model model) {
         int result = 0;
-
-        lectureDto.setTea_no(teacherDto.getTeaNo());
         lectureService.lecJoin(lectureDto);
+        System.out.println("lectureDto: "+ lectureDto);
 
         model.addAttribute("result",result);
 
         return "teacher/lecJoin";
 
+    }
+    //강사 강의 목록 조희
+    @GetMapping("/leclist")
+    public String leclist(HttpSession session,
+                          Pageable pageable,
+                          Model model){
+        Integer teaNo = (Integer) session.getAttribute("teaNo");
+        System.out.println("teaNo:"+teaNo);
+        LectureDto lectureDto = new LectureDto();
+        lectureDto.setTea_no(teaNo);
+
+        List<LectureDto> lecture = lectureService.findAllByTeaNo(lectureDto.getTea_no());
+        model.addAttribute("lecture",lecture);
+        return "teacher/leclist";
     }
 
 }
