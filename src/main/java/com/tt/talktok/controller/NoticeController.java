@@ -36,7 +36,6 @@ public class NoticeController {
         return "notice/notice";
     }
 
-
     // 공지사항 작성폼으로 이동
     @GetMapping("/write")
     public String noticeWrite() {
