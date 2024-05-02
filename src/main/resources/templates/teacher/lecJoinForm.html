@@ -5,8 +5,10 @@
     <title>강의 등록</title>
 </head>
 <body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
 <form method="post" action="/teacher/lecJoin">
-    <input type="hidden" name="teaNo" th:value="${teaNo}">
+    <input type="hidden" name="tea_no" th:value="${teaNo}">
         <div class="form-group">
             <label>
                 강의 이름 <span class="lec_name"></span>
@@ -48,6 +50,8 @@
         <input type="button" value="뒤로가기" onclick="history.go(-1);">
     </div>
 </form>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
 </body>
 </html>

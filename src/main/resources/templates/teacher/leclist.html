@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>강사 강의 목록</title>
+</head>
+<body>
+
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+
+<main class="wrap">
+    <section>
+        <div class="list-box">
+            <div th:each="list : ${lecture}" class="list">
+                <a th:href="@{/lecture/detail(no=${list.lec_no}, page=0)}">
+                    <h3 th:text="${list.lec_name}" class="title"></h3>
+                    <p><span th:text="${list.lec_day}"></span></p>
+                    <p><span th:text="${list.lec_time}"></span></p>
+                    <p><span th:text="${list.lec_startdate}"></span> ~ <span th:text="${list.lec_enddate}"></span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+
+</body>
+</html>
