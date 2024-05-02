@@ -31,7 +31,7 @@ public class Review {
     @Column(name = "rev_writer")
     private String revWriter;
     @Column(name = "rev_readcount")
-    private Integer  revReadCount;
+    private int  revReadCount;
     @Column(name = "rev_score")
     private int revScore;
     @CreationTimestamp

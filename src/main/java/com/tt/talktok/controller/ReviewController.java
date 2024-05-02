@@ -84,7 +84,7 @@ public class ReviewController {
     public String write(ReviewDto reviewDto){
         log.info("reviewDto: {}", reviewDto);
         reviewService.reviewWrite(reviewDto);
-        return "redirect:/review/list";
+        return "redirect:/student/lecture";
     }
 
     @GetMapping("/able")
@@ -100,18 +100,22 @@ public class ReviewController {
     @GetMapping("/update")
     public String updateForm(int rev_no, Model model){
         ReviewDto review = reviewService.reviewFindDetail(rev_no);
+
+
         model.addAttribute("review", review);
         return "review/updateForm";
     }
     @PostMapping("/update")
     public String update(ReviewDto reviewDto){
+        System.out.println("업데이트 진입");
         System.out.println(reviewDto);
         reviewService.reviewUpdate(reviewDto);
-        return "redirect:/review/able";
+        return "redirect:/review/list";
     }
     @GetMapping("/delete")
-    public String deleteForm(){
-        return "review/deleteForm";
+    public String delete(@RequestParam(name = "rev_no") int rev_no){
+        reviewService.reviewDelete(rev_no);
+        return "redirect:/review/list";
     }
     @GetMapping("/mylist")
     public String myReview(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {

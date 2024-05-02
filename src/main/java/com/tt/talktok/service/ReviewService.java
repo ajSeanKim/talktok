@@ -26,7 +26,6 @@ public class ReviewService {
 
     public void reviewWrite(ReviewDto reviewDto) {
 
-//        LocalDateTime currentDateTime = LocalDateTime.now();
 
         Review review = Review
                 .builder()
@@ -34,7 +33,6 @@ public class ReviewService {
                 .revDetail(reviewDto.getRev_detail())
                 .revWriter(reviewDto.getRev_writer())
                 .revScore(reviewDto.getRev_score())
-//                .revDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .lecNo(reviewDto.getLec_no())
                 .lecName(reviewDto.getLec_name())
                 .teaNo(reviewDto.getTea_no())
@@ -75,6 +73,7 @@ public class ReviewService {
         reviewDto.setRev_name(review.getRevName());
         reviewDto.setRev_detail(review.getRevDetail());
         reviewDto.setRev_writer(review.getRevWriter());
+        reviewDto.setRev_ReadCount(review.getRevReadCount());
         reviewDto.setRev_score(review.getRevScore());
         reviewDto.setRev_date(review.getRevDate());
         reviewDto.setLec_no(review.getLecNo());
@@ -127,22 +126,16 @@ public class ReviewService {
     public void reviewUpdate(ReviewDto reviewDto) {
 
 //        LocalDateTime currentDateTime = LocalDateTime.now();
-
+        System.out.println(reviewDto);
         Review review = Review
                 .builder()
                 .revNo(reviewDto.getRev_no())
                 .revName(reviewDto.getRev_name())
                 .revDetail(reviewDto.getRev_detail())
-                .revWriter(reviewDto.getRev_writer())
                 .revScore(reviewDto.getRev_score())
-//                .revDate(currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-//                .lecNo(reviewDto.getLec_no())
-//                .lecName(reviewDto.getLec_name())
-//                .teaNo(reviewDto.getTea_no())
-//                .teaName(reviewDto.getTea_name())
-//                .teaNo(reviewDto.getStu_no())
                 .build();
-        reviewRepository.save(review);
+        System.out.println(review.getRevNo());
+        reviewRepository.updateReviewDetails(review);
 
     }
 
@@ -150,7 +143,7 @@ public class ReviewService {
         return reviewRepository.existsByStuNoAndLecNo(stuNo, lecNo);
     }
 
-//    public void reviewUpdate(ReviewDto reviewDto) {
-//        reviewRepository.reviewUpdate(reviewDto);
-//    }
+    public void reviewDelete(int revNo) {
+        reviewRepository.deleteById(revNo);
+    }
 }

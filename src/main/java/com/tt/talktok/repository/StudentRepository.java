@@ -12,5 +12,4 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     void deleteStudentByStuEmail(String stuEmail);
 
-
 }
