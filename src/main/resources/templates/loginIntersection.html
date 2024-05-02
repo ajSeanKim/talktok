@@ -5,10 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
         <input type="button" value="학생로그인" onclick="location='/student/login'">
         <input type="button" value="강사로그인" onclick="location='/teacher/login'">
-
-</div>
-
+<div th:replace="~{footer :: footer}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 </body>
 </html>
