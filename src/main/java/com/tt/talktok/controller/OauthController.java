@@ -107,6 +107,7 @@ public class OauthController {
         student.setStuPwd(UUID.randomUUID().toString()); // 비밀번호는 임의로 생성
         System.out.println(student.getStuEmail());
         System.out.println(student.getStuPwd());
+
         student.setStuEmail(student.getStuEmail());
         student.setStuNickname(student.getStuNickname());
         student.setStuPwd(student.getStuPwd());
@@ -123,7 +124,11 @@ public class OauthController {
             model.addAttribute("stuNickname", student.getStuNickname());
             model.addAttribute("stuEmail", student.getStuEmail());
         }
+
         session.setAttribute("student", student);
+        session.setAttribute("stuEmail", student.getStuEmail());
+        session.setAttribute("stuNo", student.getStuNo());
+
         model.addAttribute("email", student.getStuEmail());
         model.addAttribute("nickname", student.getStuNickname());
         return "student/myPage";
