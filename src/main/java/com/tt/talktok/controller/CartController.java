@@ -1,7 +1,7 @@
 package com.tt.talktok.controller;
 
 
-import com.tt.talktok.dto.LectureDto;
+import com.tt.talktok.dto.CartDto;
 import com.tt.talktok.dto.StudentDto;
 import com.tt.talktok.entity.Cart;
 import com.tt.talktok.service.CartService;
@@ -22,20 +22,29 @@ public class CartController {
 
     // 장바구니 추가
     @PostMapping("/add")
-    public String cart(@RequestParam("lec_no") int lec_no, HttpSession session) {
+    public String cart(@RequestParam("lec_no") int lec_no, @ModelAttribute CartDto cartDto, HttpSession session, Model model) {
         StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
 
         if(studentDto == null){
-            return "redirect:/student/login";
+            return "cart/loginmessage";
         } else {
-            System.out.println("studentDto.getStuNo() : "+studentDto.getStuNo());
-            System.out.println("lectureDto.getLec_no() : "+lec_no);
 
-            cartService.addCart(studentDto.getStuNo(), lec_no);
+            // 장바구니에 기존 상품이 있는지 검사
+            int count = cartService.countCart(lec_no, studentDto.getStuNo());
 
-            System.out.println("장바구니 추가");
+            if(count == 0){
+                System.out.println("studentDto.getStuNo() : "+studentDto.getStuNo());
+                System.out.println("lectureDto.getLec_no() : "+lec_no);
 
-            return "redirect:/cart/list";
+                cartService.addCart(studentDto.getStuNo(), lec_no);
+
+                System.out.println("장바구니 추가");
+
+                return "cart/smessage";
+
+            } else{
+                return "cart/fmessage";
+            }
         }
     }
 
@@ -52,8 +61,7 @@ public class CartController {
             model.addAttribute("cartItems", cartItems);
             model.addAttribute("page", page);
         }
-        return "student/cart";
+
+        return "cart/list";
     }
-
-
 }
