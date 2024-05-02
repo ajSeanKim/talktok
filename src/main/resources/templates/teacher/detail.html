@@ -10,19 +10,23 @@
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-image {padding: 0px; border-radius: 10px; flex: 0 0 auto; width: 300px; height: 300px; border: 1px solid #dddddd; overflow: hidden; text-align: center;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; border-radius:5px;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; object-fit:cover;}
-    .teacher-view-item .teacher-detail .teacher-image-info .teacher-info {}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-lecture {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab .on {color: #fff; background-color: #fcba03; border-bottom-color: #000;}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab .bg{height: 1rem; transition: 0.5s;}
-    .teacher-view-item .teacher-detail .detail-container .teacher-tab .teacher-info {min-width: 130px; height: 55px; padding: 0 40px; text-align: center; font-size: 16px; font-weight: 500; line-height: 55px;border-radius: 30px;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-tab .teacher-lecture {min-width: 130px; height: 55px; padding: 0 40px; text-align: center; font-size: 16px; font-weight: 500; line-height: 55px;border-radius: 30px;}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab .teacher-review { min-width: 130px; height: 55px; padding: 0 40px; text-align: center; font-size: 16px; font-weight: 500; line-height: 55px;  border-radius: 30px;}
-    .teacher-view-item .teacher-detail .detail-container .teacher-info-area {margin-top: 40px;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-lecture-area {margin-top: 40px;}
 
 
 
-    .teacher-view-item .teacher-detail .detail-container .teacher-review-area {}
-    .teacher-review-area {position: relative; display: inline-block; width: 100%; height: 200px; overflow: auto;}
-    .teacher-review-area .teacher-review { width: 1150px; margin: 0 auto; position: relative;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area {position: relative; margin-top: 2rem; width: 100%; height: 20rem; overflow-y: auto;}
+    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar {width: 10px;}
+    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-thumb {height:20%; border-radius: 10px; background-color: #fcba03; }
+    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0.5);}
+    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-button {}
+
+    .teacher-review-area .teacher-review { width: 100%; margin: 0 auto; position: relative;}
     .teacher-review-area .teacher-review .teacher_review_box_items {padding: 24px 10px; border-bottom: 1px solid #e5e5e5; position: relative;}
     .teacher-review-area .teacher-review .teacher_review_box_items .review_detail {width: 950px; color: #666666;}
     .teacher-review-area .teacher-review .teacher_review_box_items .writerDay_var2 {padding-top: 20px;}
@@ -49,19 +53,29 @@
                     <p class="teacherSchool">학력: <span th:text="${teacherDetail.teaCareer}"></span></p>
                     <p class="teaEmail">이메일: <span th:text="${teacherDetail.teaEmail}"></span></p>
                     <p class="teaNation">국적: <span th:text="${teacherDetail.teaNation}"></span></p>
+                    <p class="teacherIntro">한 줄 소개: <span th:text="${teacherDetail.teaIntro}"></span></p><br>
+                    <p class="teacher-infoDetail">상세 소개: <span th:text="${teacherDetail.teaDetail}"></span></p>
                 </div>
             </div>
             <div class="detail-container">
                 <div class="teacher-tab">
                     <div class="bg"></div>
-                    <button class="teacher-info on">튜터소개</button>
+                    <button class="teacher-lecture on">강의</button>
                     <button class="teacher-review">수업후기</button>
                 </div>
-                <div class="teacher-info-area">
-                    <p class="teacherIntro">한 줄 소개: <span th:text="${teacherDetail.teaIntro}"></p><br>
-                    <p class="teacher-infoDetail">상세 소개: <span th:text="${teacherDetail.teaDetail}"></span></p>
+                <div class="teacher-lecture-area">
+                    <div th:each="list, stat : ${lecture}" class="list">
+                        <a th:href="@{/lecture/detail(no=${list.lec_no}, page=0)}">
+                            <h3 th:text="${list.lec_name}" class="title"></h3>
+                            <p>
+                                <span th:text="${list.lec_day}" ></span>
+                                <span class="formattedTimeRanges" th:data-lec-time="${list.lec_time}"></span>
+                            </p>
+                            <p>월 <span th:text="${list.lec_price}"></span>만원</p>
+                            <p><span th:text="${list.lec_startdate}"></span> ~ <span th:text="${list.lec_enddate}"></span></p>
+                        </a>
+                    </div><br>
                 </div>
-
                 <div class="teacher-review-area">
                     <div class="teacher-review" th:each="review : ${reviews}" >
                         <div class="teacher_review_box_items">
@@ -93,6 +107,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -100,24 +115,48 @@
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
 <script>
     //버튼 영역 제어
     $('.teacher-review-area').hide();
-    $('.teacher-info').click(function() {
+    $('.teacher-lecture').click(function() {
         $(this).addClass('on');
         $('.teacher-tab .bg').css('left','5px');
         $('.teacher-review').removeClass('on');
         $('.teacher-review-area').hide();
-        $('.teacher-info-area').show();
+        $('.teacher-lecture-area').show();
     });
     $('.teacher-review').click(function() {
         $(this).addClass('on');
         $('.teacher-tab .bg').css('left','33%');
-        $('.teacher-info').removeClass('on');
-        $('.teacher-info-area').hide();
+        $('.teacher-lecture').removeClass('on');
+        $('.teacher-lecture-area').hide();
         $('.teacher-review-area').show();
     });
+
+//lec_day 데이터베이스 ,를 스크립트로 ~ 변경 코드
+    document.addEventListener("DOMContentLoaded", function() {
+        var timeRangesElements = document.querySelectorAll(".formattedTimeRanges");
+
+        timeRangesElements.forEach(function(element) {
+            var lecTime = element.getAttribute("data-lec-time");
+            var formattedTimeRange = formatTimeRanges(lecTime);
+            element.textContent = formattedTimeRange; // 각 요소에 시간 범위를 업데이트
+        });
+    });
+
+    function formatTimeRanges(timeRangesString) {
+        var timeRanges = timeRangesString.split(",");
+        return timeRanges.map(function(timeRange) {
+            var times = timeRange.split("-");
+            if (times.length > 1) {
+                return times[0] + " ~ " + times[1];
+            }
+            return timeRange; // 만약 분할되지 않는다면 원래 문자열 반환
+        }).join("~"); // 여러 시간 범위가 있을 경우 콤마로 구분하여 조인
+    }
 </script>
+
 
 </body>
 </html>
