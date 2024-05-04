@@ -315,9 +315,10 @@ public class TeacherController {
     }
     @PostMapping("/update")
     public String update(@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
+        System.out.println("ControllerTeacherDto: " + teacherDto.toString());
         String teaEmail = (String) session.getAttribute("teaEmail");
         teacherDto.setTeaEmail(teaEmail);
-        TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
+        TeacherDto dbTeacher = teacherService.findTeacher(teacherDto.getTeaEmail());
         int result  = 0;
         // student update
         if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
