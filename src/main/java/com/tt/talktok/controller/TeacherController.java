@@ -11,6 +11,7 @@ import com.tt.talktok.entity.Teacher;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.TeacherService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.File;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -127,17 +128,70 @@ public class TeacherController {
         return "teacher/joinForm";
     }
 
-    @PostMapping("/join")
-    public String join(@ModelAttribute TeacherDto teacher, Model model) {
-        int result = 0;
 
+    //프로필 사진 경로
+    @Value("${app.upload.dir}")
+    private String uploadDir;
+
+    //회원가입
+    @PostMapping("/join")
+    public String join(@RequestParam("teaImage1") MultipartFile mf,
+                       @ModelAttribute TeacherDto teacher,
+                       HttpSession  session,
+                       Model model) throws Exception{
+        System.out.println("taecher: "+teacher);
+
+        String filename = mf.getOriginalFilename();
+        int size = (int)mf.getSize();
+
+        String path = Paths.get(uploadDir).toString();
+
+        System.out.println("mf=" + mf);
+        System.out.println("filename=" + filename); 	// filename="Koala.jpg"
+        System.out.println("size=" + size);
+        System.out.println("Path=" + path);
+
+
+        int result = 0;
+        String newfilename = "";
         String teaEmail = teacher.getTeaEmail();
+
+        if(size > 0){ // 첨부파일이 전송된 경우
+            // 파일 중복문제 해결
+            String extension = filename.substring(filename.lastIndexOf("."), filename.length());
+            System.out.println("extension:"+extension); // extension: .jpg
+            UUID uuid = UUID.randomUUID();
+
+            newfilename = uuid.toString() + extension;
+            System.out.println("newfilename:"+newfilename);
+
+            if(size > 100000){ // 100KB
+                result=1;
+                model.addAttribute("result", result);
+                return "teacher/join";
+
+            }else if(!extension.equals(".jpg")  &&
+                    !extension.equals(".jpeg") &&
+                    !extension.equals(".gif")  &&
+                    !extension.equals(".png") ){
+                result=2;
+                model.addAttribute("result", result);
+                return "teacher/join";
+            }
+        }
+        if (size > 0) { // 첨부파일 전송
+            mf.transferTo(new File(path + "/" + newfilename));
+        }
 
         TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
         //가입된 email = 1, 가입안된 email = 0
 
-            teacherService.join(teacher);
-            model.addAttribute("result",result);
+        //teacherDTO에 teaImage
+        teacher.setTeaImage(newfilename);
+        //JPA DB입력
+        teacherService.join(teacher);
+
+        model.addAttribute("result",result);
         return "teacher/join";
     }
 

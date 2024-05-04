@@ -8,8 +8,8 @@
     .teacher-view-item .teacher-detail {margin: 5rem;}
     .teacher-view-item .teacher-detail .teacher-image-info {display: flex; gap: 5rem;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-image {padding: 0px; border-radius: 10px; flex: 0 0 auto; width: 300px; height: 300px; border: 1px solid #dddddd; overflow: hidden; text-align: center;}
-    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; border-radius:5px;}
-    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; object-fit:cover;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; height: 100%; border-radius:5px;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; height: 100%; object-fit:cover;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-lecture {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab .on {color: #fff; background-color: #fcba03; border-bottom-color: #000;}
@@ -21,10 +21,10 @@
 
 
     .teacher-view-item .teacher-detail .detail-container .teacher-review-area {position: relative; margin-top: 2rem; width: 100%; height: 20rem; overflow-y: auto;}
-    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar {width: 10px;}
-    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-thumb {height:20%; border-radius: 10px; background-color: #fcba03; }
-    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0.5);}
-    .teacher-view-item .teacher-detail .detail-container ::-webkit-scrollbar-button {}
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area::-webkit-scrollbar {width: 10px;}
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area::-webkit-scrollbar-thumb {height:20%; border-radius: 10px; background-color: #fcba03; }
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0.5);}
+    .teacher-view-item .teacher-detail .detail-container .teacher-review-area::-webkit-scrollbar-button {}
 
     .teacher-review-area .teacher-review { width: 100%; margin: 0 auto; position: relative;}
     .teacher-review-area .teacher-review .teacher_review_box_items {padding: 24px 10px; border-bottom: 1px solid #e5e5e5; position: relative;}
@@ -44,7 +44,7 @@
             <div class="teacher-image-info">
                 <div class="teacher-image">
                     <div class="img-wrap">
-                        <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+                        <img th:if="${teacherDetail.teaImage != null}" th:src="@{'/files/' + ${teacherDetail.teaImage}}" />
                         <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
                     </div>
                 </div>

@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .contents {}
         .wrapper {width: 1300px; position: relative; margin:auto; padding: 60px 0 60px; min-height: 100px;}
         .wrapper .sort-right{position: absolute; right: 0; bottom: 30%;}
         .wrapper .sort-right .search_input{width: 300px; height: 45px; padding: 0 50px 0 0; display: inline-block; vertical-align: middle; border: 1px solid #db8600; background-color: #fff; border-radius: 5px; position: relative;}
         input[type="text"] {
-            padding: 10px 0;
+            padding: 10px 10px;
         }
         .wrapper .sort-right .search_input .btn_search{width: 50px; position: absolute; right: 0; top: 0; bottom: 0;}
         .teacher-contents {width: 1300px; margin:0 auto; position: relative;}
@@ -56,7 +57,7 @@
         <div class="list-wrap" >
             <div class="teacher-item" th:each="list : ${teacherList}" th:onclick="|window.location.href = '@{/teacher/detail(teaNo=${list.teaNo})}'|">
                 <div class="teacher-inner">
-                    <img th:if="${list.teaImage != null}" th:src="${list.teaImage}" />
+                    <img th:if="${list.teaImage != null}" th:src="@{'/files/' + ${list.teaImage}}" />
                     <img th:unless="${list.teaImage != null}" src="/images/noprofile.png" />
                     <div class="text-box">
                         <h2 class="name" th:text="${list.teaName}"></h2>
@@ -108,5 +109,9 @@
     </div>
 </div>
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>
