@@ -124,14 +124,13 @@ public class OauthController {
             model.addAttribute("stuNickname", student.getStuNickname());
             model.addAttribute("stuEmail", student.getStuEmail());
         }
-
         session.setAttribute("student", student);
         session.setAttribute("stuEmail", student.getStuEmail());
         session.setAttribute("stuNo", student.getStuNo());
 
         model.addAttribute("email", student.getStuEmail());
         model.addAttribute("nickname", student.getStuNickname());
-        return "student/myPage";
+        return "redirect:/student/myPage";
     }
 
 }
