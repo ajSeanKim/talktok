@@ -238,7 +238,6 @@ public class StudentController {
         String stuEmail = (String) session.getAttribute("stuEmail");
         StudentDto dbStudent = studentService.findStudent(stuEmail);
         int result = 0;
-        StudentDto dbStudent = studentService.findStudent(stuEmail);
         System.out.println("Password check before: " + passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd()));
 
         // 미리 newStudent 객체 생성
@@ -283,18 +282,25 @@ public class StudentController {
         studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
 
         StudentDto dbStudent = studentService.findStudent(stuEmail);
+        int result = 0;
         // student update
         if (stuSocial.equals("normal")) {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
                 // 비밀번호 일치: 회원 정보 업데이트
                 studentService.update(studentDto);
                 System.out.println("정보 수정 완료");
+                result = 1;
+                model.addAttribute("result", result);
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
+                result = -1;
+                model.addAttribute("result", result);
                 return "student/update";
             }
         } else {
             studentService.update(studentDto);
+            result = 1;
+            model.addAttribute("result", result);
             return "redirect:/student/myPage";
         }
     }
