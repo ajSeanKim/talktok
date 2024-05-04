@@ -84,37 +84,46 @@
         .panel_inner {
             padding: 20px 24px;
         }
+        /*
+
+        .id_pw_wrap .input_row:last-child {
+
+        }
         .id_pw_wrap .input_row:first-child {
-            border-radius: 6px 6px 0 0;
+            border-radius: 6px 6px 6px 6px;
             box-shadow: none;
         }
+        */
         .id_pw_wrap .input_row {
-            display: table;
-            table-layout: fixed;
+            border-radius: 6px 6px 6px 6px;
             width: 100%;
-            padding: 14px 17px 13px;
-            box-sizing: border-box;
+            height: 45px;
+            box-shadow: none;
         }
         .input_row {
             position: relative;
             display: block;
-            height: 100%;
-            border: 1px solid #dadada;
-            padding: 16px 18px 15px;
-            border-radius: 6px;
-            box-sizing: border-box;
-            text-align: left;
-            box-shadow: 0 2px 6px 0 rgba(68, 68, 68, .08);
-        }
-        .id_pw_wrap .input_row:last-child {
-            border-radius: 0 0 6px 6px;
+            width: 100%; /* 부모 요소의 전체 너비를 차지하도록 설정 */
+            margin: 8px 0; /* 필요에 따라 조절 */
+            border: 1px solid #dadada; /* 테두리 설정 */
+            border-radius: 6px; /* 모서리를 둥글게 */
+            box-shadow: 0 2px 6px 0 rgba(68, 68, 68, .08); /* 그림자 효과 */
+            box-sizing: border-box; /* 테두리와 패딩을 너비에 포함 */
         }
         .id_pw_wrap .input_row .input_text {
             display: table-cell;
             padding-right: 30px;
+            border: none;
             width: 100%;
             height: 100%;
             box-sizing: border-box;
+        }
+        .input_text {
+            width: 100%; /* 부모 요소의 전체 너비를 사용 */
+            padding: 10px; /* 외부 `input_row`의 패딩에 맞추어 설정 */
+            border: none; /* 내부 테두리 없음 */
+            box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+            display: block; /* 블록 레벨 요소로 설정 */
         }
         button, input, select, textarea {
             border-radius: 0;
