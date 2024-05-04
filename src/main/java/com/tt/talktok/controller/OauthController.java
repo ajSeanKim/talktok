@@ -130,7 +130,7 @@ public class OauthController {
 
         model.addAttribute("email", student.getStuEmail());
         model.addAttribute("nickname", student.getStuNickname());
-        return "student/myPage";
+        return "redirect:/student/myPage";
     }
 
 }
