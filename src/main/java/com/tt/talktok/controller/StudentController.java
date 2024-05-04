@@ -236,6 +236,7 @@ public class StudentController {
     @PostMapping("pwdUpdate")
     public String pwdUpdate(StudentDto studentDto, @RequestParam("stuNewPwd") String stuNewPwd, Model model, HttpSession session) {
         String stuEmail = (String) session.getAttribute("stuEmail");
+        StudentDto dbStudent = studentService.findStudent(stuEmail);
         int result = 0;
         StudentDto dbStudent = studentService.findStudent(stuEmail);
         System.out.println("Password check before: " + passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd()));
@@ -260,13 +261,11 @@ public class StudentController {
         return "student/pwdUpdate";
     }
 
-
     // 학생 회원정보 수정
     @GetMapping("/update")
     public String update(HttpSession session, Model model) {
         String stuEmail = (String) session.getAttribute("stuEmail");
         StudentDto studentDto = studentService.findStudent(stuEmail);
-
         if(studentDto.getStuSocial().equals("normal")) {
             model.addAttribute("studentDto", studentDto);
             return "student/updateForm";
@@ -275,7 +274,6 @@ public class StudentController {
             return "student/updateSocial";
         }
     }
-
     @PostMapping("/update")
     public String update(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) throws Exception {
         String stuEmail = (String) session.getAttribute("stuEmail");
@@ -293,6 +291,7 @@ public class StudentController {
                 System.out.println("정보 수정 완료");
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
+                result = -1;
                 return "student/update";
             }
         } else {
@@ -300,7 +299,6 @@ public class StudentController {
             return "redirect:/student/myPage";
         }
     }
-
     
     // 학생 결제내역
     @GetMapping("/payment")
