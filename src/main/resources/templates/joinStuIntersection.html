@@ -82,6 +82,7 @@
             document.getElementById("stuPhone").value = stuPhone;
         }
         function idCheck() {
+            console.log("btn click");
             var stuEmail = $("#stuEmail").val().trim();
 
             if (stuEmail === "") {
@@ -221,7 +222,7 @@
         .container {
             position: relative;
             height: 100%;
-            font-size: 15px;
+            font-size: 0;
         }
         div {
             display: block;

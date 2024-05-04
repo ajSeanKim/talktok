@@ -365,14 +365,14 @@ function registerUsername() {
 			$('#register').removeAttr('disabled').click(registerUsername);
 			return;
 		}
-		if(/[^a-zA-Z0-9]/.test(username)) {
+		/*if(/[^a-zA-Z0-9]/.test(username)) {
 			$('#you')
 				.removeClass().addClass('label label-warning')
 				.html('닉네임은 영문만 가능합니다.');
 			$('#username').removeAttr('disabled').val("");
 			$('#register').removeAttr('disabled').click(registerUsername);
 			return;
-		}
+		}*/
 
         //alert("room id:" + roomname);
         myroom = Number(roomname); //사용자 입력 방 아이디

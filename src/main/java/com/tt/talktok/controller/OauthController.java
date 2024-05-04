@@ -124,7 +124,6 @@ public class OauthController {
             model.addAttribute("stuNickname", student.getStuNickname());
             model.addAttribute("stuEmail", student.getStuEmail());
         }
-
         session.setAttribute("student", student);
         session.setAttribute("stuEmail", student.getStuEmail());
         session.setAttribute("stuNo", student.getStuNo());
