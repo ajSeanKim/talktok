@@ -238,7 +238,6 @@ public class StudentController {
         String stuEmail = (String) session.getAttribute("stuEmail");
         StudentDto dbStudent = studentService.findStudent(stuEmail);
         int result = 0;
-        StudentDto dbStudent = studentService.findStudent(stuEmail);
         System.out.println("Password check before: " + passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd()));
 
         // 미리 newStudent 객체 생성
