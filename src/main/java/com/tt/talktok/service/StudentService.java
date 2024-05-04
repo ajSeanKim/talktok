@@ -92,7 +92,6 @@ public class StudentService {
             student.setStuName(studentDto.getStuName());
             student.setStuPhone(studentDto.getStuPhone());
             student.setStuNickname(studentDto.getStuNickname());
-            student.setStuPwd(passwordEncoder.encode(studentDto.getStuPwd())); // 비밀번호도 업데이트할 경우
             studentRepository.save(student);
         }
     }

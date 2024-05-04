@@ -109,8 +109,9 @@ public class TeacherService{
     }
 
     // 회원정보 수정
+    @Transactional
     public void update(TeacherDto teacherDto) {
-        Teacher teacher = teacherRepository.findTeacherByTeaNo(teacherDto.getTeaNo());
+        Teacher teacher = teacherRepository.findTeacherByTeaEmail(teacherDto.getTeaEmail());
         if (teacher != null) {
             // DTO에서 변경된 정보를 Entity에 반영
             teacher.setTeaName(teacherDto.getTeaName());

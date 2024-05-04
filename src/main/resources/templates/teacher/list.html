@@ -59,13 +59,7 @@
                 <div class="teacher-inner">
                     <img th:if="${list.teaImage != null}" th:src="@{'/files/' + ${list.teaImage}}" />
                     <img th:unless="${list.teaImage != null}" src="/images/noprofile.png" />
-
                     <div class="text-box">
-                        <script th:inline="javascript">
-                            /*<![CDATA[*/
-                            console.log([[${list.teaImage}]]); // 콘솔에 출력
-                            /*]]>*/
-                        </script>
                         <h2 class="name" th:text="${list.teaName}"></h2>
                         <div class="desc">
                             <p class="teacherIntro" th:text="${list.teaIntro}"></p>

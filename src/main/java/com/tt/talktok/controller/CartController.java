@@ -57,11 +57,35 @@ public class CartController {
             return "redirect:/student/login";
         }else{
             List<Cart> cartItems = cartService.getCartItems(studentDto.getStuNo());
-            System.out.println("cartItems : "+ cartItems.toString());
             model.addAttribute("cartItems", cartItems);
             model.addAttribute("page", page);
         }
-
         return "cart/list";
+    }
+
+    // 장바구니에서 선택항목 삭제
+    @PostMapping("/delete")
+    public String deleteCart(@RequestParam(value = "cartCheck", required = false) List<String> cartCheck, HttpSession session) {
+        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+
+        if (studentDto == null) {
+            return "redirect:/student/login";
+        }else if(cartCheck == null || cartCheck.isEmpty()){
+            return "cart/cbmessage";
+        } else {
+            for (String item : cartCheck) {
+                String[] parts = item.split("-");
+                int stuNo = Integer.parseInt(parts[0]);
+                int lecNo = Integer.parseInt(parts[1]);
+
+                System.out.println("서비스 가기 전");
+
+                cartService.checkCart(stuNo, lecNo);
+            }
+
+            System.out.println("끝");
+
+            return "redirect:/cart/list";
+        }
     }
 }

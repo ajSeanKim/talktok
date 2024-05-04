@@ -68,7 +68,7 @@ public class StudentController {
 
                 session.setAttribute("stuEmail", email);
                 session.setAttribute("stuNo", dbStudent.getStuNo());
-
+                session.setAttribute("stuSocial", dbStudent.getStuSocial());
                 session.setAttribute("studentDto", dbStudent); //장바구니용 테스트
 
                 model.addAttribute("result", result);
@@ -121,7 +121,7 @@ public class StudentController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "student/logout";
+        return "/loginStuIntersection";
     }
 
     // 학생 마이페이지
@@ -238,17 +238,23 @@ public class StudentController {
         String stuEmail = (String) session.getAttribute("stuEmail");
         StudentDto dbStudent = studentService.findStudent(stuEmail);
         int result = 0;
+        System.out.println("Password check before: " + passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd()));
+
+        // 미리 newStudent 객체 생성
+        StudentDto newStudent = new StudentDto();
+        newStudent.setStuEmail(stuEmail);  // 이메일 설정도 세션에서 가져온 이메일로 변경
+
         // 현재 비밀번호 확인
         if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
             String encpassword = passwordEncoder.encode(stuNewPwd);
-            dbStudent.setStuPwd(encpassword);
-            studentService.updatePwd(dbStudent);
+            newStudent.setStuPwd(encpassword);
+            studentService.updatePwd(newStudent);
             result = 1;
-//            result = studentService.updatePwd(newStudent);
-
-        }else {
-            result=-1;
+        } else {
+            result = -1;
         }
+
+        System.out.println("Password check after: " + passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd()));
         System.out.println(result);
         model.addAttribute("result", result);
         return "student/pwdUpdate";
@@ -270,29 +276,31 @@ public class StudentController {
     @PostMapping("/update")
     public String update(@ModelAttribute StudentDto studentDto, HttpSession session, Model model) throws Exception {
         String stuEmail = (String) session.getAttribute("stuEmail");
-        String stuName = (String) session.getAttribute("stuName");
         studentDto.setStuEmail(stuEmail);
-        studentDto.setStuName(stuName);
-        int result = 0;
-
         // 최대한 빨리 stuSocial의 null 체크를 수행
         String stuSocial = Optional.ofNullable(studentDto.getStuSocial()).orElse("normal");
         studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
 
-        StudentDto dbStudent = this.studentService.findStudent(stuEmail);
+        StudentDto dbStudent = studentService.findStudent(stuEmail);
+        int result = 0;
         // student update
         if (stuSocial.equals("normal")) {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
-                studentService.update(dbStudent);
-                System.out.println("수정완료");
+                // 비밀번호 일치: 회원 정보 업데이트
+                studentService.update(studentDto);
+                System.out.println("정보 수정 완료");
                 result = 1;
+                model.addAttribute("result", result);
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
                 result = -1;
+                model.addAttribute("result", result);
                 return "student/update";
             }
         } else {
             studentService.update(studentDto);
+            result = 1;
+            model.addAttribute("result", result);
             return "redirect:/student/myPage";
         }
     }
