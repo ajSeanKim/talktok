@@ -291,7 +291,6 @@ public class StudentController {
                 System.out.println("정보 수정 완료");
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
-                result = -1;
                 return "student/update";
             }
         } else {
