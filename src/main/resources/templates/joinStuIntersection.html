@@ -82,6 +82,7 @@
             document.getElementById("stuPhone").value = stuPhone;
         }
         function idCheck() {
+            console.log("btn click");
             var stuEmail = $("#stuEmail").val().trim();
 
             if (stuEmail === "") {
@@ -111,10 +112,6 @@
         }
 
         $(document).ready(function() {
-            // 중복 검사 버튼에 이벤트 핸들러 등록
-            $('#id-check').click(function() {
-                return idCheck();
-            });
             //메인 검색 영역 버튼 제어
             $('.btn-student').click(function() {
                 $(this).addClass('on');
@@ -221,7 +218,6 @@
         .container {
             position: relative;
             height: 100%;
-            font-size: 0;
         }
         div {
             display: block;

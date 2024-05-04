@@ -106,7 +106,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/teadent/idCheck',
+                url: '/teacher/idCheck',
                 data: {teaEmail: teaEmail},
                 success: function(result) {
                     // 성공 콜백에서 HTML 업데이트
@@ -125,10 +125,6 @@
         }
 
         $(document).ready(function() {
-            // 중복 검사 버튼에 이벤트 핸들러 등록
-            $('#id-check').click(function() {
-                return idCheck();
-            });
             //메인 검색 영역 버튼 제어
             $('.btn-teadent').click(function() {
                 $(this).addClass('on');
@@ -235,7 +231,6 @@
         .container {
             position: relative;
             height: 100%;
-            font-size: 0;
         }
         div {
             display: block;
@@ -375,7 +370,7 @@
                                 <input type="text" name="teaEmail" id="teaEmail" class="input" placeholder="이메일을 입력하세요.">
                                 <input type="button" id="id-check" value="중복검사" onclick="return idCheck();">
                             </div>
-                            <div id="id-result"></div><!--중복검사-->
+                            <div class="form_item" id="id-result"></div><!--중복검사-->
                             <div class="form_item lock password" id="divpasswd"><!--비밀번호 입력-->
                                 <input type="password" name="teaPwd" id="teaPwd" placeholder="비밀번호" class="input" autocomplete="new_password"/>
                             </div>
