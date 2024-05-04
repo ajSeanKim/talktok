@@ -29,7 +29,7 @@
                     <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}">
                         <h3 th:text="${list.lec_name}" class="title"></h3>
                         <p><span th:text="${list.lec_day}"></span>&nbsp;&nbsp;<span th:text="${list.lec_time}"></span></p>
-                        <p>월 <span th:text="${list.lec_price}"></span>만원</p>
+                        <p>월 <span th:text="${list.lec_price}"></span>원</p>
                         <p><span th:text="${list.lec_startdate}"></span> ~ <span th:text="${list.lec_enddate}"></span></p>
                     </a>
                 </div>
