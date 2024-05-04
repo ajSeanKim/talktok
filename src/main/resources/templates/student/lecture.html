@@ -17,6 +17,7 @@
 </style>
 </head>
 <body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 <h1>수강한 강의 목록</h1>
 
 <section>
@@ -41,5 +42,6 @@
         </div>
     </div>
 </section>
+<div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
