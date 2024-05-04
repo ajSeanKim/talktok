@@ -44,20 +44,18 @@
         </tr>
         <tr>
             <th>이름</th>
-            <!--            <td th:text="${session.stuName}">stuName</td>-->
-            <td><input type="text" name="stuName" id="stuName" value="" /></td>
+                <td><input type="text" name="stuName" id="stuName" required th:value="${studentDto.stuName}" /></td>
         </tr>
         <tr>
             <th>닉네임</th>
-            <td><input type="text" name="stuNickname" id="stuNickname" value="" /></td>
-<!--            <td><input type="text" name="stuNickname" id="stuNickname" value="${studentDto.stuNickname}" /></td>-->
+            <td><input type="text" name="stuNickname" id="stuNickname" th:value="${studentDto.stuNickname}" /></td>
         </tr>
         <tr>
             <th>핸드폰</th>
             <td>
                 <input type="text" name="stuPhone" id="stuPhone" maxlength="13" placeholder="ex) 01012345678"
                        oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
-                       autocomplete="off" value="" />
+                       autocomplete="off" th:value="${studentDto.stuPhone}" />
             </td>
         </tr>
     </table>

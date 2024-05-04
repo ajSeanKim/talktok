@@ -109,6 +109,7 @@ public class TeacherService{
     }
 
     // 회원정보 수정
+    @Transactional
     public void update(TeacherDto teacherDto) {
         Teacher teacher = teacherRepository.findTeacherByTeaNo(teacherDto.getTeaNo());
         if (teacher != null) {
