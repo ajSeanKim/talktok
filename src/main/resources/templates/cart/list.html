@@ -14,9 +14,14 @@
         <h3>장바구니에 상품이 없습니다.</h3>
     </div>
     <div th:unless="${cartItems.isEmpty()}">
+        <form action="/cart/delete" method="POST">
+            <div class="btns">
+                <input class="btn-submit" type="submit" value="선택항목 삭제"/>
+            </div>
     <table>
         <thead>
         <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
             <th>강의명</th>
             <th>강의 시작일</th>
             <th>강의 종료일</th>
@@ -26,21 +31,48 @@
         </thead>
         <tbody>
         <tr th:each="cart : ${cartItems}">
+            <td>
+                <input type="checkbox" name="cartCheck" id="cartCheck" th:value="${cart.getStudent().getStuNo()} + '-' + ${cart.getLecture().getLecNo()}" class="cartCheck">
+            </td>
             <td><a th:href="@{/lecture/detail(page=${page}, no=${cart.getLecture().getLecNo()})}" th:text="${cart.getLecture().getLec_name()}"></a></td>
             <td th:text="${cart.getLecture().getLec_startdate()}"></td>
             <td th:text="${cart.getLecture().getLec_enddate()}"></td>
-            <td th:text="${cart.getLecPrice()}"></td>
+            <td th:text="${cart.getLecPrice()} + '원'"></td>
             <td th:text="${cart.getCaCount()}"></td>
         </tr>
         </tbody>
     </table>
-    <div class="total-price">
-        <strong>Total Price: </strong>
-<!--        <span th:text="${#aggregates.sum(cartItems.![lecPrice * caCount])}">0</span> 원-->
-    </div>
+    </form>
     </div>
 </main>
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
 </body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectAll = document.getElementById('selectAll');
+            var checkboxes = document.querySelectorAll('input[name="cartCheck"]');
+
+            // 전체선택 체크박스 선택시 마다 실행
+            selectAll.addEventListener('change', function() {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = this.checked;
+                }
+            });
+
+            // 모든 개별 체크박스가 선택되거나 선택 해제될 때 "모두 선택" 체크박스 상태 업데이트
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    if (!this.checked) {
+                        selectAll.checked = false;
+                    } else {
+                        // 모든 체크박스가 체크되어 있을 때만 "모두 선택" 체크박스 체크
+                        selectAll.checked = Array.from(checkboxes).every(c => c.checked);
+                    }
+                });
+            });
+        });
+    </script>
+
 </html>
