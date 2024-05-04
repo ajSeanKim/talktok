@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -92,10 +93,11 @@ public class StudentController {
 
         String stuEmail = student.getStuEmail();
 
-         StudentDto dbStudent = studentService.findStudent(stuEmail);
+        StudentDto dbStudent = studentService.findStudent(stuEmail);
         //가입된 email = 1, 가입안된 email = 0
-            studentService.join(student);
-            model.addAttribute("result",result);
+        studentService.join(student);
+        model.addAttribute("result",result);
+
         return "student/join";
     }
 
@@ -121,7 +123,7 @@ public class StudentController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "/loginStuIntersection";
+        return "/student/logout";
     }
 
     // 학생 마이페이지
@@ -282,25 +284,18 @@ public class StudentController {
         studentDto.setStuSocial(stuSocial);  // 확실하게 stuSocial 값을 설정
 
         StudentDto dbStudent = studentService.findStudent(stuEmail);
-        int result = 0;
         // student update
         if (stuSocial.equals("normal")) {
             if (passwordEncoder.matches(studentDto.getStuPwd(), dbStudent.getStuPwd())) {
                 // 비밀번호 일치: 회원 정보 업데이트
                 studentService.update(studentDto);
                 System.out.println("정보 수정 완료");
-                result = 1;
-                model.addAttribute("result", result);
                 return "redirect:/student/myPage"; // 정보 업데이트 후 마이페이지로 리다이렉트
             } else {// 비밀번호 불일치
-                result = -1;
-                model.addAttribute("result", result);
                 return "student/update";
             }
         } else {
             studentService.update(studentDto);
-            result = 1;
-            model.addAttribute("result", result);
             return "redirect:/student/myPage";
         }
     }

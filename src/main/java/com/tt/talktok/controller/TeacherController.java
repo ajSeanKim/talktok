@@ -217,7 +217,7 @@ public class TeacherController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "/loginTeaIntersection";
+        return "/teacher/logout";
     }
 
     //마이페이지
