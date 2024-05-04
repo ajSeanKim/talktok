@@ -163,7 +163,7 @@ public class TeacherController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "teacher/logout";
+        return "/loginTeaIntersection";
     }
 
     //마이페이지
@@ -271,6 +271,71 @@ public class TeacherController {
         }
 
     }
+
+    // 강사 비밀번호 변경
+    @GetMapping("pwdUpdate")
+    public String pwdUpdate() {
+        return "teacher/pwdUpdateForm";
+    }
+    @PostMapping("pwdUpdate")
+    public String pwdUpdate(TeacherDto teacherDto, @RequestParam("teaNewPwd") String teaNewPwd, Model model, HttpSession session) {
+        String teaEmail = (String) session.getAttribute("teaEmail");
+
+        int result = 0;
+        TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
+        System.out.println("Password check before: " + passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd()));
+
+        // 미리 newStudent 객체 생성
+        TeacherDto newTeacher = new TeacherDto();
+        newTeacher.setTeaEmail(teaEmail);  // 이메일 설정도 세션에서 가져온 이메일로 변경
+
+        // 현재 비밀번호 확인
+        if (passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
+            String encpassword = passwordEncoder.encode(teaNewPwd);
+            newTeacher.setTeaPwd(encpassword);
+            teacherService.updatePwd(newTeacher);
+            result = 1;
+
+        }else {
+            result=-1;
+        }
+        System.out.println("Password check after: " + passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd()));
+        System.out.println(result);
+        model.addAttribute("result", result);
+        return "teacher/pwdUpdate";
+    }
+
+    // 강사 회원정보 수정
+    @GetMapping("/update")
+    public String update(HttpSession session, Model model) {
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        TeacherDto teacherDto = teacherService.findTeacher(teaEmail);
+        model.addAttribute("teacherDto", teacherDto);
+        return "teacher/updateForm";
+    }
+    @PostMapping("/update")
+    public String update(@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
+        System.out.println("ControllerTeacherDto: " + teacherDto.toString());
+        String teaEmail = (String) session.getAttribute("teaEmail");
+        teacherDto.setTeaEmail(teaEmail);
+        TeacherDto dbTeacher = teacherService.findTeacher(teacherDto.getTeaEmail());
+        int result  = 0;
+        // student update
+        if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
+            // 비밀번호 일치: 회원 정보 업데이트
+            teacherService.update(teacherDto);
+            System.out.println("정보 수정 완료");
+            result  = 1;
+            model.addAttribute("result", result);
+            return "redirect:/teacher/myPage"; // 정보 업데이트 후 마이 페이지로 리다이렉트
+        } else{ //비밀번호 불일치
+            result  = -1;
+            model.addAttribute("result", result);
+            return "teacher/updateForm";
+        }
+    }
+
+
 
     //강의 등록
     @GetMapping("/lecJoin")

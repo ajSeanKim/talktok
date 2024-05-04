@@ -8,6 +8,7 @@ import com.tt.talktok.repository.LectureRepository;
 import com.tt.talktok.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,5 +46,11 @@ public class CartService {
     public int countCart(int lecNo, int stuNo) {
 
         return cartRepository.countByLectureLecNoAndStudentStuNo(lecNo, stuNo);
+    }
+
+    @Transactional
+    public void checkCart(int stuNo, int lecNo) {
+        System.out.println("서비스 옴");
+        cartRepository.deleteByStudentStuNoAndLectureLecNo(stuNo, lecNo);
     }
 }

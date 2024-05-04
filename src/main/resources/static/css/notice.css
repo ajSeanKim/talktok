@@ -10,6 +10,8 @@ body {font-family: 'Pretendard', 'sans-serif';}
 }
 .notice-page table input, table textarea {width:100%;}
 .notice-page th, td {padding: 10px; border: 1px solid #dee2e6; text-decoration: none; }
+.notice-page th:first-child,
+.notice-page td:first-child {width: 60px; text-align: center;}
 .notice-page pre {text-align: left;}
 
 /*페이지네이션*/
@@ -21,6 +23,7 @@ body {font-family: 'Pretendard', 'sans-serif';}
 .notice-page {padding: 20px;}
 .notice-page h2 {font-size: 200%; text-align:center;}
 .notice-page input {border:1px solid #dee2e6; height: 35px;}
+.notice-page input[type="checkbox"]{width: 15px; height: 15px;}
 .notice-page .btn-submit {
     padding: 5px 20px;
     background-color: #FAA11B;
@@ -36,3 +39,4 @@ body {font-family: 'Pretendard', 'sans-serif';}
     color: white;
     cursor: pointer;
 }
+
