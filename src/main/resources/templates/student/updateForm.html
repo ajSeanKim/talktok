@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원정보수정</title>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>회원 정보 변경</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         //핸드폰번호 자동하이픈 기능
         const autoHyphen = (target) => {
@@ -42,44 +42,176 @@
 
         }
     </script>
+    <style>
+        .inner{
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .container {
+            position: relative;
+            height: 100%;
+            font-size: 0;
+        }
+        div {
+            display: block;
+            unicode-bidi: isolate;
+        }
+        .content {
+            flex: 1 1 auto;
+            padding-top: 30px;
+        }
+        .form {
+            display: flex;
+            box-sizing: border-box;
+            flex-direction: column;
+            height: 100%;
+        }
+        .form_content {
+            flex: 1 1 auto;
+        }
+        @media (min-width: 768px) {
+            .form_section {
+                margin-right: 20px;
+                margin-left: 20px;
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+        .form_section {
+            padding: 0 20px;
+        }
+        .join_toggle:not([style*="display: none"])+.form_list {
+            margin-top: 10px;
+        }
+        .form_list {
+            position: relative;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        .form_item:first-of-type {
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .form_item:last-child {
+            border-bottom: none;
+        }
+        .form_item {
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-sizing: border-box;
+            max-width: 100%;
+            min-height: 50px;
+            padding: 0 10px 0 45px;
+            border-bottom: 1px solid #ccc;
+        }
+        .input {
+            flex: 1 1 auto;
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 16px;
+            line-height: 22px;
+            color: #222;
+        }
+        button, input, select, textarea {
+            border-radius: 0;
+            border: none;
+            background: 0 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: 0;
+            text-decoration: none;
+            cursor: pointer;
+            -webkit-text-size-adjust: none;
+        }
+        .form_item+.form_item {
+            margin-top: -1px;
+        }
+        .btn_submit_wrap {
+            flex: none;
+            padding: 20px;
+        }
+        .btn_submit {
+            width: 100%;
+            padding: 14px 0;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, .05);
+            background: #FAA11B;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #fff;
+        }
+        button {
+            cursor: pointer;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #FAA11B;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        .form_label_container {
+            display: flex;
+            flex-direction: row; /* 요소들을 가로로 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            margin-right: 10px; /* 입력 필드와의 간격 */
+        }
+        .form_label_container span {
+            color: #000; /* 텍스트 색상 보장 */
+            font-size: 16px; /* 가독성 있는 폰트 크기 */
+        }
+    </style>
 </head>
 <body>
-<h2>회원정보변경</h2>
-<form method="post" action="update" onsubmit="return boardCheck();">
-    <input type="hidden" name= "stuEmail" value="${studentDto.stuEmail}">
-    <input type="hidden" name= "stuName" value="${studentDto.stuName}">
-    <input type="hidden" name="stuSocial" value="normal">
-    <table>
-        <tr>
-            <th>이메일</th>
-            <td th:text="${session.stuEmail}">stuEmail</td>
-        </tr>
-        <tr>
-            <th>이름</th>
-<!--            <td th:text="${session.stuName}">stuName</td>-->
-            <td><input type="text" name="stuName" id="stuName" th:value="${studentDto.stuName}" /></td>
-        </tr>
-        <tr>
-            <th>닉네임</th>
-            <td><input type="text" name="stuNickname" id="stuNickname" th:value="${studentDto.stuNickname}" /></td>
-        </tr>
-        <tr>
-            <th>핸드폰</th>
-            <td>
-                <input type="text" name="stuPhone" id="stuPhone" maxlength="13" placeholder="ex) 01012345678"
-                       oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
-                       autocomplete="off" th:value="${studentDto.stuPhone}" />
-            </td>
-        </tr>
-        <tr>
-            <th>비밀번호 확인</th>
-            <td><input type="password" name="stuPwd" id="stuPwd" /></td>
-        </tr>
-    </table>
-    <div class="btns">
-        <input type="submit" value="수정하기">
-        <input type="button" value="뒤로가기" onclick="history.go(-1);">
+<div th:replace="~{header :: header}"></div>
+<div class="container">
+    <div class="inner">
+        <div class="content">
+            <h2>회원정보변경</h2>
+            <form method="post" action="update" onsubmit="return boardCheck();" class="form">
+                <div class="form_content">
+                    <div class="form_section">
+                        <div class="form_list">
+                            <div class="form_item user" id="divId">
+                                <input type="text" name="stuEmail" readonly th:value="${session.stuEmail}" class="input">
+                            </div>
+                            <div class="form_item" id="divname">
+                                <div class="form_label_container">
+                                    <span>이름:</span>
+                                </div>
+                                <input type="text" name="stuName" id="stuName" th:value="${studentDto.stuName}" class="input" maxlength="8" />
+                            </div>
+                            <div class="form_item" id="divnickname">
+                                <div class="form_label_container">
+                                    <span>닉네임:</span>
+                                </div>
+                                <input type="text" name="stuNickname" id="stuNickname" th:value="${studentDto.stuNickname}" class="input" maxlength="8" />
+                            </div>
+                            <div class="form_item" id="divphone">
+                                <div class="form_label_container">
+                                    <span>핸드폰:</span>
+                                </div>
+                                <input type="text" name="stuPhone" id="stuPhone" th:value="${studentDto.stuPhone}" class="input" maxlength="13" oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}" autocomplete="off"/>
+                            </div>
+                            <div class="form_item" id="divpassword">
+                                <input type="password" name="stuPwd" id="stuPwd" class="input" placeholder="비밀번호 확인"/>
+                            </div>
+                            <div class="btn_submit_wrap">
+                                <input type="submit" value="수정하기" class="btn_submit"><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
+<div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

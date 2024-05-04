@@ -16,14 +16,14 @@
             return phone.replace(/-/g, '');
         }
         function boardCheck() {
-            var stuEmail = $.trim($("#stuEmail").val());
-            if (stuEmail === "") {
+            var teaEmail = $.trim($("#teaEmail").val());
+            if (teaEmail === "") {
                 alert("아이디를 입력하세요");
-                $("#stuEmail").val("").focus();
+                $("#teaEmail").val("").focus();
                 return false;
             }
             // 이메일 입력란에서 값을 가져옴
-            var email = document.getElementById("stuEmail").value;
+            var email = document.getElementById("teaEmail").value;
 
             // 이메일 형식 검사 정규식
             var emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,39 +34,53 @@
                 return false; // 유효성 검사 실패
             }
 
-            if ($.trim($("#stuPwd").val()) == "") {
+            if ($.trim($("#teaPwd").val()) == "") {
                 alert("비밀번호를 입력하세요");
-                $("#stuPwd").val("").focus();
+                $("#teaPwd").val("").focus();
                 return false;
             }
-            if ($.trim($("#stuPwd2").val()) == "") {
+            if ($.trim($("#teaPwd2").val()) == "") {
                 alert("비밀번호 확인을 입력하세요");
-                $("#stuPwd2").val("").focus();
+                $("#teaPwd2").val("").focus();
                 return false;
             }
-            if($.trim($("#stuPwd").val()) != $.trim($("#stuPwd2").val())){
+            if($.trim($("#teaPwd").val()) != $.trim($("#teaPwd2").val())){
                 alert("비밀번호가 다릅니다!");
-                $("#stuPwd").val("");
-                $("#stuPwd2").val("");
-                $("#stuPwd").focus();
+                $("#teaPwd").val("");
+                $("#teaPwd2").val("");
+                $("#teaPwd").focus();
                 return false;
             }
-            if ($.trim($("#stuName").val()) == "") {
+            if ($.trim($("#teaName").val()) == "") {
                 alert("이름을 입력하세요");
-                $("#stuName").val("").focus();
+                $("#teaName").val("").focus();
                 return false;
             }
-            if ($.trim($("#stuNickname").val()) == "") {
+            if ($.trim($("#teaNickname").val()) == "") {
                 alert("닉네임을 입력하세요");
-                $("#stuNickname").val("").focus();
+                $("#teaNickname").val("").focus();
                 return false;
             }
-            if ($.trim($("#stuPhone").val()) == "") {
+            if ($.trim($("#teaPhone").val()) == "") {
                 alert("핸드폰번호를 입력하세요");
-                $("#stuPhone").val("").focus();
+                $("#teaPhone").val("").focus();
                 return false;
             }
-
+            if ($.trim($("#teaAccount").val()) !== "" && !/^\d{10,14}$/.test($("#teaAccount").val())) {
+                alert("계좌번호는 10자리에서 14자리 사이여야 합니다");
+                $("#teaAccount").focus();
+                return false;
+            }
+            if ($.trim($("#teaIntro").val()).length > 500) {
+                alert("자기소개는 500자 이내로 입력하세요");
+                $("#teaIntro").focus();
+                return false;
+            }
+            if ($.trim($("#teaDetail").val()).length > 2000) {
+                alert("디테일 자기소개는 2000자 이내로 입력하세요");
+                $("#teaDetail").focus();
+                return false;
+            }
             //중복체크 관련
             var chkresult = $("#id-result div").text();
             if (chkresult == "") {
@@ -78,30 +92,30 @@
             }
 
             //핸드폰번호에서 하이픈을 제거하고 숫자만 포함하는 문자열로 변경- 수정필요
-            const stuPhone = removeHyphen(document.getElementById("stuPhone").value);
-            document.getElementById("stuPhone").value = stuPhone;
+            const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
+            document.getElementById("teaPhone").value = teaPhone;
         }
         function idCheck() {
-            var stuEmail = $("#stuEmail").val().trim();
+            var teaEmail = $("#teaEmail").val().trim();
 
-            if (stuEmail === "") {
+            if (teaEmail === "") {
                 alert("아이디를 입력하세요");
-                $("#stuEmail").focus();
+                $("#teaEmail").focus();
                 return false;
             }
 
             $.ajax({
                 type: 'POST',
-                url: '/student/idCheck',
-                data: {stuEmail: stuEmail},
+                url: '/teadent/idCheck',
+                data: {teaEmail: teaEmail},
                 success: function(result) {
                     // 성공 콜백에서 HTML 업데이트
                     if (result == 1) {
                         $("#id-result").html("<span style='color: red;'>이미 존재하는 이메일입니다.</span>");
-                        $("#stuEmail").focus();
+                        $("#teaEmail").focus();
                     } else {
                         $("#id-result").html("<span style='color: green;'>사용 가능한 이메일입니다.</span>");
-                        $("#stuPwd").focus();
+                        $("#teaPwd").focus();
                     }
                 },
                 error: function(xhr) {
@@ -116,19 +130,19 @@
                 return idCheck();
             });
             //메인 검색 영역 버튼 제어
-            $('.btn-student').click(function() {
+            $('.btn-teadent').click(function() {
                 $(this).addClass('on');
                 $('.btn-teacher').removeClass('on');
                 $('#teacher').hide();
-                $('#student').show();
+                $('#teadent').show();
                 $('.teacher-input').off('input');
             });
             $('.btn-teacher').click(function() {
                 $(this).addClass('on');
-                $('.btn-student').removeClass('on');
-                $('#student').hide();
+                $('.btn-teadent').removeClass('on');
+                $('#teadent').hide();
                 $('#teacher').show();
-                $('.student-input').off('input');
+                $('.teadent-input').off('input');
             });
         });
 
@@ -167,14 +181,14 @@
             border: 1px solid #e3e3e3;
             border-bottom: 0;
             border-radius: 6px 6px 0 0;
-            background-color: #f8f9fa;
+            background-color: #fff;
             text-align: center;
             box-sizing: border-box;
             z-index: 2;
         }
         .menu_id.on, .menu_ones.on {
             border-color: #c6c6c6;
-            background-color: #fff;
+            background-color: #f8f9fa;
             z-index: 5;
         }
         .id_pw_wrap .input_row {
@@ -334,14 +348,14 @@
     <div class="login_wrap">
         <ul class="menu_wrap" role="tablist">
             <li class="menu-item" role="presentation">
-                <a href="#none" id="loinid" class="menu_id on" role="tab" aria-selected="true" >
+                <a href="#none" id="loinid" class="menu_id on" role="tab" aria-selected="false" onclick="location='/view/joinStuIntersection'">
                     <span class="menu_text">
                             <span class="text">학생회원 회원가입</span>
                         </span>
                 </a>
             </li>
             <li class="menu_item" role="presentation">
-                <a href="#none" id="ones" class="menu_ones" role="tab" aria-selected="false" onclick="location='/view/joinTeaIntersection'">
+                <a href="#none" id="ones" class="menu_ones" role="tab" aria-selected="true">
                         <span class="menu_text">
                             <span class="text">강사회원 회원가입</span>
                         </span>
@@ -352,32 +366,49 @@
 <div class="container">
     <div class="inner">
         <div class="content">
-            <form id="join_form" method="post" action="student/login" class="form" onsubmit="return boardCheck();">
+            <form id="join_form" method="post" action="teacher/login" class="form" onsubmit="return boardCheck();">
                 <div class="form_content">
                     <div class="form_section">
                         <div class="form_list">
+
                             <div class="form_item user" id="divId"> <!--이메일 입력-->
-                                <input type="text" name="stuEmail" id="stuEmail" class="input" placeholder="이메일을 입력하세요.">
+                                <input type="text" name="teaEmail" id="teaEmail" class="input" placeholder="이메일을 입력하세요.">
                                 <input type="button" id="id-check" value="중복검사" onclick="return idCheck();">
                             </div>
-                            <div class="form_item user" id="id-result"></div><!--중복검사-->
+                            <div id="id-result"></div><!--중복검사-->
                             <div class="form_item lock password" id="divpasswd"><!--비밀번호 입력-->
-                                <input type="password" name="stuPwd" id="stuPwd" placeholder="비밀번호" class="input" autocomplete="new_password"/>
+                                <input type="password" name="teaPwd" id="teaPwd" placeholder="비밀번호" class="input" autocomplete="new_password"/>
                             </div>
                             <div class="form_item lock password" id="divpasswd2"><!--비밀번호확인 입력-->
-                                <input type="password" name="stuPwd2" id="stuPwd2" placeholder="비밀번호 재입력" class="input" autocomplete="new_password"/>
+                                <input type="password" name="teaPwd2" id="teaPwd2" placeholder="비밀번호 재입력" class="input" autocomplete="new_password"/>
                             </div>
                             <div class="form_item" id="divname">
-                                <input type="text" name="stuName" id="stuName" placeholder="이름" class="input" maxlength="8" />
+                                <input type="text" name="teaName" id="teaName" placeholder="이름" class="input" maxlength="8" />
                             </div>
                             <div class="form_item" id="divnickname">
-                                <input type="text" name="stuNickname" id="stuNickname" placeholder="닉네임" class="input" maxlength="8" />
+                                <input type="text" name="teaNickname" id="teaNickname" placeholder="닉네임" class="input" maxlength="8" />
                             </div>
                             <div class="form_item" id="divphone">
-                                <input type="text" name="stuPhone" id="stuPhone"  placeholder="휴대전화번호" class="input" maxlength="13"
+                                <input type="text" name="teaPhone" id="teaPhone"  placeholder="휴대전화번호" class="input" maxlength="13"
                                        oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}"
                                        autocomplete="off" />
                             </div>
+                            <div class="form_item" id="divaccount">
+                                <input type="text" name="teaAccount" id="teaAccount" placeholder="계좌번호" class="input" maxlength="14" />
+                            </div>
+                            <div class="form_item" id="divintro">
+                                <input type="text" name="teaIntro" id="teaIntro" placeholder="자기소개" class="input" maxlength="" />
+                            </div>
+                            <div class="form_item" id="divdetail">
+                                <input type="text" name="teaDetail" id="teaDetail" placeholder="디테일 자기소개" class="input" />
+                            </div>
+                            <div class="form_item" id="divcareer">
+                                <input type="text" name="teaCareer" id="teaCareer" placeholder="약력" class="input" maxlength="" />
+                            </div>
+                            <div class="form_item" id="divimage">
+                                <input type="file" name="teaImage" id="teaImage" placeholder="사진" class="input" />
+                            </div>
+
                         </div>
                         <div class="btn_submit_wrap" id="divBtnJoin">
                             <button type="submit" class="btn_submit" id="btnJoin">가입하기</button>
