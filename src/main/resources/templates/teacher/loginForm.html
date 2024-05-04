@@ -5,20 +5,20 @@
     <title>로그인 폼</title>
     <script>
         function boardCheck() {
-            var stuEmail = $.trim($("#stuEmail").val());
-            if (stuEmail === "") {
+            var teaEmail = $.trim($("#teaEmail").val());
+            if (teaEmail === "") {
                 alert("아이디를 입력하세요");
-                $("#stuEmail").val("").focus();
+                $("#teaEmail").val("").focus();
                 return false;
             }
             if (!checkId(userId)) {
                 alert("아이디는 4~12자 이내로 소문자와 숫자만 사용할 수 있습니다");
-                $("#stuEmail").val("").focus();
+                $("#teaEmail").val("").focus();
                 return false;
             }
-            if ($.trim($("#stuPwd").val()) == "") {
+            if ($.trim($("#teaPwd").val()) == "") {
                 alert("비밀번호를 입력하세요");
-                $("#stuPwd").val("").focus();
+                $("#teaPwd").val("").focus();
                 return false;
             }
         }

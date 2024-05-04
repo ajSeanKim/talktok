@@ -19,8 +19,8 @@
         </nav>
         <div class="util-menu">
             <div th:if="${session.stuNo == null} and ${session.teaNo == null}">
-                <a href="/view/loginIntersection">로그인</a>
-                <a href="/view/joinIntersection">회원가입</a>
+                <a href="/view/loginStuIntersection">로그인</a>
+                <a href="/view/joinStuIntersection">회원가입</a>
             </div>
             <div th:if="${session.stuNo != null}">
                 <a href="/student/myPage">마이페이지</a>

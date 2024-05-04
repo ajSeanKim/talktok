@@ -29,27 +29,27 @@ spring:
 #              - name
 #              - phone_number
             clientName: Kakao
-          naver:
-            clientId: mdKA6sN55zOmRKVIwSKl
-            clientSecret: 2zWypUly75
-            clientAuthenticationMethod: get
-            authorizationGrantType: authorization_code
-            redirectUri: http://localhost:80/oauth/naver/callback
-            scope:
-              - profile_nickname
-              - profile_name
-              - account_email
-              - profile_mobile
-            clientName: Naver
+#          naver:
+#            clientId: mdKA6sN55zOmRKVIwSKl
+#            clientSecret: 2zWypUly75
+#            clientAuthenticationMethod: get
+#            authorizationGrantType: authorization_code
+#            redirectUri: http://localhost:80/oauth/naver/callback
+#            scope:
+#              - profile_nickname
+#              - profile_name
+#              - account_email
+#              - profile_mobile
+#            clientName: Naver
         provider:
           kakao:
             authorizationUri: https://kauth.kakao.com/oauth/authorize
             tokenUri: https://kauth.kakao.com/oauth/token
             userInfoUri: https://kapi.kakao.com/v2/user/me
-          naver:
-            authorizationUri: https://nid.naver.com/oauth2.0/authorize
-            tokenUri: https://nid.naver.com/oauth2.0/token
-            userInfoUri: https://openapi.naver.com/v1/nid/me
+#          naver:
+#            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+#            tokenUri: https://nid.naver.com/oauth2.0/token
+#            userInfoUri: https://openapi.naver.com/v1/nid/me
   jpa:
     hibernate:
       ddl-auto: none

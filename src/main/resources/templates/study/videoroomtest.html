@@ -38,11 +38,9 @@
     }
   </style>
 </head>
-<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
 <body>
-  <nav class="navbar navbar-default navbar-static-top">
-  </nav>
+  <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
   <div class="container">
     <div class="row">
@@ -157,10 +155,7 @@
       </div>
     </div>
     <hr>
-    <div class="footer">
-    </div>
   </div>
   <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
-
 </body>
 </html>
