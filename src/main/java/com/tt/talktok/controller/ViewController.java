@@ -9,13 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/view")
 public class ViewController {
-    @GetMapping("/loginIntersection")
-    public String showLogin() {
-        return "/loginIntersection";
+    @GetMapping("/loginStuIntersection")
+    public String stuLogin() {
+        return "loginStuIntersection";
     }
 
-    @GetMapping("/joinIntersection")
-    public String showJoin() {
-        return "/joinIntersection";
+    @GetMapping("/loginTeaIntersection")
+    public String teaLogin() {
+        return "loginTeaIntersection";
+    }
+
+    @GetMapping("/joinStuIntersection")
+    public String stuJoin() {
+        return "joinStuIntersection";
+    }
+
+    @GetMapping("/joinTeaIntersection")
+    public String teaJoin() {
+        return "joinTeaIntersection";
     }
 }
