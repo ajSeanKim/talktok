@@ -45,10 +45,11 @@
 </head>
 <body>
 <h2>회원정보변경</h2>
-<form method="post" action="update" onsubmit="return boardCheck();">
-    <input type="hidden" name= "stuEmail" value="${studentDto.stuEmail}">
-    <input type="hidden" name= "stuName" value="${studentDto.stuName}">
-    <input type="hidden" name="stuSocial" value="normal">
+<form method="post" action="/student/update" onsubmit="return boardCheck();">
+    <input type="hidden" name="stuEmail" th:value="${studentDto.stuEmail}">
+    <input type="hidden" name="stuName" th:value="${studentDto.stuName}">
+    <input type="hidden" name="stuNo" th:value="${studentDto.stuNo}">
+    <input type="hidden" name="stuSocial" th:value="normal">
     <table>
         <tr>
             <th>이메일</th>
