@@ -8,8 +8,8 @@
     .teacher-view-item .teacher-detail {margin: 5rem;}
     .teacher-view-item .teacher-detail .teacher-image-info {display: flex; gap: 5rem;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-image {padding: 0px; border-radius: 10px; flex: 0 0 auto; width: 300px; height: 300px; border: 1px solid #dddddd; overflow: hidden; text-align: center;}
-    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; border-radius:5px;}
-    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; object-fit:cover;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap {width:100%; height: 100%; border-radius:5px;}
+    .teacher-view-item .teacher-detail .teacher-image-info .teacher-image .img-wrap img {width:100%; height: 100%; object-fit:cover;}
     .teacher-view-item .teacher-detail .teacher-image-info .teacher-lecture {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab {}
     .teacher-view-item .teacher-detail .detail-container .teacher-tab .on {color: #fff; background-color: #fcba03; border-bottom-color: #000;}
@@ -44,7 +44,7 @@
             <div class="teacher-image-info">
                 <div class="teacher-image">
                     <div class="img-wrap">
-                        <img th:if="${teacherDetail.teaImage != null}" th:src="${teacherDetail.teaImage}" />
+                        <img th:if="${teacherDetail.teaImage != null}" th:src="@{'/files/' + ${teacherDetail.teaImage}}" />
                         <img th:unless="${teacherDetail.teaImage != null}" src="/images/noprofile.png" />
                     </div>
                 </div>

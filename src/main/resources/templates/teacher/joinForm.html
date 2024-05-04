@@ -153,7 +153,7 @@
 
 <div id="teacher" name="teacher">
     <h2>선생님 회원가입</h2>
-    <form method="post" action="/teacher/join" onsubmit="return boardCheck();">
+    <form method="post" action="/teacher/join" onsubmit="return boardCheck()" enctype="multipart/form-data" >
         <input type="hidden" id="teaSocial" name="teaSocial" value="normal">
         <table>
             <tr>
@@ -220,7 +220,7 @@
             </tr>
             <tr>
                 <th>사진</th>
-                <td colspan="2"><input type="file" name="teaImage" id="teaImage"/></td>
+                <td colspan="2"><input type="file" name="teaImage1" id="teaImage"/></td>
             </tr>
 
         </table>
