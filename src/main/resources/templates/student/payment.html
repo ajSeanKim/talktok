@@ -5,6 +5,7 @@
     <title>학생 결제한 강의</title>
 </head>
 <body>
+<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 <h1>결제한 강의 목록</h1>
 <div class="payment_container">
     <div th:if="${not #lists.isEmpty(stuPayment)}">
@@ -25,4 +26,5 @@
     </div>
 </div>
 </body>
+<div th:replace="~{footer :: footer}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 </html>
