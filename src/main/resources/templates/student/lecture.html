@@ -27,6 +27,7 @@
                 <div class="payment_name">
                     -------
                     <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${entry.key},tea_no=${studentDto.getStuNo()})}"><input type="button" value="수정하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                    <a th:href="@{/study/room(lec_no=${entry.key})}"><input type="button" value="스터디룸 입장" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                     <a th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
                     <h3 th:text="${entry.value.lec_name}" class="title"></h3>
                     <p><span th:text="${entry.value.lec_day}"></span>&nbsp;&nbsp;<span th:text="${entry.value.lec_time}"></span></p>
