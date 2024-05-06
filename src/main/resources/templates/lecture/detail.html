@@ -10,9 +10,10 @@
         .contents-box h3 {color: #f9a01b; font-size: 1.4em;}
         .float-box {flex-basis: 30%;}
         .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
+        .float-box .btn-list {border-color: #ccc; border-radius: unset;}
         .float-box .btn-review {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
-        .float-box .btn-list {width:100%; border-color: #ccc; border-radius: unset;}
         .float-box .btn-list a {display: block;}
+        .float-box form {display: inline;}
         .review-box {width:100%;}
         .review-box .none {color: #666;}
         .review-box h3 {margin-bottom:30px; border-bottom: 1px solid; font-size : 1.2em; line-height: 2;}
@@ -54,7 +55,7 @@
             </div>
             <form th:action="@{/cart/add}" method="post">
                 <input type="hidden" name="lec_no" th:value="${lectureDto.lec_no}"/>
-                <button type="submit" class="btn btn-list">장바구니 담기</button>
+                <button type="submit" class="btn btn-list"><a>장바구니 담기</a></button>
             </form>
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>

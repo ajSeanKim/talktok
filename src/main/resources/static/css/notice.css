@@ -1,5 +1,3 @@
-body {font-family: 'Pretendard', 'sans-serif';}
-
 .notice-page table {
     width: 100%;
     border-collapse: collapse;
@@ -20,7 +18,7 @@ body {font-family: 'Pretendard', 'sans-serif';}
 .notice-page .pagination li a {display: block; padding: 5px 10px; color: #000; text-decoration: none; border: 1px solid #dee2e6; background-color: #fff;}
 .notice-page .pagination .active a {color: #fff; background-color: #FAA11B; border-color: #FAA11B;}
 
-.notice-page {padding: 20px;}
+.notice-page {padding: 0 20px;}
 .notice-page h2 {font-size: 200%; text-align:center;}
 .notice-page input {border:1px solid #dee2e6; height: 35px;}
 .notice-page input[type="checkbox"]{width: 15px; height: 15px;}
