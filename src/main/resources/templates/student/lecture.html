@@ -6,34 +6,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-    .review_write{
-        color: #ffffff;
-        border-radius: 30px;
-        width: 70px;
-        background-color: #FAA11B;
-        border-color: #FAA11B;
-    }
-
-</style>
+        main.wrap h2 {font-size: 180%; font-weight: 700; text-align: center;}
+    </style>
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<h1>수강한 강의 목록</h1>
-
-<section>
+<main class="wrap">
+    <h2>내 강의 목록</h2>
     <div class="list-box">
         <div th:if="${not #lists.isEmpty(stuLecture)}">
             <div th:each="entry, iter: ${stuLecture}">
                 <div th:with="reviewCheck=${reviewCheck[iter.index]}">
                 <div class="payment_name">
                     -------
-                    <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${entry.key},tea_no=${studentDto.getStuNo()})}"><input type="button" value="수정하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                    <a th:if="${reviewCheck == 0}" th:href="@{/review/write(lec_no=${entry.key},tea_no=${studentDto.getStuNo()})}"><input type="button" value="후기 작성" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                     <a th:href="@{/study/room(lec_no=${entry.key})}"><input type="button" value="스터디룸 입장" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
                     <a th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
                     <h3 th:text="${entry.value.lec_name}" class="title"></h3>
                     <p><span th:text="${entry.value.lec_day}"></span>&nbsp;&nbsp;<span th:text="${entry.value.lec_time}"></span></p>
                     <p><span th:text="${entry.value.lec_startdate}"></span> ~ <span th:text="${entry.value.lec_enddate}"></span></p>
-                </a>
+
+                    </a>
                 </div>
                 </div>
             </div>
@@ -42,7 +35,7 @@
             <p>수강한 강의가 없습니다.</p>
         </div>
     </div>
-</section>
+</main>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
