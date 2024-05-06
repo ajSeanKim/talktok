@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>톡톡스피킹</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
     .review_contents {
@@ -74,5 +74,6 @@
         <div class="review_detail" th:utext="${review.rev_detail}"></div>
     </div>
 </div>
+<div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

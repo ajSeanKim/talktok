@@ -7,6 +7,7 @@
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
+<main class="wrap">
 강사회원으로 로그인 하셨습니다
 <p th:text="${session.teaEmail}">teaEmail</p>님 환영합니다!
 <br>
@@ -16,9 +17,9 @@
 <input type="button" value="로그아웃" onclick="location='/teacher/logout'">
 <input type="button" value="정보수정" onclick="location='/teacher/update'">
 <input type="button" value="비밀번호변경" onclick="location='/teacher/pwdUpdate'">
-
 <input type="button" value="강의 등록" onclick="location='/teacher/lecJoin'">
 <input type="button" value="강의 정보" onclick="location='/teacher/'">
+</main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>

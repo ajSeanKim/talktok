@@ -21,14 +21,10 @@
 </head>
 <style>
     .review_contents {
-        margin: 50px;
         position: relative;
-        display: inline-block;
-        width: 100%
     }
     .wrapper_small {
-        width: 1150px;
-        margin: 0 auto;
+        padding: 0 30px;
         position: relative;
     }
     .review_box_items {
@@ -37,7 +33,6 @@
         position: relative;
     }
     .review_detail {
-        width: 950px;
         color: #666666;
 
     }
@@ -176,7 +171,7 @@
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
-<div class="review_contents">
+<main class="wrap review_contents">
     <div class="wrapper_small">
         <form class="review_search" method="get" th:action="@{/review/list}">
             <select class="form-select" style="width:10%;" name="search_target">
@@ -246,7 +241,9 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </main>
 </div>
+
+<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>
 </html>
