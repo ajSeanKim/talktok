@@ -4,36 +4,199 @@
     <meta charset="UTF-8">
     <title>강사 비밀번호 변경</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        .container {
+            position: relative;
+            height: 100%;
+            font-size: 0;
+        }
+        div {
+            display: block;
+        }
+        .content {
+            flex: 1 1 auto;
+            padding-top: 30px;
+        }
+        .form {
+            display: flex;
+            box-sizing: border-box;
+            flex-direction: column;
+            height: 100%;
+        }
+        .form_content {
+            flex: 1 1 auto;
+        }
+        @media (min-width: 768px) {
+            .form_section {
+                margin-right: 20px;
+                margin-left: 20px;
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+        .form_section {
+            padding: 0 20px;
+        }
+        .join_toggle:not([style*="display: none"])+.form_list {
+            margin-top: 10px;
+        }
+        .form_list {
+            position: relative;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        .form_item:first-of-type {
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .form_item:last-child {
+            border-bottom: none;
+        }
+        .form_item {
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-sizing: border-box;
+            max-width: 100%;
+            min-height: 50px;
+            padding: 0 10px 0 45px;
+            border-bottom: 1px solid #ccc;
+        }
+        .input {
+            flex: 1 1 auto;
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 16px;
+            line-height: 22px;
+            color: #222;
+        }
+        button, input, select, textarea {
+            border-radius: 0;
+            border: none;
+            background: 0 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: 0;
+            text-decoration: none;
+            cursor: pointer;
+            -webkit-text-size-adjust: none;
+        }
+        .form_item+.form_item {
+            margin-top: -1px;
+        }
+        .btn_submit_wrap {
+            flex: none;
+            padding: 20px;
+        }
+        .btn_submit {
+            width: 100%;
+            padding: 14px 0;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, .05);
+            background: #FAA11B;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            color: #fff;
+        }
+        button {
+            cursor: pointer;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #FAA11B;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        .form_label_container {
+            display: flex;
+            flex-direction: row; /* 요소들을 가로로 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            margin-right: 10px; /* 입력 필드와의 간격 */
+        }
+        .form_label_container span {
+            min-width: 130px;
+            color: #000; /* 텍스트 색상 보장 */
+            font-size: 16px; /* 가독성 있는 폰트 크기 */
+        }
+    </style>
+    <script>
+
+        function check() {
+            if ($.trim($("#teaPwd").val()) === "") {
+                alert("현재 비밀번호를 입력하세요!");
+                $("#teaPwd").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($.trim($("#teaNewPwd").val()) === "") {
+                alert("신규 비밀번호를 입력하세요!");
+                $("#teaNewPwd").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($.trim($("#teaPwd2").val()) === "") {
+                alert("비밀번호 확인을 입력하세요!");
+                $("#teaPwd2").focus(); // ID를 올바르게 참조
+                return false;
+            }
+            if ($("#teaNewPwd").val() !== $("#teaPwd2").val()) {
+                alert("신규 비밀번호와 비밀번호 확인이 일치하지 않습니다!");
+                $("#teaPwd2").focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<h2>비밀번호 변경</h2>
-<form action="/teacher/pwdUpdate" method="post" onsubmit="return check()">
-    <input type="hidden" name="teaEmail" value="${session.teaEmail}" />
-    <table>
-        <tr>
-            <th>이메일</th>
-            <td th:text="${session.teaEmail}">teaEmail</td>
-        </tr>
-
-        <tr>
-            <th>현재 비밀번호</th>
-            <td><input type="password" id="teaPwd" name="teaPwd"></td>
-        </tr>
-        <tr>
-            <th>신규 비밀번호</th>
-            <td><input type="password" id="teaNewPwd" name="teaNewPwd"></td>
-        </tr>
-        <tr>
-            <th>비밀번호 확인</th>
-            <td><input type="password" id="teaPwd2" name="teaPwd2"></td>
-        </tr>
-    </table>
-    <div class="btns">
-        <input type="submit" value="수정하기">
-        <input type="button" value="뒤로가기" onclick="history.go(-1);">
+<div class="container">
+    <div class="inner">
+        <div class="content">
+            <h2>비밀번호 변경</h2>
+            <form action="/teacher/pwdUpdate" method="post" onsubmit="return check()">
+                <input type="hidden" name="teaEmail" value="${session.teaEmail }" />
+                <div class="form_content">
+                    <div class="form_section">
+                        <div class="form_list">
+                            <div class="form_item user" id="divId">
+                                <div class="form_label_container">
+                                    <span>아이디 : </span>
+                                </div>
+                                <input type="text" name="teaEmail" readonly th:value="${session.teaEmail}" class="input">
+                            </div>
+                            <div class="form_item" id="divpwd">
+                                <div class="form_label_container">
+                                    <span>현재 비밀번호 : </span>
+                                </div>
+                                <input type="password" name="teaPwd" id="teaPwd" class="input" placeholder="현재 비밀번호"/>
+                            </div>
+                            <div class="form_item" id="divnewpwd">
+                                <div class="form_label_container">
+                                    <span>신규 비밀번호 : </span>
+                                </div>
+                                <input type="password" name="teaNewPwd" id="teaNewPwd" class="input" placeholder="신규 비밀번호"/>
+                            </div>
+                            <div class="form_item" id="divname">
+                                <div class="form_label_container">
+                                    <span>비밀번호 확인 : </span>
+                                </div>
+                                <input type="password" name="teaPwd2" id="teaPwd2" class="input" placeholder="비밀번호 확인" />
+                            </div>
+                            <div class="btn_submit_wrap">
+                                <input type="submit" value="수정하기" class="btn_submit"><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>
 </html>
