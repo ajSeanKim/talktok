@@ -19,9 +19,7 @@ public class TeacherDto {
     private String teaIntro;
     private String teaDetail;
     private String teaCareer;
-    private String teaNation;
     private String teaImage;
-    private String teaSocial;
 
     public TeacherDto() {
         // 기본 생성자 추가

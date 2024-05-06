@@ -28,9 +28,7 @@ public class Teacher {
     private String tea_intro;
     private String tea_detail;
     private String tea_career;
-    private String tea_nation;
     private String tea_image;
-    private String tea_social;
 
 
     public Teacher() {
