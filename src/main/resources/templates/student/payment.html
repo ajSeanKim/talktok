@@ -10,7 +10,7 @@
 <div class="payment_container">
     <div th:if="${not #lists.isEmpty(stuPayment)}">
         <div th:each="payment : ${stuPayment}">
-<!--            <input type="hidden" name="stuEmail" value="${session.stuEmail}" />-->
+            <!--            <input type="hidden" name="stuEmail" value="${session.stuEmail}" />-->
             <div class="payment_name">
                 <div class="pay_no" th:text="${payment.pay_no}"></div>
                 <div class="stu_email" th:text="${payment.stu_Email}"></div>

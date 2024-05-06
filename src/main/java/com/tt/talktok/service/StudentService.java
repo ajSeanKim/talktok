@@ -64,8 +64,7 @@ public class StudentService {
 
         newStudent = convertToEntity(studentDto);
         newStudent.setStuPwd(encodePwd);
-        System.out.println("ddd");
-        
+
         studentRepository.save(newStudent);
     }
     @Transactional
