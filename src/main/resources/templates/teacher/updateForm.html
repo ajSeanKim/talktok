@@ -5,16 +5,21 @@
     <title>강사 정보수정</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        //핸드폰번호 자동하이픈 기능
+        // 핸드폰번호 자동하이픈 기능
         const autoHyphen = (target) => {
             target.value = target.value
                 .replace(/[^0-9]/g, '')
-                .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, "$1-$2-$3")
+                .replace(/(\-{1,2})$/g, "");
         }
-        // 하이픈 제거 함수
-        const removeHyphen = (value) => {
-            return value.replace(/-/g, '');
-        }
+
+        // 페이지 로드 시 입력 필드에 하이픈 적용
+        window.onload = function() {
+            const teaPhoneInput = document.getElementById('teaPhone');
+            if (teaPhoneInput) {
+                autoHyphen(teaPhoneInput); // 기존 번호에 하이픈 적용
+            }
+        };
         function boardCheck() {
             if ($.trim($("#teaName").val()) == "") {
                 alert("이름을 입력하세요");
@@ -31,8 +36,6 @@
                 $("#teaPhone").val("").focus();
                 return false;
             }
-            const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
-            document.getElementById("teaPhone").value = teaPhone;
             // 계좌번호 필드 검사 (선택적 입력)
             if ($.trim($("#teaAccount").val()) != "" && !/^\d{10,14}$/.test($("#teaAccount").val())) {
                 alert("계좌번호는 10자리에서 14자리 사이여야 합니다");
@@ -49,12 +52,12 @@
                 $("#teaDetail").focus();
                 return false;
             }
-            var nation = $("#teaNation").val();
+/*            var nation = $("#teaNation").val();
             if (nation === "" || !["원어민", "영어사용국", "비영어권"].includes(nation)) {
                 alert("출신국가를 올바르게 선택하세요");
                 $("#teaNation").focus();
                 return false;
-            }
+            }*/
             /*            if ($.trim($("#teaImage").val()) == "") {
                             alert("이미지를 입력하세요");
                             $("#teaImage").val("").focus();
@@ -65,15 +68,11 @@
                 $("#teaPwd").val("").focus();
                 return false;
             }
-
-            return true;
+            const phoneValue = document.getElementById("teaPhone").value;
+            document.getElementById("teaPhone").value = removeHyphen(phoneValue);
         }
     </script>
     <style>
-        .inner{
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
         .container {
             position: relative;
             height: 100%;
@@ -81,7 +80,6 @@
         }
         div {
             display: block;
-            unicode-bidi: isolate;
         }
         .content {
             flex: 1 1 auto;
@@ -187,7 +185,7 @@
             margin-right: 10px; /* 입력 필드와의 간격 */
         }
         .form_label_container span {
-            min-width: 105px;
+            min-width: 130px;
             color: #000; /* 텍스트 색상 보장 */
             font-size: 16px; /* 가독성 있는 폰트 크기 */
         }
@@ -197,11 +195,10 @@
             align-items: center;
         }
     </style>
-
+    
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<input type="text" name="title" id="title" value="강사 회원정보 변경" class="input" />
 <div class="container">
     <div class="inner">
         <div class="content">
@@ -211,53 +208,56 @@
                         <div class="form_list">
                             <div class="form_item user" id="divId">
                                 <input type="hidden" name= "teaEmail" th:value="${teacherDto.teaEmail}">
+                                <div class="form_label_container">
+                                    <span>아이디 : </span>
+                                </div>
                                 <input type="text" readonly th:value="${session.teaEmail}" class="input">
                             </div>
                             <div class="form_item" id="divname">
                                 <div class="form_label_container">
-                                    <span>이름:</span>
+                                    <span>이름 : </span>
                                 </div>
                                 <input type="text" name="teaName" id="teaName" th:value="${teacherDto.teaName}" class="input" />
                             </div>
                             <div class="form_item" id="divnickname">
                                 <div class="form_label_container">
-                                    <span>닉네임:</span>
+                                    <span>닉네임 : </span>
                                 </div>
                                 <input type="text" name="teaNickname" id="teaNickname" th:value="${teacherDto.teaNickname}" class="input" />
                             </div>
                             <div class="form_item" id="divphone">
                                 <div class="form_label_container">
-                                    <span>핸드폰:</span>
+                                    <span>핸드폰 : </span>
                                 </div>
                                 <input type="text" name="teaPhone" id="teaPhone" th:value="${teacherDto.teaPhone}" class="input" maxlength="13" oninput="autoHyphen(this)" pattern="010-[0-9]{3,4}-[0-9]{4}" autocomplete="off"/>
                             </div>
                             <div class="form_item" id="divaccount">
                                 <div class="form_label_container">
-                                    <span>계좌번호:</span>
+                                    <span>계좌번호 : </span>
                                 </div>
                                 <input type="text" name="teaAccount" id="teaAccount" th:value="${teacherDto.teaAccount}" class="input" maxlength="14" />
                             </div>
                             <div class="form_item" id="divintro">
                                 <div class="form_label_container">
-                                    <span>자기소개:</span>
+                                    <span>한줄소개 : </span>
                                 </div>
                                 <input type="text" name="teaIntro" id="teaIntro" th:value="${teacherDto.teaIntro}" class="input" />
                             </div>
                             <div class="form_item" id="divdetail">
                                 <div class="form_label_container">
-                                    <span>디테일 자기소개:</span>
+                                    <span>자기소개 : </span>
                                 </div>
                                 <input type="text" name="teaDetail" id="teaDetail" th:value="${teacherDto.teaDetail}" class="input" />
                             </div>
                             <div class="form_item" id="divcareer">
                                 <div class="form_label_container">
-                                    <span>커리어(약력):</span>
+                                    <span>학력 : </span>
                                 </div>
                                 <input type="text" name="teaCareer" id="teaCareer" th:value="${teacherDto.teaCareer}" class="input" />
                             </div>
                             <div class="form_item" id="divnation">
                                 <div class="form_label_container">
-                                    <span>출신국가:</span>
+                                    <span>출신국가 : </span>
                                 </div>
                                 <select name="teaNation" id="teaNation" class="input">
                                     <option value="">출신국가선택</option>
@@ -268,12 +268,15 @@
                             </div>
                             <div class="form_item" id="divimage">
                                 <div class="form_label_container">
-                                    <span>이미지:</span>
+                                    <span>프로필사진 : </span>
                                 </div>
                                 <input type="text" name="teaImage" id="teaImage" class="input" />
                             </div>
                             <div class="form_item" id="divpassword">
-                                <input type="password" name="teaPwd" id="teaPwd" class="input" placeholder="비밀번호 확인"/>
+                                <div class="form_label_container">
+                                    <span>비밀번호 확인 : </span>
+                                </div>
+                                <input type="password" name="teaPwd" id="teaPwd" class="input"/>
                             </div>
                             <div class="btn_submit_wrap">
                                 <input type="submit" value="수정하기" class="btn_submit"><br>
