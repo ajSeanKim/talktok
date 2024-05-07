@@ -135,8 +135,8 @@ public class TeacherService{
 
         newTeacher = convertToEntity(teacherDto);
         newTeacher.setTea_pwd(encodePwd);
-
         teacherRepository.save(newTeacher);
+
     }
 
     @Transactional
