@@ -6,20 +6,38 @@
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<link href="/css/user.css" rel="stylesheet">
 
-<main class="wrap">
-학생 로그인 성공
-<p th:text="${session.stuEmail}">stuEmail</p>
-
-<input type="button" value="회원탈퇴" onclick="location='/student/withdraw'">
-<input type="button" value="내강의목록" onclick="location='/student/lecture'">
-<input type="button" value="로그아웃" onclick="location='/student/logout'">
-<input type="button" value="정보수정" onclick="location='/student/update'">
-<input type="button" value="비밀번호변경" onclick="location='/student/pwdUpdate'">
-<input type="button" value="강의장바구니" onclick="location='/cart/list'">
-<input type="button" value="강의결제내역" onclick="location='/student/payment'">
-<a th:href="@{'/review/able?stu_no='+${session.stuNo}}"><input type="button" value="강의후기"></a>
-</main>
+    <main class="mypage-wrap wrap">
+        <div class="info">
+            <div class="mode">
+                <a class="on">학생</a>
+                <a>강사</a>
+            </div>
+            <div class="profile">
+                <p class="img-box"><img src="/images/ico_student.png"></p>
+                <p th:text="${#strings.substringBefore(session.stuEmail, '@')+'님'}"></p>
+            </div>
+            <div class="btns">
+                <button onclick="location='/student/update'">정보수정 하러가기 <i class="fa-regular fa-pen-to-square"></i> </button>
+                <button onclick="location='/student/logout'">로그아웃</button>
+            </div>
+        </div>
+        <div class="detail">
+            <div class="box">
+                <h3>나의 활동</h3>
+                <button onclick="location='/student/lecture'"><i class="fa-solid fa-chalkboard-user"></i> 내 강의목록</button>
+                <button class="mr" onclick="location='/cart/list'"><i class="fa-regular fa-bookmark"></i> 강의 장바구니</button>
+                <a th:href="@{'/review/able?stu_no='+${session.stuNo}}"><button><i class="fa-regular fa-heart"></i> 내 강의후기</button></a>
+                <button class="mr" onclick="location='/student/payment'"><i class="fa-regular fa-credit-card"></i>강의 결제내역</button>
+            </div>
+            <div class="box">
+                <h3>나의 정보</h3>
+                <button onclick="location='/student/withdraw'"><i class="fa-solid fa-user-slash"></i> 회원탈퇴</button>
+                <button class="mr" onclick="location='/student/pwdUpdate'"><i class="fa-solid fa-repeat"></i> 비밀번호 변경</button>
+            </div>
+        </div>
+    </main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 </body>

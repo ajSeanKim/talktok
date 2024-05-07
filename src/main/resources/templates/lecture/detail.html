@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>톡톡스피킹</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
         main.wrap {margin:70px auto; display: flex; gap:40px; flex-wrap: wrap;}
         .contents-box {flex-basis: calc(70% - 40px);}
@@ -11,6 +10,7 @@
         .float-box {flex-basis: 30%;}
         .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
         .float-box .btn-list {border-color: #ccc; border-radius: unset;}
+        .float-box .btn-list:last-of-type {margin-left: 1%;}
         .float-box .btn-review {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
         .float-box .btn-list a {display: block;}
         .float-box form {display: inline;}
@@ -38,7 +38,7 @@
             <div>
                 <h3 id="lecName" th:text="${lectureDto.lec_name}"></h3>
                 <p><span th:text="${lectureDto.lec_day}"></span>&nbsp;&nbsp;<span th:text="${lectureDto.lec_time}"></span></p>
-                <p>월 <span id="lecPrice" th:text="${lectureDto.lec_price}"></span>만원</p>
+                <p>월 <span id="lecPrice" th:text="${lectureDto.lec_price}"></span>원</p>
                 <p><span th:text="${lectureDto.lec_startdate}"></span> ~ <span th:text="${lectureDto.lec_enddate}"></span></p>
                 <p th:text="${lectureDto.lec_detail}"></p>
                 <p>선생님 번호 : <span th:text="${lectureDto.tea_no}"></span></p>

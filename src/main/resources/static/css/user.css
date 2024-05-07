@@ -1,4 +1,4 @@
-/* student, teacher login Form */
+/* loginForm : 로그인폼 */
 .login_wrap {
     box-sizing: border-box;
     width: 460px;
@@ -94,6 +94,7 @@
     padding: 20px 0 35px;
     text-align: center;
 }
+.find_wrap a {cursor: pointer;}
 .menu_ones {
     border-right: 0;
     border-radius: 0;
@@ -127,7 +128,7 @@
     color: #777;
 }
 
-/* student, teacher join Form */
+/* joinForm : 회원가입 폼 */
 .inner{
     border-top: 1px solid #ccc;
     margin: 0 40px;
@@ -184,18 +185,6 @@ div {
     line-height: 22px;
     color: #222;
 }
-button, input, select, textarea {
-    border-radius: 0;
-    border: none;
-    background: 0 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: 0;
-    text-decoration: none;
-    cursor: pointer;
-    -webkit-text-size-adjust: none;
-}
 .form_item+.form_item {
     margin-top: -1px;
 }
@@ -214,17 +203,13 @@ button, input, select, textarea {
     line-height: 22px;
     color: #fff;
 }
-button {
-    cursor: pointer;
-}
 input[type="button"] {
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #FAA11B; /* 주황색 배경 */
     color: white; /* 흰색 텍스트 */
     border: none;
     border-radius: 6px; /* 둥근 모서리 */
     cursor: pointer; /* 커서 포인터 모양 */
-    margin-left: 10px; /* 좌측 여백 */
     font-size: 16px; /* 글씨 크기 설정 */
 }
 .form_label_container {
@@ -238,3 +223,39 @@ input[type="button"] {
     color: #000; /* 텍스트 색상 보장 */
     font-size: 16px; /* 가독성 있는 폰트 크기 */
 }
+
+/* myPage */
+.mypage-wrap {display: flex; gap: 40px;}
+.mypage-wrap .info {flex-basis: 15%;}
+.mypage-wrap .info > div {display: flex; align-items: center; flex-direction: column; text-align: center;}
+.mypage-wrap .info .mode {margin-left: 15%; width: 140px; flex-direction: row; border-radius: 50px; background: #eee;}
+.mypage-wrap .info .mode a {width: 50%; border-radius: 50px; font-weight: 500; line-height: 2; color: #999;}
+.mypage-wrap .info .mode a.on {color: #fff; background: #f9a01b;}
+.mypage-wrap .info .profile {margin: 40px 0; padding: 0 0 30px; gap: 10px; border-bottom: 1px solid #eee;}
+.mypage-wrap .info .profile p {font-size: 1.2em; font-weight: 500;}
+.mypage-wrap .info .profile .img-box {width: 80px; height: 80px; border: 1px solid #ddd; border-radius: 50px; overflow:hidden;}
+.mypage-wrap .info .profile .img-box img {width: 100%;}
+.mypage-wrap .info .btns {gap: 15px;}
+.mypage-wrap .info .btns button {width: 100%; height: 40px; border: 1px solid #ddd; border-radius: 50px; color: #999; font-weight: 300;}
+.mypage-wrap .info .btns button:first-of-type {background: #eee; border: 0;}
+.mypage-wrap .detail {flex-basis: calc(85% - 40px); border-left: 1px solid #eee; padding: 0 30px;}
+.mypage-wrap .detail .box + .box {margin: 50px 0;}
+.mypage-wrap .detail .box h3 {font-size: 1.3em;}
+.mypage-wrap .detail .box button {width: 49%; padding: 17px 0; border-bottom: 1px solid #eee; text-align: left;}
+.mypage-wrap .detail .box button.mr {margin-left: 1%;}
+.mypage-wrap .detail .box button::after {display: inline-block; width: 10px; height: 10px; margin: 7px 20px; float: right; border: 1px solid #999; border-width: 1px 1px 0 0; transform: rotate(45deg); content: '';}
+.mypage-wrap .detail .box button i {margin-right: 10px; font-size: 0.9em; color: #555;}
+
+/* user 관련 기타 페이지들 */
+.wrap .container {margin: 0 20px; padding: 0 20px;}
+.wrap .container .title {font-size: 180%; text-align:center;}
+.wrap .container .title a {float: right; color: #999; font-size: initial; margin-top: 10px; cursor: pointer;}
+.wrap .container .title a i {margin-left: 10px; font-size: 0.9em;}
+.wrap .container form {margin-top: 30px;}
+.wrap .container form .row {border-bottom: 1px solid #ddd; padding: 5px 0;}
+.wrap .container form .row span {display: inline-block; width: 100px;}
+.wrap .container form .row input[type="text"] {width: calc(100% - 105px); padding: 15px;}
+.wrap .container form .row input[type="checkbox"] {width: 16px; height: 16px; margin: 5px; vertical-align: middle;}
+.wrap .container form .row textarea {vertical-align: top; width: calc(100% - 105px); padding: 15px; outline: 0; border: 1px solid #ddd;}
+.wrap .container form .row label + label {margin: 0 5px;}
+.wrap .container form .submit {float: right; margin: 20px 0; padding: 5px 10px; border-radius: 6px; color: #fff; background: #f9a01b;}

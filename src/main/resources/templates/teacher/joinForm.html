@@ -109,12 +109,6 @@
                 $("#teaDetail").focus();
                 return false;
             }
-            var nation = $("#teaNation").val();
-            if (nation === "" || !["원어민", "영어사용국", "비영어권"].includes(nation)) {
-                alert("출신국가를 올바르게 선택하세요");
-                $("#teaNation").focus();
-                return false;
-            }
 
             const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
             document.getElementById("teaPhone").value = teaPhone;
@@ -221,17 +215,6 @@
                                     <span>학력 : </span>
                                 </div>
                                 <input type="text" name="teaCareer" id="teaCareer" placeholder="학력" class="input" maxlength="" />
-                            </div>
-                            <div class="form_item" id="divnation">
-                                <div class="form_label_container">
-                                    <span>출신국가 : </span>
-                                </div>
-                                <select name="teaNation" id="teaNation" class="input">
-                                    <option value="">출신국가선택</option>
-                                    <option value="원어민">원어민</option>
-                                    <option value="영어사용국">영어사용국</option>
-                                    <option value="비영어권">비영어권</option>
-                                </select>
                             </div>
                             <div class="form_item" id="divimage">
                                 <div class="form_label_container">

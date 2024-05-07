@@ -6,50 +6,34 @@
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
+<link href="/css/user.css" rel="stylesheet">
 
-<form method="post" action="/teacher/lecJoin">
-    <input type="hidden" name="tea_no" th:value="${teaNo}">
-        <div class="form-group">
-            <label>
-                강의 이름 <span class="lec_name"></span>
-                <input type="text" name="lec_name"/>
-            </label>
-        </div>
-    <div>
-        <fieldset>
-        <legend> 강의 요일</legend>
-            <label>월<input type="checkbox" name="lec_day" value="월"></label>
-            <label>화<input type="checkbox" name="lec_day" value="화"></label>
-            <label>수<input type="checkbox" name="lec_day" value="수"></label>
-            <label>목<input type="checkbox" name="lec_day" value="목"></label>
-            <label>금<input type="checkbox" name="lec_day" value="금"></label>
-            <label>토<input type="checkbox" name="lec_day" value="토"></label>
-            <label>일<input type="checkbox" name="lec_day" value="일"></label>
-        </fieldset>
+<main class="wrap">
+    <div class="container">
+        <h3 class="title">강의 등록<a onclick="history.go(-1); return false;">뒤로가기<i class="fa-solid fa-chevron-right"></i></a></h3>
+        <form method="post" action="/teacher/lecJoin">
+            <input type="hidden" name="tea_no" th:value="${teaNo}">
+            <div class="row"><span>강의 이름 :</span> <input type="text" name="lec_name"/></div>
+            <div class="row">
+                <span>강의 요일 : </span>
+                <label>월<input type="checkbox" name="lec_day" value="월"></label>
+                <label>화<input type="checkbox" name="lec_day" value="화"></label>
+                <label>수<input type="checkbox" name="lec_day" value="수"></label>
+                <label>목<input type="checkbox" name="lec_day" value="목"></label>
+                <label>금<input type="checkbox" name="lec_day" value="금"></label>
+                <label>토<input type="checkbox" name="lec_day" value="토"></label>
+                <label>일<input type="checkbox" name="lec_day" value="일"></label>
+            </div>
+            <div class="row"><span>강의 시간 :</span> <input type="time" name="lec_time"/> - <input type="time" name="lec_time"/></div>
+            <div class="row"><span>한달 강의 가격 :</span><input type="number" name="lec_price"/></div>
+            <div class="row"><span>강의 내용 :</span><textarea name="lec_detail" cols="" rows=""></textarea></div>
+            <div class="row"><span>강의 날짜 :</span><input type="date" name="lec_startdate"/> - <input type="date" name="lec_enddate"/></div>
+            <div class="btns">
+                <input class="submit" type="submit" value="등록하기">
+            </div>
+        </form>
     </div>
-    <div>
-        <label>
-            강의 시간 <input type="time" name="lec_time"/> - <input type="time" name="lec_time"/>
-        </label>
-    </div>
-    <div>
-        <label>
-            강의 가격<input type="number" name="lec_price"/>
-        </label>
-    </div>
-    <div>
-        강의 내용: <textarea name="lec_detail" cols="" rows=""></textarea>
-    </div>
-    <div>
-        <label>강의날짜
-            <input type="date" name="lec_startdate"/> - <input type="date" name="lec_enddate"/>
-        </label>
-    </div>
-    <div class="btns">
-        <input type="submit" value="등록하기">
-        <input type="button" value="뒤로가기" onclick="history.go(-1);">
-    </div>
-</form>
+</main>
 
 <div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
 
