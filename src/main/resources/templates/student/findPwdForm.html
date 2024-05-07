@@ -2,17 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>비밀번호 찾기 창</title>
+    <title>톡톡스피킹</title>
 </head>
 <body>
-<div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
-<form method="post" action="/student/findPwd" onsubmit="return check()">
-    아이디 <input type="text" id="stuEmail" name="stuEmail" placeholder="이메일을 입력하세요." /> <br/>
-    <input type="submit" value="비밀번호 찾기">
-    <input type="button" value="취소" onclick="history.go(-1)">
+<div th:replace="~{header :: header}"></div>
+<link href="/css/user.css" rel="stylesheet">
 
-</form>
+<main class="wrap">
+    <div class="container">
+        <h3 class="title">비밀번호 찾기
+            <a onclick="history.go(-1); return false;">뒤로가기<i class="fa-solid fa-chevron-right"></i></a>
+        </h3>
+        <form method="post" action="/student/findPwd" onsubmit="return check()">
+            <div class="row">아이디 <input type="text" id="stuEmail" name="stuEmail" placeholder="이메일을 입력하세요." /></div>
+            <input class="submit" type="submit" value="비밀번호 찾기">
+        </form>
+    </div>
+</main>
 
-<div th:replace="~{footer :: footer}"></div> <!-- footer.html 에서 footer 태그 불러오기 -->
+<div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
