@@ -15,6 +15,7 @@
     <div th:unless="${cartItems.isEmpty()}">
         <form action="/cart/delete" method="POST">
             <div class="btns">
+                <input class="btn-submit" type="button" value="결제"/>
                 <input class="btn-submit" type="submit" value="선택항목 삭제"/>
             </div>
     <table>
