@@ -112,6 +112,7 @@ public class TeacherController {
                 session.setAttribute("teaNo",dbTeacher.getTeaNo());
                 System.out.println("teaNo"+dbTeacher.getTeaNo());
                 model.addAttribute("result", result);
+                System.out.println("로그인 : "+ dbTeacher);
                 //비번이 다를때
             } else {
                 System.out.println("비번이 다를때");

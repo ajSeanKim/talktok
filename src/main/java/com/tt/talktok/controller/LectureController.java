@@ -1,10 +1,9 @@
 package com.tt.talktok.controller;
 
-import com.tt.talktok.dto.LectureDto;
-import com.tt.talktok.dto.ReviewDto;
-import com.tt.talktok.dto.StudentDto;
+import com.tt.talktok.dto.*;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
+import com.tt.talktok.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +26,7 @@ public class LectureController {
 
     private final LectureService lectureService;
     private final ReviewService reviewService;
+    private final TeacherService teacherService;
 
     @GetMapping("/list")
     public String list(@PageableDefault(page = 0, size = 8, sort = "lecNo", direction = Sort.Direction.DESC) Pageable pageable,
@@ -61,5 +61,6 @@ public class LectureController {
 
         return "/lecture/detail";
     }
+
 
 }

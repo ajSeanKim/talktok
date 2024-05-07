@@ -124,9 +124,12 @@ public class OauthController {
             model.addAttribute("stuNickname", student.getStuNickname());
             model.addAttribute("stuEmail", student.getStuEmail());
         }
+
         session.setAttribute("student", student);
         session.setAttribute("stuEmail", student.getStuEmail());
         session.setAttribute("stuNo", student.getStuNo());
+        StudentDto dbStudent = studentService.findStudent(student.getStuEmail());
+        session.setAttribute("studentDto", dbStudent); //장바구니용 테스트
 
         model.addAttribute("email", student.getStuEmail());
         model.addAttribute("nickname", student.getStuNickname());

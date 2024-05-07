@@ -2,7 +2,9 @@ package com.tt.talktok.service;
 
 import com.tt.talktok.dto.ReviewDto;
 import com.tt.talktok.dto.StudentDto;
+import com.tt.talktok.dto.TeacherDto;
 import com.tt.talktok.entity.Review;
+import com.tt.talktok.entity.Teacher;
 import com.tt.talktok.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -146,4 +148,7 @@ public class ReviewService {
     public void reviewDelete(int revNo) {
         reviewRepository.deleteById(revNo);
     }
+
+
+
 }
