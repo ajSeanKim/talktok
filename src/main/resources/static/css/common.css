@@ -1,5 +1,5 @@
 .wrap {width: 96%; max-width: 1280px; margin: 0 auto;}
-main.wrap {min-height: 430px; margin: 70px auto;}
+main.wrap {min-height: 640px; margin: 70px auto;}
 
 /*header*/
 #hd {position: sticky; left: 0; top: 0; border-bottom: 1px solid #ccc; background-color: #fff; z-index: 100;}

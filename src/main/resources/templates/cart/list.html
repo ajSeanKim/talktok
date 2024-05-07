@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
 <main class="notice-page wrap">
-    <h2>장바구니</h2>
+    <h2>강의 장바구니</h2>
     <div th:if="${cartItems.isEmpty()}">
         <h3>장바구니에 상품이 없습니다.</h3>
     </div>
