@@ -28,7 +28,7 @@
                     <a class="linked" th:href="@{/lecture/detail(page=${currentPage}, no=${entry.key})}">
                         <h4 th:text="${entry.value.lec_name}"></h4>
                         <p><span th:text="${entry.value.lec_day}"></span>&nbsp;&nbsp;<span th:text="${entry.value.lec_time}"></span></p>
-                        <p><span th:text="${entry.value.lec_startdate}"></span> ~ <span th:text="${entry.value.lec_enddate}"></span></p>
+                        <p><span th:text="${entry.value.lecStartdate}"></span> ~ <span th:text="${entry.value.lec_enddate}"></span></p>
                     </a>
                 </div>
             </div>
