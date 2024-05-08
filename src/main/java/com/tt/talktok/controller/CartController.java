@@ -23,9 +23,12 @@ public class CartController {
     // 장바구니 추가
     @PostMapping("/add")
     public String cart(@RequestParam("lec_no") int lec_no, @ModelAttribute CartDto cartDto, HttpSession session, Model model) {
-        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+//        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
         String stuEmail = (String) session.getAttribute("stuEmail");
-        int stuNo = (int) session.getAttribute("stuNo");
+
+        // 받아온 stuNo 값을 Integer 에서 int 로 변환, Integer null 일시 0 할당
+        Integer stuNoInteger = (Integer) session.getAttribute("stuNo");
+        int stuNo = (stuNoInteger != null) ? stuNoInteger.intValue() : 0;
 
         System.out.println(stuEmail);
 
