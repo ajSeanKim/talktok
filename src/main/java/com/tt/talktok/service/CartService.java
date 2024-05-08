@@ -48,9 +48,12 @@ public class CartService {
         return cartRepository.countByLectureLecNoAndStudentStuNo(lecNo, stuNo);
     }
 
+    //장바구니 삭제 메서드 : 결제에서 사용
     @Transactional
     public void checkCart(int stuNo, int lecNo) {
         System.out.println("서비스 옴");
+        System.out.println("장바구니 삭제 ! 강의="+lecNo+", 학생="+stuNo);
         cartRepository.deleteByStudentStuNoAndLectureLecNo(stuNo, lecNo);
+        System.out.println("삭제완료");
     }
 }
