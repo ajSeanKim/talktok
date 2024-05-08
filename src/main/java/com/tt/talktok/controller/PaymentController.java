@@ -27,7 +27,7 @@ public class PaymentController {
         String email = (String) session.getAttribute("stuEmail");
         System.out.println(email);
         model.addAttribute("email", email);
-        return "/lecture/payments";
+        return "lecture/payments";
     }
 
     @PostMapping("/savePayment")
