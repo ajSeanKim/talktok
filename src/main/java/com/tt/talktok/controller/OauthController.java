@@ -117,7 +117,6 @@ public class OauthController {
         student.setStuSocial("social");
 
         if(studentService.findStudent(student.getStuEmail()).getStuEmail()==null){
-            System.out.println("ddd");
             studentService.join(student);
             session.setAttribute("stuEmail", student.getStuEmail());
             model.addAttribute("student", student);
