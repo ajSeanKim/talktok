@@ -183,13 +183,11 @@ public class TeacherController {
             mf.transferTo(new File(path + "/" + newfilename));
         }
 
-        TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
-        //가입된 email = 1, 가입안된 email = 0
         if(size>0){
-            dbTeacher.setTeaImage(newfilename);
-            teacherService.join(dbTeacher);
+            teacher.setTeaImage(newfilename);
+            teacherService.join(teacher);
         }else{
-            dbTeacher.setTeaImage(null);
+            teacher.setTeaImage(null);
         }
 
         model.addAttribute("result",result);
@@ -375,9 +373,9 @@ public class TeacherController {
     }
     @PostMapping("/update")
     public String update(@RequestParam("teaImage1")MultipartFile mf,@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
-        System.out.println("ControllerTeacherDto: " + teacherDto.toString());
         String teaEmail = (String) session.getAttribute("teaEmail");
         teacherDto.setTeaEmail(teaEmail);
+        System.out.println("ControllerTeacherDto: " + teacherDto.toString());
 
         String filename = mf.getOriginalFilename();
         int size = (int)mf.getSize();
@@ -386,49 +384,48 @@ public class TeacherController {
 
         TeacherDto dbTeacher = teacherService.findTeacher(teacherDto.getTeaEmail());
 
-        int result  = 0;
         String newfilename="";
-        String teaEmail1 = dbTeacher.getTeaEmail();
 
         if(size>0){
             //파일 중복 문제
             String extension = filename.substring(filename.lastIndexOf("."),filename.length());
 
-            UUID uuid =UUID.randomUUID();
-            newfilename = uuid.toString()+extension;
-
             if(size > 100000){ // 100KB
 
-                result=1;
-                model.addAttribute("result", result);
+                model.addAttribute("result", 1);
                 return "teacher/update";
 
-            }else if(!extension.equals(".jpg")  &&
+            }
+
+            if(!extension.equals(".jpg") &&
                     !extension.equals(".jpeg") &&
                     !extension.equals(".gif")  &&
                     !extension.equals(".png") ){
 
-                result=2;
-                model.addAttribute("result", result);
+                model.addAttribute("result", 2);
                 return "teacher/update";
             }
+            UUID uuid =UUID.randomUUID();
+            newfilename = uuid.toString() + extension;
             mf.transferTo(new File(path + "/"+ newfilename));
-            teacherDto.setTeaImage(newfilename);
-            teacherService.update(teacherDto);
-        }else{
-            teacherDto.setTeaImage(dbTeacher.getTeaImage());
-        }
 
+            dbTeacher.setTeaImage(newfilename);
+        }
         if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
+            if (size <= 0) {
+                teacherDto.setTeaImage(dbTeacher.getTeaImage()); // Preserve old image if new one is not uploaded
+            } else {
+                teacherDto.setTeaImage(newfilename); // Update with new image
+            }
             // 비밀번호 일치: 회원 정보 업데이트
             teacherService.update(teacherDto);
             System.out.println("정보 수정 완료");
-            result  = 1;
-            model.addAttribute("result", result);
+            model.addAttribute("result", 1);
+            System.out.println("teacherDto.teaImage"+teacherDto.getTeaImage());
+
             return "redirect:/teacher/myPage"; // 정보 업데이트 후 마이 페이지로 리다이렉트
         } else{ //비밀번호 불일치
-            result  = -1;
-            model.addAttribute("result", result);
+            model.addAttribute("result", -1);
             return "teacher/updateForm";
         }
     }
