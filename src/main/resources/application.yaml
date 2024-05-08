@@ -79,5 +79,5 @@ spring:
 
 app:
   upload:
-    dir: C:\GitBash\talktok\src\main\resources\static\files
+    dir: C:\gitpractice\talktok\src\main\resources\static\files
 

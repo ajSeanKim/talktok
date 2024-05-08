@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -184,11 +185,12 @@ public class TeacherController {
 
         TeacherDto dbTeacher = teacherService.findTeacher(teaEmail);
         //가입된 email = 1, 가입안된 email = 0
-
-        //teacherDTO에 teaImage
-        teacher.setTeaImage(newfilename);
-        //JPA DB입력
-        teacherService.join(teacher);
+        if(size>0){
+            dbTeacher.setTeaImage(newfilename);
+            teacherService.join(dbTeacher);
+        }else{
+            dbTeacher.setTeaImage(null);
+        }
 
         model.addAttribute("result",result);
         return "teacher/join";
@@ -363,17 +365,56 @@ public class TeacherController {
     public String update(HttpSession session, Model model) {
         String teaEmail = (String) session.getAttribute("teaEmail");
         TeacherDto teacherDto = teacherService.findTeacher(teaEmail);
+        System.out.println("teacherDto.teaImage"+teacherDto.getTeaImage());
         model.addAttribute("teacherDto", teacherDto);
         return "teacher/updateForm";
     }
     @PostMapping("/update")
-    public String update(@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
+    public String update(@RequestParam("teaImage1")MultipartFile mf,@ModelAttribute TeacherDto teacherDto, HttpSession session, Model model) throws Exception {
         System.out.println("ControllerTeacherDto: " + teacherDto.toString());
         String teaEmail = (String) session.getAttribute("teaEmail");
         teacherDto.setTeaEmail(teaEmail);
+
+        String filename = mf.getOriginalFilename();
+        int size = (int)mf.getSize();
+
+        String path = Paths.get(uploadDir).toString();
+
         TeacherDto dbTeacher = teacherService.findTeacher(teacherDto.getTeaEmail());
+
         int result  = 0;
-        // student update
+        String newfilename="";
+        String teaEmail1 = dbTeacher.getTeaEmail();
+
+        if(size>0){
+            //파일 중복 문제
+            String extension = filename.substring(filename.lastIndexOf("."),filename.length());
+
+            UUID uuid =UUID.randomUUID();
+            newfilename = uuid.toString()+extension;
+
+            if(size > 100000){ // 100KB
+
+                result=1;
+                model.addAttribute("result", result);
+                return "teacher/update";
+
+            }else if(!extension.equals(".jpg")  &&
+                    !extension.equals(".jpeg") &&
+                    !extension.equals(".gif")  &&
+                    !extension.equals(".png") ){
+
+                result=2;
+                model.addAttribute("result", result);
+                return "teacher/update";
+            }
+            mf.transferTo(new File(path + "/"+ newfilename));
+            teacherDto.setTeaImage(newfilename);
+            teacherService.update(teacherDto);
+        }else{
+            teacherDto.setTeaImage(dbTeacher.getTeaImage());
+        }
+
         if(passwordEncoder.matches(teacherDto.getTeaPwd(), dbTeacher.getTeaPwd())) {
             // 비밀번호 일치: 회원 정보 업데이트
             teacherService.update(teacherDto);
@@ -387,7 +428,6 @@ public class TeacherController {
             return "teacher/updateForm";
         }
     }
-
 
 
     //강의 등록
