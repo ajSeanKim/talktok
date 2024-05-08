@@ -1,8 +1,6 @@
 package com.tt.talktok.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cglib.core.Local;
@@ -16,10 +14,11 @@ import java.time.LocalDate;
 @Entity
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pay_no")
     private int payNo;
-    @Column(name = "payTime")
-    private Timestamp pay_time;
+    @Column(name = "pay_time")
+    private Timestamp payTime;
     @Column(name = "payPrice")
     private String pay_price;
     @Column(name = "lec_no")
