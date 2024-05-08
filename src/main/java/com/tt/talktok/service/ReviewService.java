@@ -149,6 +149,12 @@ public class ReviewService {
         reviewRepository.deleteById(revNo);
     }
 
-
-
+    // 메인에 베스트 강의 넘버 가져가기
+    public List<Integer> findBestLecNo() {
+        return reviewRepository.findBestLecNo();
+    }
+    // 메인에 베스트 선생님 넘버 가져가기
+    public List<Integer> findBestTeaNo() {
+        return reviewRepository.findBestTeaNo();
+    }
 }
