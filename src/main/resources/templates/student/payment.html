@@ -31,7 +31,18 @@
         </div>
     </div>
 </main>
+<script>
+    // 요소 선택한 후 배열로 변환, 배열 역순으로 정렬
+    const paymentItems = document.querySelectorAll('.payment_container > div');
+    const paymentItemsArray = Array.from(paymentItems);
+    const reversedPaymentItemsArray = paymentItemsArray.reverse();
 
+    // 정렬된 요소를 다시 container 에 추가하기
+    const paymentContainer = document.querySelector('.payment_container');
+    reversedPaymentItemsArray.forEach(item => {
+        paymentContainer.appendChild(item);
+    });
+</script>
 <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
