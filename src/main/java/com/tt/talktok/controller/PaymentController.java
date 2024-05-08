@@ -63,7 +63,7 @@ public class PaymentController {
         }
     }
     
-    // 다중 결제
+    // 다중 결제, 결제 건 장바구니 삭제
     @PostMapping("/savePayments")
     @ResponseBody
     public ResponseEntity<String> savePayments(@RequestBody Map<String, List<Map<String, Object>>> requestData,
