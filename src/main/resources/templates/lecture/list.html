@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>톡톡스피킹</title>
     <style>
-        .wrap h2 {margin-bottom: 30px; text-align: center; font-size: 180%;}
-        .list-box {display:flex; flex-wrap:wrap; gap:2rem; margin-bottom: 30px;}
+        .wrap h2 {margin-bottom: 30px; text-align: center; font-size: 180%; font-family: 'bitbit', 'serif'; font-weight: 400;}
+        .list-box {display:flex; flex-wrap:wrap; gap:2rem; margin-bottom: 50px;}
         .list-box .list {position:relative; display: block; width: calc(25% - 24px); overflow:hidden; border-radius: 4px; box-shadow: 1px 5px 10px rgba(0,0,0,.1);}
         .list-box .list a {display: block; padding: 15px;}
         .list-box .list h3 {margin-bottom:10px; color:#f9a01b; font-size: 1.1em;}
-        .paging-box .paging {display: flex; gap: 20px; justify-content: center;}
-        .paging-box .paging li {display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; border-radius: 20px; overflow: hidden;}
-        .paging-box .paging li.active {background: #000;}
+        .paging-box .paging {display: flex; gap: 10px; justify-content: center;}
+        .paging-box .paging li {display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; border: 1px solid #ddd;}
+        .paging-box .paging li.active {background: #f9a01b; border-color: #f9a01b;}
         .paging-box .paging li.active a {color:#fff;}
         .paging-box .paging li a i {font-size:13px; margin: 0 -2px 0 -1px;}
 
@@ -37,18 +37,14 @@
             <div th:if="${lectureList.totalPages > 1}" class="paging-box">
                 <ul class="paging">
                     <li th:if="${not lectureList.first}">
-                        <a th:href="@{/lecture/list(page=1)}">
-                        <i class="fa-solid fa-chevron-left"></i><i class="fa-solid fa-chevron-left"></i>
-                        </a>
+                        <a th:href="@{/lecture/list(page=1)}">«</a>
                     </li>
                     <li th:each="pageNumber : ${#numbers.sequence(1, lectureList.totalPages)}"
                         th:class="${pageNumber == lectureList.number + 1 ? 'active' : ''}">
                         <a th:href="@{'/lecture/list?page=' + ${pageNumber}}">[[${pageNumber}]]</a>
                     </li>
                     <li th:if="${not lectureList.last}">
-                        <a th:href="@{/lecture/list(page=${lectureList.totalPages})}">
-                            <i class="fa-solid fa-chevron-right"></i><i class="fa-solid fa-chevron-right"></i>
-                        </a>
+                        <a th:href="@{/lecture/list(page=${lectureList.totalPages})}">»</a>
                     </li>
                 </ul>
             </div>
