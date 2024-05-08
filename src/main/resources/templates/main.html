@@ -12,9 +12,11 @@
         .banner-wrap .box .inner .text h2 {margin-bottom: 1em; font-size: 45px; font-weight: 600;}
         .banner-wrap .box .inner .text p {font-size: 20px; line-height: 1.3;}
         .banner-wrap .box .inner .img-box {position: absolute; right: 80px; bottom: -30px;}
-        .banner-wrap .box .inner .img-box img {}
-        .banner-wrap .box .btns-banner button {}
-        .banner-wrap .box .btns-banner button i {color: #fff;}
+        .lecture-wrap .paging {display: flex; justify-content: space-between; align-items: center; margin: 40px 0;}
+        .lecture-wrap .paging button {font-size: 20px; opacity: 0.3; transition: .3s;}
+        .lecture-wrap .paging button:hover {opacity: 1;}
+        .lecture-wrap .paging .progress {position: relative; width: 95%; height: 3px; background: #ddd; border-radius: 10px;}
+        .lecture-wrap .paging .progress .bar {width: 20%; height: 3px; background: #333; transition: width .3s;}
     </style>
 </head>
 <body>
@@ -36,15 +38,6 @@
                     <a><img src="/images/banner01.jpg"></a>
                 </div>
             </div>
-        </div>
-        <div class="paging">
-            <div class="progress">
-
-            </div>
-            <!--<div class="btns-banner">
-                <button class="btn-prev"><i class="fa fa-angle-left"></i></button>
-                <button class="btn-next"><i class="fa fa-angle-right"></i></button>
-            </div>-->
         </div>
     </section>
     <script>
@@ -99,7 +92,22 @@
 
             $('.lecture-box').slick({
                 centerMode: true,
-                slidesToShow: 3
+                slidesToShow: 3,
+                prevArrow: $('#lecture-prev'),
+                nextArrow: $('#lecture-next')
+            });
+            $('.lecture-box').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+                if (nextSlide === 0) {
+                    $('.progress .bar').css('width', '20%');
+                } else if (nextSlide === 1) {
+                    $('.progress .bar').css('width', '40%');
+                } else if (nextSlide === 2) {
+                    $('.progress .bar').css('width', '60%');
+                } else if (nextSlide === 3) {
+                    $('.progress .bar').css('width', '80%');
+                } else {
+                    $('.progress .bar').css('width', '100%');
+                }
             });
             $('.review-box').slick({
                 slidesToShow: 3,
@@ -111,7 +119,7 @@
             });
         });
     </script>
-    <section class="wrap">
+    <section class="wrap lecture-wrap">
         <h2 class="title">인기 TOP! 효과 <span class="color-main">톡톡히</span> 보는 강의</h2>
         <div class="list-box lecture-box">
             <div th:each="list : ${lectureList}" class="list lecture-list">
@@ -124,6 +132,11 @@
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="paging">
+            <button id="lecture-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="progress"><div class="bar"></div></div>
+            <button id="lecture-next"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
     </section>
     <section class="wrap">

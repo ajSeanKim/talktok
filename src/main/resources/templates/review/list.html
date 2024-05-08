@@ -20,6 +20,7 @@
     </style>
 </head>
 <style>
+    .wrap h2.main-title {margin-bottom: 70px; text-align: center; font-size: 180%; font-family: 'bitbit', 'serif'; font-weight: 400;}
     .review_contents {
         position: relative;
     }
@@ -172,6 +173,7 @@
 <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
 <main class="wrap review_contents">
+    <h2 class="main-title">후기</h2>
     <div class="wrapper_small">
         <form class="review_search" method="get" th:action="@{/review/list}">
             <select class="form-select" style="width:10%;" name="search_target">
