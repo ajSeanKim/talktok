@@ -1,0 +1,8 @@
+section.wrap {margin: 200px auto;}
+h2.title {margin-bottom: 70px; text-align: center; font-size: 180%;}
+span.color-main {text-decoration: #f9a01b wavy underline; background: rgba(255,226,0,.1);}
+
+.list-box {display:flex; flex-wrap:wrap; gap:2rem; margin-bottom: 30px;}
+.list-box .list {position:relative; display: block; width: calc(25% - 24px); overflow:hidden; border-radius: 4px; box-shadow: 1px 5px 10px rgba(0,0,0,.1);}
+.list-box .list a {display: block; padding: 15px;}
+.list-box .list h3 {margin-bottom:10px; color:#f9a01b; font-size: 1.1em;}

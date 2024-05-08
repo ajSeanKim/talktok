@@ -5,155 +5,104 @@
     <title>톡톡스피킹</title>
     <style>
         .banner-wrap {color: #fff;}
-        .banner-wrap .box {}
+        .banner-wrap .box {transition: background 0.3s;}
         .banner-wrap .box .inner {position: relative; padding: 80px;}
         .banner-wrap .box .inner .text {}
         .banner-wrap .box .inner .text h3 {font-size: 25px; font-weight: 400;}
         .banner-wrap .box .inner .text h2 {margin-bottom: 1em; font-size: 45px; font-weight: 600;}
         .banner-wrap .box .inner .text p {font-size: 20px; line-height: 1.3;}
-        .banner-wrap .box .inner .paging {}
-        .banner-wrap .box .inner .btns {}
-        .banner-wrap .box .inner .btns button {}
-        .banner-wrap .box .inner .btns button i {color: #fff;}
-        .banner-wrap .box .inner .img-box {position: absolute; right: 0; bottom: -30px;}
+        .banner-wrap .box .inner .img-box {position: absolute; right: 80px; bottom: -30px;}
         .banner-wrap .box .inner .img-box img {}
+        .banner-wrap .box .btns-banner button {}
+        .banner-wrap .box .btns-banner button i {color: #fff;}
     </style>
 </head>
 <body>
 <div th:replace="~{header :: header}"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <main>
     <section class="banner-wrap">
-<!--        <div class="box" style="background:linear-gradient(#4544d4, #6463e3)">-->
         <div class="box" style="background:linear-gradient(#ed9221, #f9bf75)">
-            <div class="inner wrap">
+            <div class="wrap inner">
                 <div class="text">
                     <h3>1:1 화상 영어</h3>
                     <h2>무료수업 3회 체험</h2>
                     <p>1:1 원하는 커리큘럼 <br> 체험만 받아도 스벅 쿠폰</p>
                 </div>
-                <div class="paging">
-                    <div class="progress">
-
-                    </div>
-                    <div class="btns">
-                        <button><i class="fa fa-angle-left"></i></button>
-                        <button><i class="fa fa-angle-right"></i></button>
-                    </div>
-                </div>
                 <div class="img-box">
-                    <a><img src="https://www.pagodatalkool.com/cmn/common/download-file/image-file?attachId=66a291fede84412fb30ccb4e588e1c72"></a>
+                    <a><img src="/images/banner01.jpg"></a>
                 </div>
             </div>
         </div>
-        <div class="box" style="background:linear-gradient(#e94e76, #ff7d9f)">
-            <div class="inner wrap">
-                <div class="text">
-                    <h3>낮시간대 수강 혜택</h3>
-                    <h2>해피아워 이벤트</h2>
-                    <p>낮시간대 수강하고<br> 최대 24% 할인 받자!</p>
-                </div>
-                <div class="paging">
-                    <div class="progress">
+        <div class="paging">
+            <div class="progress">
 
-                    </div>
-                    <div class="btns">
-                        <button><i class="fa fa-angle-left"></i></button>
-                        <button><i class="fa fa-angle-right"></i></button>
-                    </div>
-                </div>
-                <div class="img-box">
-                    <a><img src="https://www.pagodatalkool.com/cmn/common/download-file/image-file?attachId=c6792ebc646141b498c3a794478cb134"></a>
-                </div>
+            </div>
+            <!--<div class="btns-banner">
+                <button class="btn-prev"><i class="fa fa-angle-left"></i></button>
+                <button class="btn-next"><i class="fa fa-angle-right"></i></button>
+            </div>-->
+        </div>
+    </section>
+    <script>
+        const h3List = ['1:1 화상 영어','낮시간대 수강 혜택','톡톡 X 카카오톡','카카오톡 플친해요!','리뷰 남기고'];
+        const h2List = ['무료수업 3회 체험','해피아워 이벤트','대학생 수강료 할인','1만원 쿠폰 증정','네이버페이 포인트 받자!'];
+        const pList = ['1:1 원하는 커리큘럼 <br> 체험만 받아도 스벅 쿠폰','낮시간대 수강하고<br> 최대 24% 할인 받자!',
+            '대학교, 대학원에 재학중인<br> 톡학생증 인증 시, 수강료 최대 50% 할인','이제 카카오 채널에서 <br> 더 편리하게 상담 받으세요',
+            '수강 중인 과정의 후기를 남겨주시면 <br> 네이버페이 포인트를 지급해드립니다'];
+        const imgList = ['/images/banner01.jpg','/images/banner02.jpg','/images/banner03.jpg','/images/banner04.jpg','/images/banner05.jpg'];
+        const gradientList = ['#ed9221, #f9bf75','#e94e76, #ff7d9f','#1253c9, #5388e8','#d4b62e, #ecd25d','#232323, #444444'];
+
+        let index = 0;
+
+        function updateContent() {
+            $('.banner-wrap .box .inner .text h3').text(h3List[index]);
+            $('.banner-wrap .box .inner .text h2').text(h2List[index]);
+            $('.banner-wrap .box .inner .text p').html(pList[index]);
+            $('.banner-wrap .box .inner .img-box img').attr('src', imgList[index]);
+            $('.banner-wrap .box').css('background', 'linear-gradient(' + gradientList[index] + ')');
+
+            index = (index + 1) % h3List.length;
+        }
+
+        setInterval(updateContent, 5000);
+    </script>
+    <section class="wrap">
+        <h2 class="title">인기 TOP! 효과 <span class="color-main">톡톡히</span> 보는 강의</h2>
+        <div class="list-box">
+            <div th:each="list : ${lectureList}" class="list">
+                <a th:href="@{/lecture/detail(page=1, no=${list.lec_no})}">
+                    <h3 th:text="${list.lec_name}" class="title"></h3>
+                    <p>매주 <span th:text="${list.lec_day}"></span></p>
+                    <p>월 <span th:text="${list.lec_price}"></span>원</p>
+                </a>
             </div>
         </div>
-        <div class="box" style="background:linear-gradient(#1253c9, #5388e8)">
-            <div class="inner wrap">
-                <div class="text">
-                    <h3>톡톡 X 카카오톡</h3>
-                    <h2>대학생 수강료 할인</h2>
-                    <p>대학교, 대학원에 재학중인<br> 톡학생증 인증 시, 수강료 최대 50% 할인</p>
-                </div>
-                <div class="paging">
-                    <div class="progress">
-
-                    </div>
-                    <div class="btns">
-                        <button><i class="fa fa-angle-left"></i></button>
-                        <button><i class="fa fa-angle-right"></i></button>
-                    </div>
-                </div>
-                <div class="img-box">
-                    <a><img src="https://www.pagodatalkool.com/cmn/common/download-file/image-file?attachId=7e784ca3a8624752917c416e3068e14a"></a>
-                </div>
+    </section>
+    <section class="wrap">
+        <h2 class="title">후기 TOP! 효과 <span class="color-main">톡톡히</span> 보는 선생님</h2>
+        <div class="list-box">
+            <div th:each="list : ${teacherList}" class="list">
+                <a th:href="@{/teacher/detail(teaNo=${list.teaNo})}">
+                    <h3 th:text="${list.teaName}" class="title"></h3>
+                    <p><span th:text="${list.teaIntro}"></span></p>
+                </a>
             </div>
         </div>
-        <div class="box" style="background:linear-gradient(#d4b62e, #ecd25d)">
-            <div class="inner wrap">
-                <div class="text">
-                    <h3>카카오톡 플친해요!</h3>
-                    <h2>1만원 쿠폰 증정</h2>
-                    <p>이제 카카오 채널에서 <br> 더 편리하게 상담 받으세요</p>
-                </div>
-                <div class="paging">
-                    <div class="progress">
-
-                    </div>
-                    <div class="btns">
-                        <button><i class="fa fa-angle-left"></i></button>
-                        <button><i class="fa fa-angle-right"></i></button>
-                    </div>
-                </div>
-                <div class="img-box">
-                    <a><img src="https://www.pagodatalkool.com/cmn/common/download-file/image-file?attachId=becfd4bf2ecd48f1a7d277e408767fe1"></a>
-                </div>
+    </section><section class="wrap">
+        <h2 class="title">후기 모아보기 <span class="color-main">톡톡히</span> 보는 선생님</h2>
+        <div class="list-box">
+            <div th:each="list : ${reviewList}" class="list">
+                <a th:href="@{/review/detail(rev_no=${list.rev_no})}">
+                    <h3 th:text="${list.rev_name}" class="title"></h3>
+                    <p><span th:text="${list.rev_score}"></span></p>
+                    <p><span th:text="${list.rev_detail.replace('<br>', '. ')}"></span></p>
+                </a>
             </div>
         </div>
-        <div class="box" style="background:linear-gradient(#232323, #444444)">
-            <div class="inner wrap">
-                <div class="text">
-                    <h3>리뷰 남기고</h3>
-                    <h2>네이버페이 포인트 받자!</h2>
-                    <p>수강 중인 과정의 후기를 남겨주시면 <br> 네이버페이 포인트를 지급해드립니다</p>
-                </div>
-                <div class="paging">
-                    <div class="progress">
-
-                    </div>
-                    <div class="btns">
-                        <button><i class="fa fa-angle-left"></i></button>
-                        <button><i class="fa fa-angle-right"></i></button>
-                    </div>
-                </div>
-                <div class="img-box">
-                    <a><img src="https://www.pagodatalkool.com/cmn/common/download-file/image-file?attachId=43dcbeaf769740df95a8323e5a4d9f12"></a>
-                </div>
-            </div>
-        </div>
-        <script>
-            const swiper = new Swiper('.swiper', {
-                // Optional parameters
-                direction: 'vertical',
-                loop: true,
-
-                // If we need paging
-                paging: {
-                    el: '.swiper-paging',
-                },
-
-                // Navigation arrows
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-
-                // And if we need scrollbar
-                scrollbar: {
-                    el: '.swiper-scrollbar',
-                },
-            });
-        </script>
     </section>
 </main>
 <div th:replace="~{footer :: footer}"></div>
