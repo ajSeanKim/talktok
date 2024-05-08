@@ -53,10 +53,15 @@ public class CartController {
     public String cartList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int page) {
         StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
 
-        if(studentDto == null){
+        String stuEmail = (String) session.getAttribute("stuEmail");
+        int stuNo = (int) session.getAttribute("stuNo");
+
+//        if(studentDto == null){
+        if(stuEmail == null){
             return "redirect:/student/login";
         }else{
-            List<Cart> cartItems = cartService.getCartItems(studentDto.getStuNo());
+//            List<Cart> cartItems = cartService.getCartItems(studentDto.getStuNo());
+            List<Cart> cartItems = cartService.getCartItems(stuNo);
             model.addAttribute("cartItems", cartItems);
             model.addAttribute("page", page);
         }
