@@ -23,20 +23,27 @@ public class CartController {
     // 장바구니 추가
     @PostMapping("/add")
     public String cart(@RequestParam("lec_no") int lec_no, @ModelAttribute CartDto cartDto, HttpSession session, Model model) {
-        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+//        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+        String stuEmail = (String) session.getAttribute("stuEmail");
 
-        if(studentDto == null){
+        // 받아온 stuNo 값을 Integer 에서 int 로 변환, Integer null 일시 0 할당
+        Integer stuNoInteger = (Integer) session.getAttribute("stuNo");
+        int stuNo = (stuNoInteger != null) ? stuNoInteger.intValue() : 0;
+
+        System.out.println(stuEmail);
+
+        if(stuEmail == null){
             return "cart/loginmessage";
         } else {
 
             // 장바구니에 기존 상품이 있는지 검사
-            int count = cartService.countCart(lec_no, studentDto.getStuNo());
+            int count = cartService.countCart(lec_no, stuNo);
 
             if(count == 0){
-                System.out.println("studentDto.getStuNo() : "+studentDto.getStuNo());
-                System.out.println("lectureDto.getLec_no() : "+lec_no);
+                System.out.println("stuNo : "+stuNo);
+                System.out.println("lecNO : "+lec_no);
 
-                cartService.addCart(studentDto.getStuNo(), lec_no);
+                cartService.addCart(stuNo, lec_no);
 
                 System.out.println("장바구니 추가");
 
@@ -71,9 +78,11 @@ public class CartController {
     // 장바구니에서 선택항목 삭제
     @PostMapping("/delete")
     public String deleteCart(@RequestParam(value = "cartCheck", required = false) List<String> cartCheck, HttpSession session) {
-        StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+        //StudentDto studentDto = (StudentDto) session.getAttribute("studentDto");
+        String stuEmail = (String) session.getAttribute("stuEmail");
 
-        if (studentDto == null) {
+        //if (studentDto == null) {
+        if (stuEmail == null) {
             return "redirect:/student/login";
         }else if(cartCheck == null || cartCheck.isEmpty()){
             return "cart/cbmessage";
