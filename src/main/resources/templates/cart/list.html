@@ -37,7 +37,7 @@
                         </td>
                         <td class="lecNo" th:text="${cart.getLecture().getLecNo()}"></td>
                         <td><a class="lecName" th:href="@{/lecture/detail(page=${page}, no=${cart.getLecture().getLecNo()})}" th:text="${cart.getLecture().getLec_name()}"></a></td>
-                        <td th:text="${cart.getLecture().getLec_startdate()}"></td>
+                        <td th:text="${cart.getLecture().getLecStartdate()}"></td>
                         <td th:text="${cart.getLecture().getLec_enddate()}"></td>
                         <td class="price" th:text="${cart.getLecPrice()} + '원'"></td>
                         <td th:text="${cart.getCaCount()}"></td>

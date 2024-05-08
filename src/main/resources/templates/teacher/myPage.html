@@ -15,7 +15,10 @@
             <a class="on">강사</a>
         </div>
         <div class="profile">
-            <p class="img-box"><img src="/images/ico_teacher.png"></p>
+            <p class="img-box">
+                <img th:if="${!#strings.isEmpty(teacher.teaImage)}" th:src="@{/app/files/${teacher.teaImage+'.png'}}">
+                <img th:if="${#strings.isEmpty(teacher.teaImage)}" th:src="@{/images/ico_teacher.png}">
+            </p>
             <p th:text="${#strings.substringBefore(session.teaEmail, '@')+'님'}"></p>
         </div>
         <div class="btns">
