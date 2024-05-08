@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +37,6 @@
     }
   </style>
 </head>
-
 <body>
 
   <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
@@ -67,13 +65,15 @@
                 <span class="label label-info" id="room"></span>
                 <div class="input-group margin-bottom-md " style="width: 100% !important;">
                   <!--<input autocomplete="off" class="form-control" type="text" placeholder="Room Name" id="roomname" />-->
-                  <input class="form-control" type="text" id="roomname" readonly th:value="20001" />
+                  <input class="form-control" type="text" id="roomname" readonly th:value="${len_no}" />
                 </div>
                 <span class="label label-info" id="you"></span>
                 <div class="input-group margin-bottom-md ">
                   <span class="input-group-addon">대화명</span>
                   <!-- autocomplete="off" , placeholder="My Name" 삭제, readonly 속성 추가 -->
-                  <input class="form-control" type="text" id="username" readonly th:value="${#strings.substringBefore(session.stuEmail, '@')}"
+                  <input th:if="${session.stuEmail != null}" class="form-control" type="text" id="username" readonly th:value="${#strings.substringBefore(session.stuEmail, '@')}"
+                         onkeypress="return checkEnter(this, event);" />
+                  <input th:if="${session.teaEmail != null}" class="form-control" type="text" id="username" readonly th:value="${#strings.substringBefore(session.teaEmail, '@')}"
                     onkeypress="return checkEnter(this, event);" />
                   <!--<input autocomplete="off" class="form-control" type="text" placeholder="My Name" id="username"
                          onkeypress="return checkEnter(this, event);" />-->

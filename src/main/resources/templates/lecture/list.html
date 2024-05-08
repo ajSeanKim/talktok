@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>톡톡스피킹</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
-        main.wrap {margin:70px auto;}
-        a {color: #000;}
+        .wrap h2 {margin-bottom: 30px; text-align: center; font-size: 180%;}
         .list-box {display:flex; flex-wrap:wrap; gap:2rem; margin-bottom: 30px;}
         .list-box .list {position:relative; display: block; width: calc(25% - 24px); overflow:hidden; border-radius: 4px; box-shadow: 1px 5px 10px rgba(0,0,0,.1);}
         .list-box .list a {display: block; padding: 15px;}
@@ -23,6 +21,7 @@
     <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
     <main class="wrap">
+        <h2>커리큘럼</h2>
         <section>
             <div class="list-box">
                 <div th:each="list : ${lectureList}" class="list">
@@ -34,6 +33,7 @@
                     </a>
                 </div>
             </div>
+            <!--페이징-->
             <div th:if="${lectureList.totalPages > 1}" class="paging-box">
                 <ul class="paging">
                     <li th:if="${not lectureList.first}">

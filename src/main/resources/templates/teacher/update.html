@@ -6,21 +6,10 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-<!--    <script>
+    <script>
         alert("비밀번호가 틀렸습니다.")
         history.go(-1);
-    </script>-->
-    <div th:if="${result == 1}">
-        <script>
-            alert("강사 회원정보 변경에 성공했습니다.")
-            location.href="/teacher/myPage";
-        </script>
-    </div>
-    <div th:if="${result != 1}">
-        <script>
-            alert("현재 비밀번호가 틀렸습니다.")
-            history.go(-1);
-        </script>
-    </div>
+    </script>
+
 </body>
 </html>

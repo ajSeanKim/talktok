@@ -324,7 +324,9 @@ function checkEnter(field, event) {
 
 // [jsflux] 방생성 및 조인
 function registerUsername() {
-
+	var username = $("#username").val().trim();
+	var roomname = $("#roomname").val().trim();
+	console.log("username, roomname : "+username+", "+roomname);
 	if($('#roomname').length === 0) {
 		// Create fields to register
         $('#register').click(registerUsername);

@@ -18,8 +18,8 @@ public class Payment {
     @Id
     @Column(name = "pay_no")
     private int payNo;
-    @Column(name = "payTime")
-    private Timestamp pay_time;
+    @Column(name = "pay_time")
+    private Timestamp payTime;
     @Column(name = "payPrice")
     private String pay_price;
     @Column(name = "lec_no")

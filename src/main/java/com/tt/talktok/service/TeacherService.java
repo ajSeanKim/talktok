@@ -35,9 +35,7 @@ public class TeacherService{
                 .tea_intro(dto.getTeaIntro())
                 .tea_detail(dto.getTeaDetail())
                 .tea_career(dto.getTeaCareer())
-                .tea_nation(dto.getTeaNation())
                 .tea_image(dto.getTeaImage())
-                .tea_social(dto.getTeaSocial())
                 .build();
     }
     // 엔터티에서 DTO로 변환하는 메서드
@@ -53,9 +51,7 @@ public class TeacherService{
                 .teaIntro(entity.getTea_intro())
                 .teaDetail(entity.getTea_detail())
                 .teaCareer(entity.getTea_career())
-                .teaNation(entity.getTea_nation())
                 .teaImage(entity.getTea_image())
-                .teaSocial(entity.getTea_social())
                 .build();
     }
 
@@ -123,7 +119,6 @@ public class TeacherService{
             teacher.setTea_intro(teacherDto.getTeaIntro());
             teacher.setTea_detail(teacherDto.getTeaDetail());
             teacher.setTea_career(teacherDto.getTeaCareer());
-            teacher.setTea_nation(teacherDto.getTeaNation());
             teacher.setTea_image(teacherDto.getTeaImage());
             teacher.setTea_pwd(passwordEncoder.encode(teacherDto.getTeaPwd())); // 비밀번호도 업데이트할 경우
             teacherRepository.save(teacher);
@@ -140,8 +135,8 @@ public class TeacherService{
 
         newTeacher = convertToEntity(teacherDto);
         newTeacher.setTea_pwd(encodePwd);
-
         teacherRepository.save(newTeacher);
+
     }
 
     @Transactional
