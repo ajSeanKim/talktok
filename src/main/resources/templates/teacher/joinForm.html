@@ -50,91 +50,69 @@
                 return false;
             }
 
+            // 이메일 입력란에서 값을 가져옴
+            var email = document.getElementById("teaEmail").value;
+
             // 이메일 형식 검사 정규식
             var emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailFormat.test(teaEmail)) {
+
+            // 이메일 형식 및 '@' 문자의 존재 여부 확인
+            if (!emailFormat.test(email)) {
                 alert("유효하지 않은 이메일 형식입니다.");
-                $("#teaEmail").focus();
-                return false;
+                return false; // 유효성 검사 실패
             }
 
-            var teaPwd = $.trim($("#teaPwd").val());
-            if (teaPwd === "") {
+            if ($.trim($("#teaPwd").val()) === "") {
                 alert("비밀번호를 입력하세요");
-                $("#teaPwd").focus();
+                $("#teaPwd").val("").focus();
                 return false;
             }
-
-            var teaPwd2 = $.trim($("#teaPwd2").val());
-            if (teaPwd2 === "") {
+            if ($.trim($("#teaPwd2").val()) === "") {
                 alert("비밀번호 확인을 입력하세요");
-                $("#teaPwd2").focus();
+                $("#teaPwd2").val("").focus();
                 return false;
             }
-
-            if (teaPwd !== teaPwd2) {
+            if ($.trim($("#teaPwd").val()) !== $.trim($("#teaPwd2").val())) {
                 alert("비밀번호가 다릅니다!");
                 $("#teaPwd").val("");
                 $("#teaPwd2").val("");
                 $("#teaPwd").focus();
                 return false;
             }
-
-            var teaName = $.trim($("#teaName").val());
-            if (teaName === "") {
+            if ($.trim($("#teaName").val()) === "") {
                 alert("이름을 입력하세요");
-                $("#teaName").focus();
+                $("#teaName").val("").focus();
                 return false;
             }
-
-            var teaNickname = $.trim($("#teaNickname").val());
-            if (teaNickname === "") {
+            if ($.trim($("#teaNickname").val()) === "") {
                 alert("닉네임을 입력하세요");
-                $("#teaNickname").focus();
+                $("#teaNickname").val("").focus();
                 return false;
             }
-            var teaPhone = $.trim($("#teaPhone").val());
-            if (teaPhone === "") {
+            if ($.trim($("#teaPhone").val()) === "") {
                 alert("핸드폰번호를 입력하세요");
-                $("#teaPhone").focus();
+                $("#teaPhone").val("").focus();
                 return false;
             }
-
-            var teaAccount = $.trim($("#teaAccount").val());
-            if (teaAccount !== "" && !/^\d{10,14}$/.test(teaAccount)) {
+            if ($.trim($("#teaAccount").val()) !== "" && !/^\d{10,14}$/.test($("#teaAccount").val())) {
                 alert("계좌번호는 10자리에서 14자리 사이여야 합니다");
                 $("#teaAccount").focus();
                 return false;
             }
-
-            var teaIntro = $.trim($("#teaIntro").val());
-            if (teaIntro.length > 500 || teaIntro === "") {
-                alert("한줄소개는 500자 이내로 입력하세요");
+            if ($.trim($("#teaIntro").val()).length > 500) {
+                alert("자기소개는 500자 이내로 입력하세요");
                 $("#teaIntro").focus();
                 return false;
             }
-
-            var teaDetail = $.trim($("#teaDetail").val());
-            if (teaDetail.length > 2000 || teaDetail === "") {
-                alert("자기소개는 2000자 이내로 입력하세요");
+            if ($.trim($("#teaDetail").val()).length > 2000) {
+                alert("디테일 자기소개는 2000자 이내로 입력하세요");
                 $("#teaDetail").focus();
                 return false;
             }
-            var teaCareer = $.trim($("#teaCareer").val());
-            if (teaCareer === "") {
-                alert("학력을 입력하세요");
-                $("#teaCareer").focus();
-                return false;
-            }
 
-
-            // 휴대전화번호 하이픈 제거
-            const teaPhoneNoHyphens = removeHyphen(teaPhone);
-            document.getElementById("teaPhone").value = teaPhoneNoHyphens;
-
-            return true;  // 모든 검증을 통과한 경우
+            const teaPhone = removeHyphen(document.getElementById("teaPhone").value);
+            document.getElementById("teaPhone").value = teaPhone;
         }
-
         $(document).ready(function() {
             $('#id-check').off('click').on('click', function() {
                 console.log("Button clicked");  // 버튼 클릭 로그
@@ -169,7 +147,7 @@
 <div class="container">
     <div class="inner">
         <div class="content">
-            <form id="join_form" method="post" action="/teacher/join" class="form" onsubmit="return boardCheck();" enctype="multipart/form-data">
+            <form id="join_form" method="post" action="/teacher/join" class="form" onsubmit="return boardCheck();">
                 <div class="form_content">
                     <div class="form_section">
                         <div class="form_list">
@@ -242,7 +220,7 @@
                                 <div class="form_label_container">
                                     <span>프로필사진 : </span>
                                 </div>
-                                <input type="file" name="teaImage1" id="teaImage1" placeholder="사진" class="input" />
+                                <input type="file" name="teaImage" id="teaImage" placeholder="사진" class="input" />
                             </div>
 
                         </div>

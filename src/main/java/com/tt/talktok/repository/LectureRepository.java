@@ -17,5 +17,7 @@ public interface LectureRepository extends JpaRepository<Lecture, Integer> {
     //강의 하나
     Lecture findByLecNo(int lec_no);
 
-    List<Lecture> findAllByTeaNo(int teaNo);
+    //강사 자기 강의 조회
+    List<Lecture> findAllByTeaNoOrderByLecStartdateDesc(int teaNo);
+
 }
