@@ -58,6 +58,20 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 //    @Query(value = "update Review set revName=:revName, revDetail=:revDetail, revScore=:revScore where revNo=:revNo")
 //    void reviewUpdate(ReviewDto reviewDto);
 
-
+    // 메인에 베스트 강의 번호 가져가기
+    @Query(value = "SELECT lec_no " +
+            "FROM review " +
+            "GROUP BY lec_no " +
+            "ORDER BY COUNT(lec_no) DESC " +
+            "LIMIT 0, 3", nativeQuery = true)
+    List<Integer> findBestLecNo();
+    
+    // 메인에 베스트 선생님 번호 가져가기
+    @Query(value = "SELECT tea_no " +
+            "FROM review " +
+            "GROUP BY tea_no " +
+            "ORDER BY COUNT(tea_no) DESC " +
+            "LIMIT 0, 3", nativeQuery = true)
+    List<Integer> findBestTeaNo();
 }
 
