@@ -61,7 +61,7 @@ public class ReviewController {
 
         log.info("review: {}", review);
         model.addAttribute("review", review);
-        return "/review/detail";
+        return "review/detail";
     }
 
     @GetMapping("/write")

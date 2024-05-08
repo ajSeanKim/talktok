@@ -216,12 +216,16 @@ public class TeacherController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "/teacher/logout";
+        return "teacher/logout";
     }
 
     //마이페이지
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(HttpSession session, Model model) {
+        int teaNo  = (int)session.getAttribute("teaNo");
+        TeacherDto teacherDto = teacherService.getTeacherDetail(teaNo);
+
+        model.addAttribute("teacher", teacherDto);
         return "teacher/myPage";
     }
 
