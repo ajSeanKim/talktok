@@ -89,6 +89,26 @@ public class ReviewService {
         return reviewDto;
     }
 
+    private ReviewDto updateConvertToDto(Review review) {
+        ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setRev_no(review.getRevNo());
+        reviewDto.setRev_name(review.getRevName());
+        reviewDto.setRev_detail(review.getRevDetail());
+        reviewDto.setRev_writer(review.getRevWriter());
+        reviewDto.setRev_ReadCount(review.getRevReadCount());
+        reviewDto.setRev_score(review.getRevScore());
+        reviewDto.setRev_date(review.getRevDate());
+        reviewDto.setLec_no(review.getLecNo());
+        reviewDto.setLec_name(review.getLecName());
+        reviewDto.setTea_no(review.getTeaNo());
+        reviewDto.setTea_name(review.getTeaName());
+        reviewDto.setStu_no(review.getStuNo());
+        reviewDto.setRev_detail(reviewDto.getRev_detail());
+        // 엔티티 클래스의 필드를 DTO 클래스에 설정
+
+        return reviewDto;
+    }
+
     public Page<ReviewDto> reviewFindAll(Pageable pageable) {
         Page<Review> reviews = reviewRepository.findAll(pageable);
         if (reviews == null || !reviews.hasContent()) {
@@ -149,6 +169,17 @@ public class ReviewService {
         reviewRepository.deleteById(revNo);
     }
 
+    // 메인에 베스트 강의 넘버 가져가기
+    public List<Integer> findBestLecNo() {
+        return reviewRepository.findBestLecNo();
+    }
+    // 메인에 베스트 선생님 넘버 가져가기
+    public List<Integer> findBestTeaNo() {
+        return reviewRepository.findBestTeaNo();
+    }
 
-
+    public ReviewDto reviewFindUpdateDetail(int rev_no) {
+        Review review = reviewRepository.findByRevNo(rev_no);
+        return updateConvertToDto(review);
+    }
 }
