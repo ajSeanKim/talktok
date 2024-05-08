@@ -100,7 +100,7 @@ public class ReviewController {
 
     @GetMapping("/update")
     public String updateForm(int rev_no, int stu_no, Model model){
-        ReviewDto review = reviewService.reviewFindDetail(rev_no);
+        ReviewDto review = reviewService.reviewFindUpdateDetail(rev_no);
 
         model.addAttribute("rev_no", rev_no);
         model.addAttribute("review", review);
