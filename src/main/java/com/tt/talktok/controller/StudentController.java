@@ -123,7 +123,7 @@ public class StudentController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "/student/logout";
+        return "student/logout";
     }
 
     // 학생 마이페이지

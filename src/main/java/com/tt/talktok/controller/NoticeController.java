@@ -45,7 +45,7 @@ public class NoticeController {
     @PostMapping("/write")
     public String write(NoticeDto noticeDto) {
         noticeService.noticeWrite(noticeDto);
-        return "notice/writemessage";
+        return "notice/writeMessage";
     }
 
     // 공지사항 상세 정보 출력
