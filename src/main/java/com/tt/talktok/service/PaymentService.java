@@ -8,6 +8,7 @@ import com.tt.talktok.repository.LectureRepository;
 import com.tt.talktok.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,20 +24,13 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final LectureRepository lectureRepository;
 
-    // 결제 정보 저장
-    public PaymentDto save(PaymentDto paymentDto) {
-        Payment payment = convertToEntity(paymentDto);
-        payment = paymentRepository.save(payment); // 엔티티를 저장하고 저장된 엔티티를 반환
-        return convertToDto(payment);
-    }
-
     private Payment convertToEntity(PaymentDto paymentDto) {
         Payment payment = new Payment();
         payment.setStuEmail(paymentDto.getStu_Email());
         payment.setPay_price(paymentDto.getPay_price());
         payment.setLec_name(paymentDto.getLec_name());
         payment.setLecNo(paymentDto.getLec_no());
-        payment.setPay_time(new Timestamp(System.currentTimeMillis())); // 현재 시간으로 설정
+        payment.setPayTime(new Timestamp(System.currentTimeMillis())); // 현재 시간으로 설정
         return payment;
     }
 
@@ -46,15 +40,25 @@ public class PaymentService {
         dto.setPay_price(payment.getPay_price());
         dto.setLec_name(payment.getLec_name());
         dto.setLec_no(payment.getLecNo());
-        dto.setPay_time(payment.getPay_time());
+        dto.setPay_time(payment.getPayTime());
         return dto; // 변환된 Dto 객체를 반환
     }
+
+    // 결제 정보 저장
+    public PaymentDto save(PaymentDto paymentDto) {
+        Payment payment = convertToEntity(paymentDto);
+        payment = paymentRepository.save(payment); // 엔티티를 저장하고 저장된 엔티티를 반환
+        return convertToDto(payment);
+    }
+
+
 
     // 강의 결제 내역
     public List<PaymentDto> findPaymentByStudentEmail(String stuEmail) {
         List<Payment> payment = paymentRepository.findByStuEmail(stuEmail);
         return payment.stream().map(this::convertToDto).collect(Collectors.toList());
     }
+
 
     // 결제한 강의 목록
     public Map<Integer, Lecture> findLecturesForPayments(List<PaymentDto> payments) {
@@ -69,5 +73,6 @@ public class PaymentService {
         return lectures.stream()
                 .collect(Collectors.toMap(Lecture::getLecNo, Function.identity()));
     }
+
 
 }

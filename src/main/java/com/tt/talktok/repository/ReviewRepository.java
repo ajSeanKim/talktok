@@ -5,6 +5,7 @@ import com.tt.talktok.entity.Review;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Range;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -50,6 +51,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Transactional
     @Query("UPDATE Review r SET r.revName = :#{#review.revName}, r.revDetail = :#{#review.revDetail}, r.revScore = :#{#review.revScore} WHERE r.revNo = :#{#review.revNo}")
     void updateReviewDetails(Review review);
+
 
 //    @Transactional
 //    @Modifying

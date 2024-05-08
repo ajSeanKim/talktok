@@ -299,7 +299,7 @@ public class StudentController {
             return "redirect:/student/myPage";
         }
     }
-    
+
     // 학생 결제내역
     @GetMapping("/payment")
     public String myPayment(HttpServletRequest request, Model model, @PageableDefault(size = 10, sort = "revNo", direction = Sort.Direction.DESC) Pageable pageable) {
