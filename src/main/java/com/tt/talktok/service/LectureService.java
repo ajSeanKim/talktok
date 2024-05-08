@@ -3,6 +3,7 @@ package com.tt.talktok.service;
 import com.tt.talktok.dto.LectureDto;
 import com.tt.talktok.entity.Lecture;
 import com.tt.talktok.repository.LectureRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+
 public class LectureService {
 
     private final LectureRepository lectureRepository;
@@ -40,7 +42,7 @@ public class LectureService {
         dto.setLec_time(lecture.getLec_time());
         dto.setLec_price(lecture.getLec_price());
         dto.setLec_detail(lecture.getLec_detail());
-        dto.setLec_startdate(lecture.getLec_startdate());
+        dto.setLec_startdate(lecture.getLecStartdate());
         dto.setLec_enddate(lecture.getLec_enddate());
         dto.setTea_no(lecture.getTeaNo());
         return dto; // 마지막으로 변환된 LectureDto 객체를 반환한다
@@ -54,7 +56,7 @@ public class LectureService {
         lecture.setLec_time(dto.getLec_time());
         lecture.setLec_price(dto.getLec_price());
         lecture.setLec_detail(dto.getLec_detail());
-        lecture.setLec_startdate(dto.getLec_startdate());
+        lecture.setLecStartdate(dto.getLec_startdate());
         lecture.setLec_enddate(dto.getLec_enddate());
         lecture.setTeaNo(dto.getTea_no());
         return lecture; // 마지막으로 변환된 Lecture 엔티티 객체를 반환한다
@@ -75,11 +77,19 @@ public class LectureService {
         Lecture newlecture = convertToEntity(lectureDto);
         lectureRepository.save(newlecture);
     }
-
+    //강사 자기 강의 조회
     public List<LectureDto> findAllByTeaNo(int tea_no) {
-        List<Lecture> lectureList = lectureRepository.findAllByTeaNo(tea_no);
+        List<Lecture> lectureList = lectureRepository.findAllByTeaNoOrderByLecStartdateDesc(tea_no);
         return lectureList.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+//    public List<LectureDto> findAllByTeaNo(int tea_no) {
+//        List<Lecture> lectureList = lectureRepository.findAllByTeaNoOrderByLecStartdateDesc(tea_no);
+//        return lectureList.stream()
+//                .map(this::convertToDto)
+//                .collect(Collectors.toList());
+//    }
+
+
 }

@@ -4,12 +4,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "lecture")
 public class Lecture {
     @Id
@@ -20,7 +24,9 @@ public class Lecture {
     private String lec_time;
     private String lec_price;
     private String lec_detail;
-    private String lec_startdate;
+    @Column(name="lec_startdate")
+    private String lecStartdate;
+
     private String lec_enddate;
     @Column(name = "tea_no")
     private int teaNo;
