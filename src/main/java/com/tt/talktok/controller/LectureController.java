@@ -35,7 +35,7 @@ public class LectureController {
         int currentPage = lectureList.getNumber(); // 현재 페이지 번호 가져가기(1번부터 시작하기)
         model.addAttribute("lectureList",lectureList);
         model.addAttribute("currentPage",currentPage);
-        return "/lecture/list";
+        return "lecture/list";
     }
 
     @GetMapping("/detail")
@@ -59,7 +59,7 @@ public class LectureController {
         int page = currentPage;
         model.addAttribute("page",page);
 
-        return "/lecture/detail";
+        return "lecture/detail";
     }
 
 
