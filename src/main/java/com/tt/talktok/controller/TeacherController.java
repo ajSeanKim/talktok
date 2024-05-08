@@ -11,7 +11,6 @@ import com.tt.talktok.entity.Teacher;
 import com.tt.talktok.service.LectureService;
 import com.tt.talktok.service.ReviewService;
 import com.tt.talktok.service.TeacherService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -417,10 +415,8 @@ public class TeacherController {
     //강사 강의 목록 조희
     @GetMapping("/leclist")
     public String leclist(HttpSession session,
-                          Pageable pageable,
                           Model model){
         Integer teaNo = (Integer) session.getAttribute("teaNo");
-        System.out.println("teaNo:"+teaNo);
         LectureDto lectureDto = new LectureDto();
         lectureDto.setTea_no(teaNo);
 
