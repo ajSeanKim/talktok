@@ -7,11 +7,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Builder
@@ -20,6 +23,15 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
+    // 메인 리스트
+    public List<NoticeDto> findAllMain() {
+        Pageable pageable = PageRequest.of(0, 5); // 첫 페이지, 5개씩
+        List<Notice> list = noticeRepository.findAllByOrderByNoDateDesc(pageable);
+        return list.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    
     //상세, 페이징
     public Page<NoticeDto> getNoticePage(Pageable pageable) {
         Page<Notice> list = noticeRepository.findAll(pageable);

@@ -63,7 +63,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
             "FROM review " +
             "GROUP BY lec_no " +
             "ORDER BY COUNT(lec_no) DESC " +
-            "LIMIT 0, 3", nativeQuery = true)
+            "LIMIT 0, 5", nativeQuery = true)
     List<Integer> findBestLecNo();
     
     // 메인에 베스트 선생님 번호 가져가기
@@ -71,7 +71,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
             "FROM review " +
             "GROUP BY tea_no " +
             "ORDER BY COUNT(tea_no) DESC " +
-            "LIMIT 0, 3", nativeQuery = true)
+            "LIMIT 0, 4", nativeQuery = true)
     List<Integer> findBestTeaNo();
 }
 

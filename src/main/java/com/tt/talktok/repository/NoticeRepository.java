@@ -10,8 +10,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
+
+    List<Notice> findAllByOrderByNoDateDesc(Pageable pageable);
 
     //상세 및 페이징
     Page<Notice> findAll(Pageable pageable);

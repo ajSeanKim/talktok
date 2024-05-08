@@ -69,40 +69,135 @@
         }
 
         setInterval(updateContent, 5000);
+
+
+        $(document).ready(function() {
+            // 이미지 URL 배열
+            var lecList = ['/images/lecture01.jpg', '/images/lecture02.jpg', '/images/lecture03.jpg',
+                '/images/lecture04.jpg', '/images/lecture05.jpg'];
+            var teaList = ['/images/teacher01.jpg', '/images/teacher02.jpg', '/images/teacher03.jpg',
+                '/images/teacher04.jpg'];
+
+            // 각 list 요소에 이미지 추가
+            $('.lecture-list').each(function(index) {
+                var img = lecList[index % lecList.length]; // 이미지 URL 배열의 인덱스를 순환
+                var imageElement = $('<img>').attr({
+                    src: img,
+                    alt: '강좌 이미지'
+                });
+                $(this).find('.lecture-img').append(imageElement);
+            });
+            // 각 list 요소에 이미지 추가
+            $('.teacher-list').each(function(index) {
+                var img = teaList[index % teaList.length]; // 이미지 URL 배열의 인덱스를 순환
+                var imageElement = $('<img>').attr({
+                    src: img,
+                    alt: '강사 이미지'
+                });
+                $(this).find('.teacher-img').append(imageElement);
+            });
+
+            $('.lecture-box').slick({
+                centerMode: true,
+                slidesToShow: 3
+            });
+            $('.review-box').slick({
+                slidesToShow: 3,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                arrows: false,
+                pauseOnFocus: false,
+                pauseOnHover: false
+            });
+        });
     </script>
     <section class="wrap">
         <h2 class="title">인기 TOP! 효과 <span class="color-main">톡톡히</span> 보는 강의</h2>
-        <div class="list-box">
-            <div th:each="list : ${lectureList}" class="list">
+        <div class="list-box lecture-box">
+            <div th:each="list : ${lectureList}" class="list lecture-list">
                 <a th:href="@{/lecture/detail(page=1, no=${list.lec_no})}">
-                    <h3 th:text="${list.lec_name}" class="title"></h3>
-                    <p>매주 <span th:text="${list.lec_day}"></span></p>
-                    <p>월 <span th:text="${list.lec_price}"></span>원</p>
+                    <div class="lecture-img"></div>
+                    <div class="text">
+                        <h3 th:text="${list.lec_name}" class="title"></h3>
+                        <p>매주 <span th:text="${list.lec_day}"></span></p>
+                        <p>월 <span th:text="${list.lec_price}"></span>원</p>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
     <section class="wrap">
-        <h2 class="title">후기 TOP! 효과 <span class="color-main">톡톡히</span> 보는 선생님</h2>
-        <div class="list-box">
-            <div th:each="list : ${teacherList}" class="list">
+        <h2 class="title">후기 TOP! 효과 재밌게 <span class="color-main">톡톡</span> 하는 선생님</h2>
+        <div class="list-box teacher-box">
+            <div th:each="list : ${teacherList}" class="list teacher-list">
                 <a th:href="@{/teacher/detail(teaNo=${list.teaNo})}">
-                    <h3 th:text="${list.teaName}" class="title"></h3>
-                    <p><span th:text="${list.teaIntro}"></span></p>
+                    <div class="teacher-img"></div>
+                    <div class="text">
+                        <h3 th:text="${list.teaName}" class="title"></h3>
+                        <p><span th:text="${list.teaIntro}"></span></p>
+                    </div>
                 </a>
             </div>
         </div>
-    </section><section class="wrap">
-        <h2 class="title">후기 모아보기 <span class="color-main">톡톡히</span> 보는 선생님</h2>
-        <div class="list-box">
-            <div th:each="list : ${reviewList}" class="list">
+    </section>
+    <section class="wrap">
+        <h2 class="title">수강생들의 리얼 후기</h2>
+        <div class="list-box review-box">
+            <div th:each="list : ${reviewList}" class="list review-list">
                 <a th:href="@{/review/detail(rev_no=${list.rev_no})}">
                     <h3 th:text="${list.rev_name}" class="title"></h3>
-                    <p><span th:text="${list.rev_score}"></span></p>
+                    <input type="hidden" th:data-score="${list.rev_score}" class="score">
+                    <p><span class="starRating"></span> <span th:text="'('+${list.rev_score}+'점)'"></span></p>
                     <p><span th:text="${list.rev_detail.replace('<br>', '. ')}"></span></p>
                 </a>
             </div>
         </div>
+    </section>
+    <script>
+        // 모든 .score 요소에 대해 별점생성 함수 호출
+        var scores = document.querySelectorAll('.score');
+        scores.forEach(function(scoreElement) {
+            var score = parseInt(scoreElement.getAttribute('data-score'));
+            var ratingElement = scoreElement.nextElementSibling.querySelector('.starRating');
+            generateStarRating(score, ratingElement);
+        });
+        // 별점생성 함수
+        function generateStarRating(score, ratingElement) {
+            var fullStars = Math.floor(score / 2);
+            var halfStar = score % 2 === 1;
+            var starsHtml = '';
+
+            for (var i = 0; i < fullStars; i++) {
+                starsHtml += '<i class="fa-solid fa-star"></i>';
+            }
+
+            if (halfStar) {
+                starsHtml += '<i class="fa-regular fa-star-half-stroke"></i>';
+            }
+
+            ratingElement.innerHTML = starsHtml;
+        }
+    </script>
+    <section class="wrap">
+        <h2 class="title">최신 공지사항</h2>
+        <table class="notice-list">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>작성일</th>
+            </tr>
+            <tr th:each="list : ${noticeList}">
+                <td th:text="${list.noNo}"></td>
+                <td>
+                    <a th:href="@{/notice/detail(noNo=${list.noNo}, page=1)}" th:text="${list.noSubject}"></a>
+                </td>
+                <td th:text="관리자"></td>
+                <td th:text="${list.noReadcount}"></td>
+                <td th:text="${#strings.substring(list.noDate, 0,10)}"></td>
+            </tr>
+        </table>
     </section>
 </main>
 <div th:replace="~{footer :: footer}"></div>
