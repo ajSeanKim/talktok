@@ -18,6 +18,7 @@ main.wrap {min-height: 640px; margin: 70px auto;}
 #hd .wrap .util-menu {line-height: 50px;}
 #hd .wrap .util-menu div a {font-weight: 500; font-size: 17px; letter-spacing: -0.5px;}
 #hd .wrap .util-menu div a + a {margin-left: 10px;}
+/*gnb*/
 body.teacher #hd .wrap .gnb-wrap .gnb .depth1 > a.teacher,
 body.lecture #hd .wrap .gnb-wrap .gnb .depth1 > a.lecture,
 body.review #hd .wrap .gnb-wrap .gnb .depth1 > a.review,
