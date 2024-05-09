@@ -79,7 +79,7 @@
     width: 100%;
     padding: 10px 0;
     border-radius: 6px;
-    background-color: #FAA11B;
+    background-color: #f9a01b;
     margin-bottom: 5px;
     color: #fff;
 }
@@ -197,7 +197,7 @@ div {
     padding: 14px 0;
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, .05);
-    background: #FAA11B;
+    background: #f9a01b;
     font-size: 18px;
     font-weight: 700;
     line-height: 22px;
@@ -205,7 +205,7 @@ div {
 }
 input[type="button"] {
     padding: 5px 10px;
-    background-color: #FAA11B; /* 주황색 배경 */
+    background-color: #f9a01b; /* 주황색 배경 */
     color: white; /* 흰색 텍스트 */
     border: none;
     border-radius: 6px; /* 둥근 모서리 */

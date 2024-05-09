@@ -26,14 +26,6 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final CartService cartService;
 
-    @GetMapping("/payment")
-    public String payment(Model model, HttpSession session) {
-        String email = (String) session.getAttribute("stuEmail");
-        System.out.println(email);
-        model.addAttribute("email", email);
-        return "lecture/payments";
-    }
-
     //단건 결제
     @PostMapping("/savePayment")
     @ResponseBody

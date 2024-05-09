@@ -23,8 +23,8 @@
         <div class="list-box">
             <div th:each="list : ${lecture}" class="list">
                 -------
-                <a th:href="@{/lecture/detail(no=${list.lec_no}, page=1)}"><input type="button" value="상세보기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
-                <a th:href="@{/study/room(lec_no=${list.lec_no})}"><input type="button" value="스터디룸 입장" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                <a th:href="@{/lecture/detail(no=${list.lec_no}, page=1)}"><input type="button" value="상세보기" class="btn btn-primary btn-sm" style="background-color: #f9a01b; border-color: #f9a01b"/></a>
+                <a th:href="@{/study/room(lec_no=${list.lec_no})}"><input type="button" value="스터디룸 입장" class="btn btn-primary btn-sm" style="background-color: #f9a01b; border-color: #f9a01b"/></a>
                 <a class="linked">
                     <h4 th:text="${list.lec_name}"></h4>
                     <p><span th:text="${list.lec_day}"></span></p>
