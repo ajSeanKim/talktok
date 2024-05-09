@@ -3,7 +3,7 @@
     border-collapse: collapse;
     text-align: center;
     line-height: 1.5;
-    border-top:4px solid #FAA11B; border-bottom:1px solid #dee2e6;
+    border-top:4px solid #f9a01b; border-bottom:1px solid #dee2e6;
     margin:30px auto;
 }
 .notice-page table input, table textarea {width:100%;}
@@ -19,7 +19,7 @@
 .notice-page .pagination .active a {color: #fff; background-color: #f9a01b; border-color: #f9a01b;}
 
 .notice-page {padding: 0 20px;}
-.notice-page h2 {font-size: 200%; text-align:center;}
+.notice-page h2 {font-size: 200%; text-align:center; letter-spacing: -0.05em;}
 .notice-page input {border:1px solid #ddd; height: 35px; padding: 0 10px;}
 .notice-page input[type="checkbox"]{width: 15px; height: 15px;}
 .notice-page .btn-submit {
