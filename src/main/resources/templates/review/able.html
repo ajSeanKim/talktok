@@ -151,8 +151,8 @@
                 <div>
                     <div>
                         <div class="review_edit" th:if="${session.stuNo == review.stu_no}">
-                            <a th:href="@{/review/update(rev_no=${review.rev_no}, stu_no=${review.stu_no})}"><input type="button" value="수정하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
-                            <a th:href="@{/review/delete(rev_no=${review.rev_no}, stu_no=${review.stu_no})}"><input type="button" value="삭제 하기" class="btn btn-primary btn-sm" style="background-color: #FAA11B; border-color: #FAA11B"/></a>
+                            <a th:href="@{/review/update(rev_no=${review.rev_no}, stu_no=${review.stu_no})}"><input type="button" value="수정하기" class="btn btn-primary btn-sm" style="background-color: #f9a01b; border-color: #f9a01b"/></a>
+                            <a th:href="@{/review/delete(rev_no=${review.rev_no}, stu_no=${review.stu_no})}"><input type="button" value="삭제 하기" class="btn btn-primary btn-sm" style="background-color: #f9a01b; border-color: #f9a01b"/></a>
                         </div>
                         <div class="review_name">
                             <a th:href="@{/lecture/detail(no=${review.tea_no}, page=0)}"><div class="lec_name" th:text="${review.lec_name}"></div></a>

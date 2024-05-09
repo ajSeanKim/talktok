@@ -1,6 +1,6 @@
 section.wrap {margin: 200px auto;}
 h2.title {margin-bottom: 70px; text-align: center; font-size: 180%; font-family: 'bitbit', 'serif'; font-weight: 400;}
-span.color-main {text-decoration: #f9a01b wavy underline; background: rgba(255,226,0,.1);}
+span.color-main {text-decoration: #f9a01b wavy underline; color: #f9a01b;}
 
 /* 메인 리스트 공통 */
 .list-box .list {margin: 0 10px; overflow:hidden; border-radius: 4px;}
