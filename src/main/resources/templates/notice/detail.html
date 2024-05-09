@@ -40,8 +40,10 @@
     </tr>
 </table>
     <div class="btns">
-        <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}&page=${page}'|">
-        <input type="button" value="삭제" th:onclick="|location.href='delete?noNo=${notice.noNo}'|">
+        <div th:if="${session.stuEmail == 'admin@talktok.com'}" class="btns" style="display: inline">
+            <input type="button" value="수정" th:onclick="|location.href='update?noNo=${notice.noNo}&page=${page}'|">
+            <input type="button" value="삭제" th:onclick="|location.href='delete?noNo=${notice.noNo}'|">
+        </div>
         <input type="button" value="목록" th:onclick="|location.href='list?page=${page}'|">
     </div>
 </main>
