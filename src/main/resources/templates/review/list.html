@@ -226,18 +226,27 @@
         </div>
         <div class="pagination">
             <ul class="pagination-list">
-                <li th:if="${page.hasPrevious()}">
-                    <a th:href="@{'/review/list?page=' + ${page.number - 1}}" aria-label="Previous">
+                <li th:if="${page.hasPrevious()} and ${keyword} == null">
+                    <a th:href="@{'/review/list?page=1'}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:if="${page.hasPrevious()} and ${keyword != null}">
+                    <a th:href="@{'/review/list?page=' + ${page.first} + '&keyword=' + ${keyword} + '&search_target=' + ${search_target}}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}">
                     <a th:if="${search_target!=null}" th:href="@{'/review/list?page=' + ${pageNumber} + '&keyword=' + ${keyword} + '&search_target=' + ${search_target}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
                     <a th:if="${search_target == null}" th:href="@{'/review/list?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
-
                 </li>
-                <li th:if="${page.hasNext()}">
-                    <a th:href="@{'/review/list?page=' + ${page.number + 1}}" aria-label="Next">
+                <li th:if="${page.hasNext()} and ${keyword} == null ">
+                    <a th:href="@{'/review/list?page=' + ${page.totalPages}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li th:if="${page.hasNext()} and ${keyword != null}">
+                    <a th:href="@{'/review/list?page=' + ${page.totalPages} + '&keyword=' + ${keyword} + '&search_target=' + ${search_target}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
