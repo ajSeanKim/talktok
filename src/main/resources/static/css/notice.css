@@ -15,16 +15,16 @@
 /*페이지네이션*/
 .notice-page .pagination {display: flex; list-style: none; padding: 0; justify-content: center; margin-top: 20px;}
 .notice-page .pagination li {margin: 0 5px;}
-.notice-page .pagination li a {display: block; padding: 5px 10px; color: #000; text-decoration: none; border: 1px solid #dee2e6; background-color: #fff;}
-.notice-page .pagination .active a {color: #fff; background-color: #FAA11B; border-color: #FAA11B;}
+.notice-page .pagination li a {display: block; padding: 4px 13px; border: 1px solid #ddd;}
+.notice-page .pagination .active a {color: #fff; background-color: #f9a01b; border-color: #f9a01b;}
 
 .notice-page {padding: 0 20px;}
 .notice-page h2 {font-size: 200%; text-align:center;}
-.notice-page input {border:1px solid #dee2e6; height: 35px;}
+.notice-page input {border:1px solid #ddd; height: 35px; padding: 0 10px;}
 .notice-page input[type="checkbox"]{width: 15px; height: 15px;}
 .notice-page .btn-submit {
     padding: 5px 20px;
-    background-color: #FAA11B;
+    background-color: #f9a01b;
     border: none;
     color: white;
     cursor: pointer;
@@ -32,7 +32,7 @@
 .notice-page .btns {text-align:right;}
 .notice-page .btns input[type="button"] {
     padding: 5px 20px;
-    background-color: #FAA11B;
+    background-color: #f9a01b;
     border: none;
     color: white;
     cursor: pointer;
