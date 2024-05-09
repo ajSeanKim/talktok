@@ -5,13 +5,12 @@
     <title>톡톡스피킹</title>
     <style>
         main.wrap {margin:70px auto; display: flex; gap:40px; flex-wrap: wrap;}
-        .contents-box {flex-basis: calc(70% - 40px);}
+        .contents-box {flex-basis: 70%;}
         .contents-box h3 {color: #f9a01b; font-size: 1.4em;}
-        .float-box {flex-basis: 30%;}
+        .float-box {flex-basis: 25%;}
         .float-box .btn {width:48%; height:45px; border:1px solid #f9a01b; color: #f9a01b; border-radius: 30px; transition: .3s;}
-        .float-box .btn-list {border-color: #ccc; border-radius: unset;}
-        .float-box .btn-list:last-of-type {margin-left: 1%;}
-        .float-box .btn-review {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
+        .float-box .btn-list {width: 100%; border-color: #ccc;}
+        .float-box .btn-cart {margin:10px 0 20px 2%; background: #f9a01b; color:#fff;}
         .float-box .btn-list a {display: block;}
         .float-box form {display: inline;}
         .review-box {width:100%;}
@@ -47,16 +46,15 @@
         <section class="box float-box">
             <div th:if="${session.stuNo != null || session.teaNo != null}">
                 <button class="btn btn-pay" id="payment">구매하기</button>
-                <button class="btn btn-review" onclick="location.href='/review/write'">후기등록</button>
+                <form th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="lec_no" th:value="${lectureDto.lec_no}"/>
+                    <button type="submit" class="btn btn-cart">장바구니 담기</button>
+                </form>
             </div>
             <div th:if="${session.stuNo == null && session.teaNo == null}">
                 <button class="btn btn-pay" onclick="location.href='/student/login'">구매하기</button>
-                <button class="btn btn-review" onclick="location.href='/student/login'">후기등록</button>
+                <button class="btn btn-cart" onclick="location.href='/student/login'">장바구니 담기</button>
             </div>
-            <form th:action="@{/cart/add}" method="post">
-                <input type="hidden" name="lec_no" th:value="${lectureDto.lec_no}"/>
-                <button type="submit" class="btn btn-list"><a>장바구니 담기</a></button>
-            </form>
             <button class="btn btn-list"><a th:href="@{/lecture/list(page=${page})}">목록</a></button>
         </section>
 

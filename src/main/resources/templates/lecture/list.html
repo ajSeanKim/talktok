@@ -31,7 +31,7 @@
         <section>
             <div class="list-box">
                 <div th:each="list : ${lectureList}" class="list">
-                    <a th:href="@{/lecture/detail(page=${currentPage}, no=${list.lec_no})}">
+                    <a th:href="@{/lecture/detail(page=${currentPage+1}, no=${list.lec_no})}">
                         <div class="lecture-img"></div>
                         <div class="text">
                             <h3 th:text="${list.lec_name}" class="title"></h3>
