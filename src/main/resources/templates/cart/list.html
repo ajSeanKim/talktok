@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>톡톡스피킹</title>
+    <style>
+        .wrap h2 {margin-bottom: 30px;}
+        .wrap h2 a {float: right; color: #999; font-size: initial; margin-top: 10px; cursor: pointer;}
+        .wrap h2 a i {margin-left: 10px; font-size: 0.9em;}
+    </style>
 </head>
 <body>
     <div th:replace="~{header :: header}"></div> <!-- header.html 에서 header 태그 불러오기 -->
 
     <main class="notice-page wrap">
-        <h2>강의 장바구니</h2>
+        <h2>강의 장바구니
+            <a onclick="history.go(-1); return false;">뒤로가기<i class="fa-solid fa-chevron-right"></i></a>
+        </h2>
         <div th:if="${cartItems.isEmpty()}">
             <h3>장바구니에 상품이 없습니다.</h3>
         </div>
