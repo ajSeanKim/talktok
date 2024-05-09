@@ -245,6 +245,10 @@ input[type="button"] {
 .mypage-wrap .detail .box button.mr {margin-left: 1%;}
 .mypage-wrap .detail .box button::after {display: inline-block; width: 10px; height: 10px; margin: 7px 20px; float: right; border: 1px solid #999; border-width: 1px 1px 0 0; transform: rotate(45deg); content: '';}
 .mypage-wrap .detail .box button i {margin-right: 10px; font-size: 0.9em; color: #555;}
+.mypage-wrap .detail .img-wrap {display: flex; gap: 20px;}
+.mypage-wrap .detail .img-wrap .img-box {border: 1px solid #ddd; border-radius: 6px; overflow: hidden;}
+.mypage-wrap .detail .img-wrap .img-box a {display: block;}
+.mypage-wrap .detail .img-wrap .img-box img {width: 100%;}
 
 /* user 관련 기타 페이지들 */
 .wrap .container {margin: 0 20px; padding: 0 20px;}
