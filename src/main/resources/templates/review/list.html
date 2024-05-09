@@ -239,7 +239,6 @@
                 <li th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}">
                     <a th:if="${search_target!=null}" th:href="@{'/review/list?page=' + ${pageNumber} + '&keyword=' + ${keyword} + '&search_target=' + ${search_target}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
                     <a th:if="${search_target == null}" th:href="@{'/review/list?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${page.number == pageNumber ? 'active' : ''}"></a>
-
                 </li>
                 <li th:if="${page.hasNext()} and ${keyword} == null ">
                     <a th:href="@{'/review/list?page=' + ${page.totalPages}}" aria-label="Next">
